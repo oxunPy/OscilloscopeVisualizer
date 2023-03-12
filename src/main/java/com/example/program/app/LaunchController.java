@@ -1,6 +1,5 @@
 package com.example.program.app;
 
-import com.example.program.app.entity.UserEntity;
 import com.example.program.common.animation.FadeInLeftTransition;
 import com.example.program.common.animation.FadeInRightTransition;
 import com.example.program.common.animation.FadeInTransition;
@@ -77,7 +76,7 @@ public class LaunchController implements Initializable {
                         }
 
                         // 2-STEP run SQL Functions
-//                        HibernateUtil.executeSQLQuery("sql/function.sql", Arrays.asList("getAdminUser", "getOsciData"));
+                        HibernateUtil.executeSQLQuery("sql/function.sql", Arrays.asList("getAdminUser"));
 
                         //  3-STEP
 //                        UserEntity adminUser = AuthenticationUtil.getAdminUser();
@@ -115,14 +114,6 @@ public class LaunchController implements Initializable {
                 case USER_NOT_EXISTS:
                     AuthenticationData.instance.log(this.getClass(), StringConfig.getValue("auth.dealer.noExistInLocale"));
                     Launch.scene = new Scene(new AuthenticationWizard(Launch.stage, 1), 400, 300);
-
-                    Launch.stage.setScene(Launch.scene);
-                    Launch.stage.show();
-                    close();
-                    break;
-                case TERMINAL_NOT_EXIST:
-                    AuthenticationData.instance.log(this.getClass(), StringConfig.getValue("auth.terminal.noExistInLocale"));
-                    Launch.scene = new Scene(new AuthenticationWizard(Launch.stage, 2), 400, 300);
 
                     Launch.stage.setScene(Launch.scene);
                     Launch.stage.show();

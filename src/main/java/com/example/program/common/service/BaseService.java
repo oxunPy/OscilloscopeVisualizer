@@ -1,9 +1,8 @@
 package com.example.program.common.service;
 
 import com.example.program.app.entity.SettingEntity;
-import com.example.program.app.entity.UserEntity;
+import com.example.program.app.entity.OsciUserEntity;
 import com.example.program.common.dao.BaseDaoI;
-import com.example.program.common.dao.impl.BaseDaoImpl;
 import com.example.program.common.dao.impl.BaseSimpleDaoImpl;
 import com.example.program.util.persistence.HibernateUtil;
 import org.hibernate.Session;
@@ -12,7 +11,7 @@ import org.hibernate.Transaction;
 
 public class BaseService {
 
-    protected BaseDaoI<UserEntity> userDao = new BaseSimpleDaoImpl<UserEntity>() {
+    protected BaseDaoI<OsciUserEntity> userDao = new BaseSimpleDaoImpl<OsciUserEntity>() {
         @Override
         public Session getCurrentSession() {
             return BaseService.this.getCurrentSession();

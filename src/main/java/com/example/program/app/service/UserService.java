@@ -1,6 +1,6 @@
 package com.example.program.app.service;
 
-import com.example.program.app.entity.UserEntity;
+import com.example.program.app.entity.OsciUserEntity;
 import com.example.program.app.property.UserProperty;
 import com.example.program.common.service.BaseService;
 import com.example.program.common.status.EntityStatus;
@@ -14,30 +14,30 @@ import java.util.List;
 public class UserService extends BaseService {
     private final LogUtil log = LogUtil.getLog(this.getClass());
 
-    public Integer insert(UserEntity userEntity){
+    public Integer insert(OsciUserEntity osciUserEntity){
         return 0;
     }
 
-    public UserEntity getByLogin(String login){
+    public OsciUserEntity getByLogin(String login){
         openCurrentSession();
 
-        UserEntity entity = userDao.get("from UserEntity where login=?", new Object[]{login});
+        OsciUserEntity entity = userDao.get("from UserEntity where login=?", new Object[]{login});
 
         closeCurrentSession();
         return entity;
     }
 
-    public UserEntity getUser(){
-        List<UserEntity> entities = list();
+    public OsciUserEntity getUser(){
+        List<OsciUserEntity> entities = list();
         if(entities.size() == 0) return null;
         if(entities.size() == 1) return entities.get(0);
         throw new UnsafeUpdateException("Only one dealer must be active.", this.getClass());
     }
 
-    public List<UserEntity> list(){
+    public List<OsciUserEntity> list(){
         openCurrentSession();
 
-        List<UserEntity> entities = new ArrayList<>();
+        List<OsciUserEntity> entities = new ArrayList<>();
         try{
             entities = userDao.find("form UserEntity where status=? order by id", new Object[]{EntityStatus.ACTIVE});
         } catch(Exception ex){

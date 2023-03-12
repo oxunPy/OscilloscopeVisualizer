@@ -1,6 +1,6 @@
 package com.example.program.app.property;
 
-import com.example.program.app.entity.UserEntity;
+import com.example.program.app.entity.OsciUserEntity;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -21,33 +21,33 @@ public class UserProperty extends BaseProperty{
 
     private StringProperty info = new SimpleStringProperty();
 
-    public static UserProperty newInstance(UserEntity userEntity, boolean withPassword, boolean withCreatedAndUpdated){
-        if(userEntity == null) return null;
+    public static UserProperty newInstance(OsciUserEntity osciUserEntity, boolean withPassword, boolean withCreatedAndUpdated){
+        if(osciUserEntity == null) return null;
         UserProperty userProperty = new UserProperty();
-        userProperty.populateBase(userEntity);
+        userProperty.populateBase(osciUserEntity);
 
-        userProperty.setFirstName(userEntity.getFirstName());
-        userProperty.setLastName(userEntity.getLastName());
-        userProperty.setMiddleName(userEntity.getMiddleName());
-        userProperty.setInfo(userEntity.getInfo());
-        userProperty.setPrintableName(userEntity.getPrintableName());
+        userProperty.setFirstName(osciUserEntity.getFirstName());
+        userProperty.setLastName(osciUserEntity.getLastName());
+        userProperty.setMiddleName(osciUserEntity.getMiddleName());
+        userProperty.setInfo(osciUserEntity.getInfo());
+        userProperty.setPrintableName(osciUserEntity.getPrintableName());
 
         if(withPassword){
-            userProperty.setPass(userEntity.getPass());
+            userProperty.setPass(osciUserEntity.getPass());
         }
 
         if(withCreatedAndUpdated){
-            userProperty.setCreatedDate(userEntity.getCreated());
-            userProperty.setUpdatedDate(userEntity.getUpdated());
+            userProperty.setCreatedDate(osciUserEntity.getCreated());
+            userProperty.setUpdatedDate(osciUserEntity.getUpdated());
         }
         return userProperty;
     }
 
-    public UserEntity toEntity(boolean updatePassword, boolean updateCreateAndUpdate){
-        return toEntity(new UserEntity(), updatePassword, updateCreateAndUpdate);
+    public OsciUserEntity toEntity(boolean updatePassword, boolean updateCreateAndUpdate){
+        return toEntity(new OsciUserEntity(), updatePassword, updateCreateAndUpdate);
     }
 
-    public UserEntity toEntity(UserEntity user, boolean updatePassword, boolean withUpdate){
+    public OsciUserEntity toEntity(OsciUserEntity user, boolean updatePassword, boolean withUpdate){
         baseEntity(user);
 
         user.setFirstName(getFirstName());

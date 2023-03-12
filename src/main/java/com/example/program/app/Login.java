@@ -1,10 +1,8 @@
 package com.example.program.app;
 
-import com.example.program.app.entity.UserEntity;
 import com.example.program.app.service.SettingService;
 import com.example.program.app.service.UserService;
 import com.example.program.util.StringConfig;
-import com.example.program.util.exception.UnsafeUpdateException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;

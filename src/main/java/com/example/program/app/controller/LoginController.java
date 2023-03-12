@@ -3,7 +3,6 @@ package com.example.program.app.controller;
 import com.example.program.app.App;
 import com.example.program.app.AppManager;
 import com.example.program.app.Login;
-import com.example.program.app.entity.UserEntity;
 import com.example.program.app.property.DeviceService;
 import com.example.program.app.property.UserProperty;
 import com.example.program.app.service.LoginService;

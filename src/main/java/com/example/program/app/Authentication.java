@@ -1,6 +1,6 @@
 package com.example.program.app;
 
-import com.example.program.app.entity.UserEntity;
+import com.example.program.app.entity.OsciUserEntity;
 import com.example.program.app.property.SettingProperty;
 import com.example.program.app.service.SettingService;
 import com.example.program.app.service.UserService;
@@ -284,9 +284,9 @@ class AuthenticationUtil {
 
     private static void initDefaultUser() {
         String login = "admin";
-        UserEntity adminUser = userService.getByLogin(login);
+        OsciUserEntity adminUser = userService.getByLogin(login);
         if (adminUser == null) {
-            adminUser = new UserEntity();
+            adminUser = new OsciUserEntity();
             adminUser.setFirstName(StringConfig.getValue("user.firstName"));
             adminUser.setLastName(StringConfig.getValue("user.middleName"));
             adminUser.setMiddleName(StringConfig.getValue("user.lastName"));
@@ -301,7 +301,7 @@ class AuthenticationUtil {
         }
     }
 
-    public static UserEntity getAdminUser(){
+    public static OsciUserEntity getAdminUser(){
         return userService.getUser();
     }
 }
@@ -326,7 +326,7 @@ class DatabaseConnectionPage extends WizardPage {
             //  1-STEP
             if (!AuthenticationUtil.isDatabaseAvailable(ipAddress)) return;
             //  2-STEP
-            UserEntity adminUser = AuthenticationUtil.getAdminUser();
+            OsciUserEntity adminUser = AuthenticationUtil.getAdminUser();
             if (adminUser == null) {
                 AuthenticationData.instance.log(this.getClass(), StringConfig.getValue("auth.user.noExistInLocale"));
                 navTo(1);

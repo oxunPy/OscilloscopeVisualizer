@@ -10,8 +10,8 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
-public class UserEntity extends BaseEntity {
+@Table(name = "osci_user")
+public class OsciUserEntity extends BaseEntity {
 
     private String firstName;
 
