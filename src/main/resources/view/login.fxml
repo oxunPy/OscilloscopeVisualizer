@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #f5f0f0;" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.program.app.controller.LoginController">
+   <children>
+      <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox alignment="TOP_RIGHT" HBox.hgrow="NEVER">
+               <children>
+                  <BorderPane VBox.vgrow="ALWAYS">
+                     <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <VBox AnchorPane.topAnchor="20.0">
+                                 <children>
+                                    <HBox maxWidth="1.7976931348623157E308" spacing="10.0">
+                                       <children>
+                                          <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../img/oscilloscope/oscilloscope.png" />
+                                             </image>
+                                          </ImageView>
+                                          <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <Label maxWidth="1.7976931348623157E308" text="ДОБРО ПОЖАЛОВАТЬ В ОСЦИЛЛОСКОП" HBox.hgrow="ALWAYS" fx:id="lbWelcome">
+                                                   <font>
+                                                      <Font name="Dubai Regular" size="30.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox layoutX="110.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                                       </children>
+                                    </HBox>
+                                    <BorderPane VBox.vgrow="ALWAYS">
+                                       <center>
+                                          <VBox prefWidth="360.0" spacing="10.0" BorderPane.alignment="CENTER">
+                                             <children>
+                                                <HBox alignment="CENTER">
+                                                   <children>
+                                                      <VBox alignment="CENTER" prefHeight="140.0" prefWidth="371.0" spacing="20.0">
+                                                         <children>
+                                                            <HBox alignment="TOP_RIGHT">
+                                                               <children>
+                                                                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="user:" HBox.hgrow="ALWAYS" fx:id="txtUser">
+                                                                     <font>
+                                                                        <Font name="Dubai Regular" size="15.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <TextField maxHeight="40.0" maxWidth="300.0" prefHeight="40.0" prefWidth="300.0" promptText="USERNAME" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox alignment="TOP_RIGHT">
+                                                               <children>
+                                                                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="password:" HBox.hgrow="ALWAYS" fx:id="lblPassword">
+                                                                     <font>
+                                                                        <Font name="Dubai Regular" size="15.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <PasswordField fx:id="txtPassword" maxWidth="300.0" prefHeight="40.0" prefWidth="300.0" promptText="PASSWORD" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="106.0" prefHeight="20.0" prefWidth="360.0" spacing="10.0" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </center>
+                                       <top>
+                                          <Separator opacity="0.0" orientation="VERTICAL" prefHeight="50.0" BorderPane.alignment="CENTER" />
+                                       </top>
+                                    </BorderPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </center>
+                  </BorderPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
