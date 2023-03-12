@@ -1,9 +1,10 @@
 package com.example.program.app;
 
 import com.example.program.app.entity.UserEntity;
-import com.example.program.app.property.SettingProperty;
 import com.example.program.app.service.SettingService;
+import com.example.program.app.service.UserService;
 import com.example.program.util.StringConfig;
+import com.example.program.util.exception.UnsafeUpdateException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -26,9 +27,10 @@ public class Login extends Application {
     private AnchorPane page;
 
     private Screen screen = Screen.getPrimary();
-    private Rectangle2D windows = screen.getVisualBounds();
+    private final Rectangle2D windows = screen.getVisualBounds();
 
-    private SettingService settingsService = new SettingService();
+    private final SettingService settingService = new SettingService();
+    private final UserService userService = new UserService();
     public LoginWindowType currentLoginType = null;
 
     public enum LoginWindowType {
@@ -39,7 +41,9 @@ public class Login extends Application {
     public void start(final Stage stage) {
         try {
             //start login
-
+//            UserEntity user = userService.getUser();
+//            if(user == null) throw new UnsafeUpdateException("User is not exist", this.getClass());
+            show(stage);
         } catch (Exception ex) {
             System.out.println("Login Initialization Error!" + ex);
         }
@@ -51,7 +55,7 @@ public class Login extends Application {
 
             stage.initStyle(StageStyle.DECORATED);
             stage.setResizable(false);
-            page = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/view/login.fxml.fxml")), StringConfig.getPropertiesFromResource());
+            page = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/view/login.fxml")), StringConfig.getPropertiesFromResource());
             this.scene = new Scene(page);
 
             stage.getIcons().addAll(new Image(this.getClass().getResourceAsStream("/img/oscilloscope/oscilloscope.png")));

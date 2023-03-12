@@ -1,6 +1,8 @@
 package com.example.program.util;
 
 
+import com.example.program.app.Launch;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -11,7 +13,7 @@ public class StringConfig {
     public static final String SPACE = " ";
 
     public static ResourceBundle getPropertiesFromResource(Locale locale) {
-        return ResourceBundle.getBundle("i18n.messages", locale);
+        return ResourceBundle.getBundle("i18.messages", locale);
     }
 
     public static ResourceBundle getPropertiesFromResource() {
@@ -42,10 +44,10 @@ public class StringConfig {
     }
 
     public static Locale getAppLocale() {
-//        if (appLocale == null)
-//            if (Launch.properties != null && Launch.properties.has("locale"))
-//                appLocale = getLocale(Launch.properties.getStr("locale"));
-//            else appLocale = getLocale("en");
+        if (appLocale == null)
+            if (Launch.properties != null && Launch.properties.has("locale"))
+                appLocale = getLocale(Launch.properties.getStr("locale"));
+            else appLocale = getLocale("en");
         return appLocale;
     }
 

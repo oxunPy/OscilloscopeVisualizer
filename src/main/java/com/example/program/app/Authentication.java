@@ -203,17 +203,17 @@ class AuthenticationUtil {
 
     public static boolean isDatabaseAvailable(String ipAddress) {
         //  1-STEP
-        AuthenticationData.instance.log(AuthenticationUtil.class, StringConfig.getValue("auth.db.checking"));
+//        AuthenticationData.instance.log(AuthenticationUtil.class, StringConfig.getValue("auth.db.checking"));
         HibernateUtil.buildSessionFactory(ipAddress);
         if (!HibernateUtil.isDatabaseAvailable()) {
-            AuthenticationData.instance.log(AuthenticationUtil.class, StringConfig.getValue("auth.db.failed"));
+//            AuthenticationData.instance.log(AuthenticationUtil.class, StringConfig.getValue("auth.db.failed"));
             return false;
         }
-        AuthenticationData.instance.log(AuthenticationUtil.class, StringConfig.getValue("auth.db.succ"));
+//        AuthenticationData.instance.log(AuthenticationUtil.class, StringConfig.getValue("auth.db.succ"));
 
         //  2-STEP
         if (!Launch.properties.getStr("db-host").equals(ipAddress)) {
-            AuthenticationData.instance.log(AuthenticationUtil.class, StringConfig.getValue("auth.db.saveIP"));
+//            AuthenticationData.instance.log(AuthenticationUtil.class, StringConfig.getValue("auth.db.saveIP"));
             Launch.properties.add("db-host", ipAddress);
             File userFile = new File(System.getProperty("user.dir") + "/app.properties");
             Launch.properties.save(userFile);

@@ -1,5 +1,6 @@
 package com.example.program.app;
 
+import com.example.program.util.StringConfig;
 import com.example.program.util.StringUtil;
 import com.example.program.util.TypedProperties;
 import com.example.program.util.persistence.HibernateUtil;
@@ -57,6 +58,9 @@ public class Launch extends Application {
 
     @Override
     public void start(final Stage stage) throws Exception {
+
+        initProperties();
+
         Launch.stage = stage;
         stage.getIcons().addAll(new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/img/oscilloscope/icon.png"))));
         show(new Stage());
@@ -65,12 +69,12 @@ public class Launch extends Application {
     private void show(final Stage stage) {
         try {
             launchStage = stage;
-            page = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/view/login.fxml")));
+            page = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/view/launch.fxml")), StringConfig.getPropertiesFromResource());
             scene = new Scene(page);
 
-            stage.initStyle(StageStyle.DECORATED);
-            stage.setWidth(800);
-            stage.setHeight(500);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setWidth(500);
+            stage.setHeight(340);
             stage.setResizable(false);
 
             stage.getIcons().addAll(new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/img/oscilloscope/icon.png"))));
@@ -173,6 +177,7 @@ public class Launch extends Application {
                         , prop.getProperty("db-name"))
                 , config.getUsername(), config.getPassword());
         flyway.setLocations("db/migration");
+        flyway.setSqlMigrationPrefix("T");
         flyway.setBaselineOnMigrate(true);
         flyway.setBaselineVersion(MigrationVersion.fromVersion("0"));
         flyway.migrate();

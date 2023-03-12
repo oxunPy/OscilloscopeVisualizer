@@ -3,6 +3,8 @@ package com.example.program.util.persistence;
 import com.example.program.app.Launch;
 import com.example.program.app.entity.DeviceEntity;
 import com.example.program.app.entity.OsciDataEntity;
+import com.example.program.app.entity.SettingEntity;
+import com.example.program.app.entity.UserEntity;
 import com.example.program.util.LogUtil;
 import com.example.program.util.SQLFile;
 import com.example.program.util.StringUtil;
@@ -82,6 +84,8 @@ public class HibernateUtil {
             configuration.addPackage("com.example.program.app.entity");
             configuration.addAnnotatedClass(DeviceEntity.class);
             configuration.addAnnotatedClass(OsciDataEntity.class);
+            configuration.addAnnotatedClass(UserEntity.class);
+            configuration.addAnnotatedClass(SettingEntity.class);
 
             ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(properties).buildServiceRegistry();
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
