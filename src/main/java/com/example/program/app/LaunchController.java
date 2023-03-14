@@ -1,5 +1,7 @@
 package com.example.program.app;
 
+import com.example.program.app.entity.OsciUserEntity;
+import com.example.program.app.service.UserService;
 import com.example.program.common.animation.FadeInLeftTransition;
 import com.example.program.common.animation.FadeInRightTransition;
 import com.example.program.common.animation.FadeInTransition;
@@ -20,15 +22,20 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class LaunchController implements Initializable {
+
+
+    private UserService userService = new UserService();
 
     private enum Result {
         NOT_AVAILABLE_DATABASE,
         USER_NOT_EXISTS,
         TERMINAL_NOT_EXIST,
+
+        AUTH_NOT_SET,
         SUCCESSFULLY
     }
 
@@ -76,13 +83,18 @@ public class LaunchController implements Initializable {
                         }
 
                         // 2-STEP run SQL Functions
-                        HibernateUtil.executeSQLQuery("sql/function.sql", Arrays.asList("getAdminUser"));
+                        HibernateUtil.executeSQLQuery("sql/function.sql", Collections.singletonList("getSecretUser"));
 
                         //  3-STEP
-//                        UserEntity adminUser = AuthenticationUtil.getAdminUser();
-//                        if (adminUser == null) {
-//                            return Result.USER_NOT_EXISTS;
-//                        }
+                        OsciUserEntity adminUser = AuthenticationUtil.getAdminUser();
+                        if (adminUser == null) {
+                            return Result.USER_NOT_EXISTS;
+                        }
+
+                        // 4-STEP
+                        if(!userService.getAuthSet()){
+                            return Result.AUTH_NOT_SET;
+                        }
 
                         //  5-STEP
 //                        AuthenticationData.instance.log(this.getClass(), StringConfig.getValue("auth.terminal.activeInServerAndLocale"));
@@ -106,19 +118,22 @@ public class LaunchController implements Initializable {
                     break;
                 case NOT_AVAILABLE_DATABASE:
                     Launch.scene = new Scene(new AuthenticationWizard(Launch.stage, 0), 400, 300);
-
                     Launch.stage.setScene(Launch.scene);
                     close();
                     Launch.stage.show();
                     break;
                 case USER_NOT_EXISTS:
-                    AuthenticationData.instance.log(this.getClass(), StringConfig.getValue("auth.dealer.noExistInLocale"));
-                    Launch.scene = new Scene(new AuthenticationWizard(Launch.stage, 1), 400, 300);
+                    AuthenticationUtil.initDefaults();
+                    AuthenticationData.instance.log(this.getClass(), StringConfig.getValue("auth.user.noExistInLocale"));
+                    longStart();
+                    break;
 
+                case AUTH_NOT_SET:
+                    AuthenticationData.instance.log(this.getClass(), StringConfig.getValue("auth.notSet"));
+                    Launch.scene = new Scene(new AuthenticationWizard(Launch.stage, 1), 400, 300);
                     Launch.stage.setScene(Launch.scene);
                     Launch.stage.show();
                     close();
-                    break;
                 default:
                     close();
             }

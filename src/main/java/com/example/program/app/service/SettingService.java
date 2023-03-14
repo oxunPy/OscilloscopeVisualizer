@@ -16,7 +16,7 @@ public class SettingService extends BaseService {
         SettingProperty property = null;
         try{
             String hql = "from SettingEntity where id > ?";
-            SettingEntity entity = settingDao.findFirst(hql, new Object[]{});
+            SettingEntity entity = settingDao.findFirst(hql, new Object[]{0});
             property = SettingProperty.newInstance(entity, false);
         }catch(Exception ex){
             log.print(StringConfig.getValue("err.db.setting") + ex.getMessage());
@@ -27,6 +27,10 @@ public class SettingService extends BaseService {
 
 
     public Integer insert(SettingProperty settingProperty){
-        return 0;
+        openCurrentSessionWithTransaction();
+        SettingEntity entity = settingProperty.toEntity(new SettingEntity(), true);
+        settingDao.saveOrUpdate(entity);
+        closeCurrentSessionWithTransaction();
+        return entity.getId();
     }
 }

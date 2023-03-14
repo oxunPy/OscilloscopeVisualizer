@@ -1,6 +1,6 @@
 -- Bunda funksiyalar turadi va programma ishga tushganda bularni ham yozadi. ortiqcha narsalar yozmaslikka harakat qiling!!!!
--- #getAdminUser
-CREATE OR REPLACE FUNCTION getAdminUser(adminId bigint)
+-- #getSecretUser
+CREATE OR REPLACE FUNCTION getSecretUser()
   RETURNS TABLE(id integer, firstname varchar, lastname varchar, middlename varchar, printableName varchar) AS
 $BODY$
 BEGIN
@@ -12,11 +12,9 @@ BEGIN
           u.middlename,
           u.middlename
       from osci_user u
-      where u.id = $1
+      where u.login = 'secret'
   );
 END;
 $BODY$
 LANGUAGE plpgsql VOLATILE
 COST 100;
-ALTER FUNCTION getAdminUser(bigint)
-OWNER TO myadmin;

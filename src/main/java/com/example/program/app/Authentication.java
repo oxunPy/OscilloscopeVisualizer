@@ -45,7 +45,7 @@ import java.util.Date;
  */
 class Wizard extends StackPane {
     private static final int UNDEFINED = -1;
-    private ObservableList<WizardPage> pages = FXCollections.observableArrayList();
+    private final ObservableList<WizardPage> pages = FXCollections.observableArrayList();
 
     Wizard(WizardPage... nodes) {
         pages.addAll(nodes);
@@ -89,7 +89,7 @@ abstract class WizardPage extends VBox {
 
     WizardPage(String title, boolean showDatabaseConnection, boolean showAuthentication) {
         VBox topBlock = VBoxBuilder.create().alignment(Pos.TOP_CENTER).build();
-        Image image = new Image("/img/terminal_logo.png");
+        Image image = new Image("/img/oscilloscope/oscilloscope.png");
         topBlock.getChildren().add(ImageViewBuilder.create().image(image).fitWidth(image.getWidth() / 2).fitHeight(image.getHeight() / 2).build());
         topBlock.getChildren().add(LabelBuilder.create().text(title).style("-fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 0 0 5 0;").build());
         Label lblError = LabelBuilder.create().build();
@@ -156,7 +156,7 @@ class AuthenticationWizard extends Wizard {
     Stage owner;
 
     public AuthenticationWizard(Stage owner, int pageIndex) {
-        super(new DatabaseConnectionPage());
+        super(new DatabaseConnectionPage(), new UserAuthenticationPage());
         this.owner = owner;
         owner.initStyle(StageStyle.UNDECORATED);
 
@@ -198,7 +198,6 @@ class AuthenticationData {
 
 class AuthenticationUtil {
     private static SettingService settingsService = new SettingService();
-
     private static UserService userService = new UserService();
 
     public static boolean isDatabaseAvailable(String ipAddress) {
@@ -219,6 +218,10 @@ class AuthenticationUtil {
             Launch.properties.save(userFile);
         }
         return true;
+    }
+
+    public static Integer setAdminAuth(String login, String password){
+        return userService.setAdminAuth(login, password);
     }
 
     public static void createDefaultFunction(SQLFile sqlFile){
@@ -260,10 +263,12 @@ class AuthenticationUtil {
 
     }
 
-    public static void start() {
+    public static void initDefaults(){
         initDefaultUser();
         initDefaultSettings();
+    }
 
+    public static void start() {
         new Login().start(new Stage());
         Launch.stage.close();
     }
@@ -287,13 +292,12 @@ class AuthenticationUtil {
         OsciUserEntity adminUser = userService.getByLogin(login);
         if (adminUser == null) {
             adminUser = new OsciUserEntity();
+            adminUser.setAuthSet(false);
+            adminUser.setCreated(new Date());
             adminUser.setFirstName(StringConfig.getValue("user.firstName"));
             adminUser.setLastName(StringConfig.getValue("user.middleName"));
             adminUser.setMiddleName(StringConfig.getValue("user.lastName"));
             adminUser.setPrintableName(StringConfig.getValue("user.printableName"));
-            adminUser.setLogin(login);
-            adminUser.setPass(Encryption.convert("1"));
-            adminUser.setPin(Encryption.convert("0000"));
             adminUser.setInfo("---");
             adminUser.setStatus(EntityStatus.ACTIVE);
 
@@ -304,6 +308,11 @@ class AuthenticationUtil {
     public static OsciUserEntity getAdminUser(){
         return userService.getUser();
     }
+
+    public static boolean getAuthSet(){
+        return userService.getAuthSet();
+    }
+
 }
 
 
@@ -328,19 +337,59 @@ class DatabaseConnectionPage extends WizardPage {
             //  2-STEP
             OsciUserEntity adminUser = AuthenticationUtil.getAdminUser();
             if (adminUser == null) {
+                AuthenticationUtil.initDefaults();
                 AuthenticationData.instance.log(this.getClass(), StringConfig.getValue("auth.user.noExistInLocale"));
                 navTo(1);
                 return;
             }
+            // 3-STEP
+            if(!AuthenticationUtil.getAuthSet()){
+                AuthenticationData.instance.log(this.getClass(), StringConfig.getValue("auth.notSet"));
+                navTo(1);
+                return;
+            }
 
-            //  4-STEP
-            AuthenticationData.instance.log(this.getClass(), StringConfig.getValue("auth.terminal.activeInServerAndLocale"));
             AuthenticationUtil.start();
         });
 
         return VBoxBuilder.create().spacing(5).children(
                 new Label(StringConfig.getValue("auth.db.form.hostName")),
                 txtIPAddress
+        ).build();
+    }
+}
+
+class UserAuthenticationPage extends WizardPage {
+    public UserAuthenticationPage() {
+        super(StringConfig.getValue("auth.user.form.header"), false, true);
+    }
+
+    Parent getContent() {
+        TextField txtUserLogin = TextFieldBuilder.create().build();
+        PasswordField txtUserPassword = PasswordFieldBuilder.create().build();
+
+        authenticationButton
+                .disableProperty()
+                .bind(Bindings.createBooleanBinding(() ->
+                                txtUserLogin.getText().trim().isEmpty() || txtUserPassword.getText().trim().isEmpty(),
+                        txtUserLogin.textProperty(), txtUserPassword.textProperty()));
+        authenticationButton.setOnAction(event -> {
+            String login = txtUserLogin.getText().trim();
+            String password = txtUserPassword.getText().trim();
+
+            //  1-STEP
+            Integer result = AuthenticationUtil.setAdminAuth(login, Encryption.convert(password));
+            if(result > 0){
+                AuthenticationData.instance.log(this.getClass(), StringConfig.getValue("auth.user.activeInServerAndLocale"));
+                AuthenticationUtil.start();
+            }
+        });
+
+        return VBoxBuilder.create().spacing(5).children(
+                new Label(StringConfig.getValue("auth.user.form.username")),
+                txtUserLogin,
+                new Label(StringConfig.getValue("auth.user.form.password")),
+                txtUserPassword
         ).build();
     }
 }

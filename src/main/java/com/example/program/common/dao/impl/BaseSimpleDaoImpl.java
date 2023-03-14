@@ -475,6 +475,20 @@ public abstract class BaseSimpleDaoImpl<T> implements BaseDaoI<T> {
         return result;
     }
 
+    public Integer executeSql(String sql, Object[] param){
+//        this.openCurrentSessionwithTransaction();
+
+        Query q = this.getCurrentSession().createSQLQuery(sql);
+
+        if(param != null && param.length > 0){
+            for(int i = 0; i < param.length; i++){
+                q.setParameter(i, param[i]);
+            }
+        }
+        Integer result = q.executeUpdate();
+        return result;
+    }
+
     public Integer executeHql(String hql, Object[] param) {
         //this.openCurrentSessionwithTransaction();
 

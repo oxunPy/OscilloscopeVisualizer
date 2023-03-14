@@ -56,6 +56,8 @@ public interface BaseDaoI<T> {
      */
     public Integer executeHql(String hql);
     public Integer executeSql(String hql);
+
+    public Integer executeSql(String sql, Object[] param);
     public Integer executeHql(String hql, Object[] param);
     public Integer executeHql(String hql, List<Object> param);
 }

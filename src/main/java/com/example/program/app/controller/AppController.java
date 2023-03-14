@@ -13,7 +13,7 @@ public class AppController implements Initializable {
 
     private static AppController instance;
 
-    private SettingService settingService;
+    private final SettingService settingService = new SettingService();
 
     @FXML
     private AnchorPane boxContent;

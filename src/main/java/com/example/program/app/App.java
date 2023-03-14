@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class App extends Application {
     public static Stage stage;
@@ -19,10 +20,10 @@ public class App extends Application {
 
     private static AnchorPane page;
 
-    private Screen screen = Screen.getPrimary();
+    private final Screen screen = Screen.getPrimary();
 
 
-    private Rectangle2D window = screen.getVisualBounds();
+    private final Rectangle2D window = screen.getVisualBounds();
 
 
     @Override
@@ -40,7 +41,7 @@ public class App extends Application {
             stage.setWidth(window.getWidth());
             stage.setHeight(window.getHeight());
 
-            stage.getIcons().add(new Image(App.class.getResourceAsStream("/img/oscilloscope.png")));
+            stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/img/oscilloscope.png"))));
 
             stage.setScene(scene);
             stage.show();

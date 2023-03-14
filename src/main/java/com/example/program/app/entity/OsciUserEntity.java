@@ -25,7 +25,7 @@ public class OsciUserEntity extends BaseEntity {
 
     private String pass;
 
-    private String pin;
-
     private String info;
+
+    private Boolean authSet;
 }
