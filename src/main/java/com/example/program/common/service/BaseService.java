@@ -1,8 +1,10 @@
 package com.example.program.common.service;
 
+import com.example.program.app.entity.DeviceEntity;
 import com.example.program.app.entity.SettingEntity;
 import com.example.program.app.entity.OsciUserEntity;
 import com.example.program.common.dao.BaseDaoI;
+import com.example.program.common.dao.impl.BaseDaoImpl;
 import com.example.program.common.dao.impl.BaseSimpleDaoImpl;
 import com.example.program.util.persistence.HibernateUtil;
 import org.hibernate.Session;
@@ -24,6 +26,14 @@ public class BaseService {
             return BaseService.this.getCurrentSession();
         }
     };
+
+    protected BaseDaoI<DeviceEntity> deviceDao = new BaseSimpleDaoImpl<DeviceEntity>(){
+        @Override
+        public Session getCurrentSession(){
+            return BaseService.this.getCurrentSession();
+        }
+    };
+
     private Session currentSession;
 
     private Transaction currentTransaction;

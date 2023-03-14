@@ -12,7 +12,6 @@ import org.apache.commons.collections4.MapUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class UserService extends BaseService {
     private final LogUtil log = LogUtil.getLog(this.getClass());

@@ -3,6 +3,7 @@ package com.example.program.app.controller;
 import com.example.program.app.service.SettingService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
@@ -19,6 +20,8 @@ public class AppController implements Initializable {
     private AnchorPane boxContent;
     @FXML
     private VBox boxNotes;
+    @FXML
+    private Button btnLogin;
 
     public VBox boxNotes(){
         return boxNotes;

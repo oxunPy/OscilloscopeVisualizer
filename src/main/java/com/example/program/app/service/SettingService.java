@@ -28,7 +28,7 @@ public class SettingService extends BaseService {
 
     public Integer insert(SettingProperty settingProperty){
         openCurrentSessionWithTransaction();
-        SettingEntity entity = settingProperty.toEntity(new SettingEntity(), true);
+        SettingEntity entity = settingProperty.toEntity(new SettingEntity(), false);
         settingDao.saveOrUpdate(entity);
         closeCurrentSessionWithTransaction();
         return entity.getId();

@@ -35,8 +35,8 @@ public class BaseProperty {
 
     private ObjectProperty<EntityStatus> status = new SimpleObjectProperty<>();
 
-    public int getId() {
-        return id.get();
+    public Integer getId() {
+        return id.get() == 0 ? null : id.get();
     }
 
     public IntegerProperty idProperty() {

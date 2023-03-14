@@ -16,7 +16,7 @@ public class LoginService extends BaseService {
     public UserProperty getLoggedUser(String login) {
         openCurrentSession();
         try {
-            String hql = "from UserEntity where login=?";
+            String hql = "from OsciUserEntity where login=?";
             OsciUserEntity entity = userDao.get(hql, new Object[]{login});
             return UserProperty.newInstance(entity, true, true);
         } catch(Exception ex) {
@@ -32,7 +32,7 @@ public class LoginService extends BaseService {
         boolean result = false;
         String encryptedPassword = Encryption.convert(password);
         try {
-            OsciUserEntity entity = userDao.get("from DealerUser where login=? and pass=?", new Object[]{login, encryptedPassword});
+            OsciUserEntity entity = userDao.get("from OsciUserEntity where login=? and pass=?", new Object[]{login, encryptedPassword});
             result = entity != null;
         } catch (Exception ex) {
             log.print(StringConfig.getValue("err.db.login.password") + "\n" + ex);

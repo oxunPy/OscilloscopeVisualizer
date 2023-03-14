@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
@@ -12,6 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import java.net.URL?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #f5f0f0;" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.program.app.controller.LoginController">
    <children>
       <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -33,7 +35,7 @@
                                           </ImageView>
                                           <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                                              <children>
-                                                <Label maxWidth="1.7976931348623157E308" text="ДОБРО ПОЖАЛОВАТЬ В ОСЦИЛЛОСКОП" HBox.hgrow="ALWAYS" fx:id="lbWelcome">
+                                                <Label fx:id="lbWelcome" maxWidth="1.7976931348623157E308" text="ДОБРО ПОЖАЛОВАТЬ В ОСЦИЛЛОСКОП" HBox.hgrow="ALWAYS">
                                                    <font>
                                                       <Font name="Dubai Regular" size="30.0" />
                                                    </font>
@@ -53,17 +55,17 @@
                                                          <children>
                                                             <HBox alignment="TOP_RIGHT">
                                                                <children>
-                                                                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="user:" HBox.hgrow="ALWAYS" fx:id="txtUser">
+                                                                  <Label fx:id="txtUser" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="user:" HBox.hgrow="ALWAYS">
                                                                      <font>
                                                                         <Font name="Dubai Regular" size="15.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <TextField maxHeight="40.0" maxWidth="300.0" prefHeight="40.0" prefWidth="300.0" promptText="USERNAME" />
+                                                                  <TextField maxHeight="40.0" maxWidth="300.0" prefHeight="40.0" prefWidth="300.0" promptText="USERNAME" fx:id="txtLogin"/>
                                                                </children>
                                                             </HBox>
                                                             <HBox alignment="TOP_RIGHT">
                                                                <children>
-                                                                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="password:" HBox.hgrow="ALWAYS" fx:id="lblPassword">
+                                                                  <Label fx:id="lblPassword" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="password:" HBox.hgrow="ALWAYS">
                                                                      <font>
                                                                         <Font name="Dubai Regular" size="15.0" />
                                                                      </font>
@@ -71,7 +73,13 @@
                                                                   <PasswordField fx:id="txtPassword" maxWidth="300.0" prefHeight="40.0" prefWidth="300.0" promptText="PASSWORD" />
                                                                </children>
                                                             </HBox>
-                                                            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="106.0" prefHeight="20.0" prefWidth="360.0" spacing="10.0" />
+                                                            <HBox alignment="BOTTOM_RIGHT" layoutX="10.0"
+                                                                  layoutY="106.0" prefHeight="20.0" prefWidth="360.0"
+                                                                  spacing="10.0">
+                                                               <Button mnemonicParsing="false" prefHeight="26.0"
+                                                                       prefWidth="110.0" text="Login"
+                                                                       styleClass="bt-login" onAction="#login"/>
+                                                            </HBox>
                                                          </children>
                                                       </VBox>
                                                    </children>
@@ -94,4 +102,8 @@
          </children>
       </HBox>
    </children>
+   <stylesheets>
+      <URL value="@../css/default.css"/>
+      <URL value="@../css/login.css"/>
+   </stylesheets>
 </AnchorPane>

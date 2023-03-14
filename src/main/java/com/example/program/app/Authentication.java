@@ -1,14 +1,13 @@
 package com.example.program.app;
 
 import com.example.program.app.entity.OsciUserEntity;
+import com.example.program.app.property.DeviceProperty;
 import com.example.program.app.property.SettingProperty;
+import com.example.program.app.service.DeviceService;
 import com.example.program.app.service.SettingService;
 import com.example.program.app.service.UserService;
 import com.example.program.common.status.EntityStatus;
-import com.example.program.util.Encryption;
-import com.example.program.util.LogUtil;
-import com.example.program.util.SQLFile;
-import com.example.program.util.StringConfig;
+import com.example.program.util.*;
 import com.example.program.util.persistence.HibernateUtil;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -200,6 +199,8 @@ class AuthenticationUtil {
     private static SettingService settingsService = new SettingService();
     private static UserService userService = new UserService();
 
+    private static DeviceService deviceService = new DeviceService();
+
     public static boolean isDatabaseAvailable(String ipAddress) {
         //  1-STEP
 //        AuthenticationData.instance.log(AuthenticationUtil.class, StringConfig.getValue("auth.db.checking"));
@@ -266,6 +267,7 @@ class AuthenticationUtil {
     public static void initDefaults(){
         initDefaultUser();
         initDefaultSettings();
+        initDevice();
     }
 
     public static void start() {
@@ -277,6 +279,7 @@ class AuthenticationUtil {
         SettingProperty setting = settingsService.getApplicationSetting();
         if (setting == null){
             setting = new SettingProperty();
+            setting.setStatus(EntityStatus.ACTIVE);
             setting.setCreatedDate(new Date());
             setting.setTechSupport("csharpoxun@gmail.com");
             setting.setAppName("0SC1LL0SC0PE!");
@@ -284,6 +287,22 @@ class AuthenticationUtil {
             setting.setAuthorContact("+998 91 407-34-38");
             setting.setAuthorName("https://t.me/programmer_anarchy");
             settingsService.insert(setting);
+        }
+    }
+
+    private static void initDevice(){
+        DeviceProperty device = deviceService.getDevice();
+        if(device == null){
+            device = new DeviceProperty();
+            device.setCreatedDate(new Date());
+            device.setStatus(EntityStatus.ACTIVE);
+            device.setHdd(OSUtils.getHDD());
+            device.setCpu(OSUtils.getCPU());
+            device.setMotherboard(OSUtils.getMotherboard());
+            device.setPcOwner(OSUtils.getPCOwner());
+            device.setPcName(OSUtils.getPCName());
+
+            deviceService.insert(device);
         }
     }
 

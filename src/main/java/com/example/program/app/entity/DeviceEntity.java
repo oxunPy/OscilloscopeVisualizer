@@ -14,5 +14,11 @@ import javax.persistence.Table;
 public class DeviceEntity extends BaseEntity {
     private String pcName;
 
-    private String licenseKey;
+    private String pcOwner;
+
+    private String hdd;
+
+    private String cpu;
+
+    private String motherboard;
 }

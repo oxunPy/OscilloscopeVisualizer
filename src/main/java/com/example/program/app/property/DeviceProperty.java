@@ -9,7 +9,14 @@ import java.util.Date;
 public class DeviceProperty extends BaseProperty{
     private StringProperty pcName = new SimpleStringProperty();
 
-    private StringProperty licenseKey = new SimpleStringProperty();
+    private StringProperty pcOwner = new SimpleStringProperty();
+
+    private StringProperty hdd = new SimpleStringProperty();
+
+    private StringProperty cpu = new SimpleStringProperty();
+
+    private StringProperty motherboard = new SimpleStringProperty();
+
 
     public static DeviceProperty newInstance(DeviceEntity entity, boolean withUpdate){
         if(entity == null) return null;
@@ -17,12 +24,29 @@ public class DeviceProperty extends BaseProperty{
         DeviceProperty deviceProperty = new DeviceProperty();
         deviceProperty.populateBase(entity);
         deviceProperty.setPcName(entity.getPcName());
-        deviceProperty.setLicenseKey(entity.getLicenseKey());
+        deviceProperty.setCpu(entity.getCpu());
+        deviceProperty.setHdd(entity.getHdd());
+        deviceProperty.setPcOwner(entity.getPcOwner());
+        deviceProperty.setMotherboard(entity.getMotherboard());
 
         if(withUpdate){
             deviceProperty.setUpdatedDate(new Date());
         }
         return deviceProperty;
+    }
+
+    public DeviceEntity toEntity(boolean withUpdate){
+        return toEntity(new DeviceEntity(), withUpdate);
+    }
+
+    public DeviceEntity toEntity(DeviceEntity entity, boolean withUpdate){
+        baseEntity(entity);
+        entity.setCpu(getCpu());
+        entity.setHdd(getHdd());
+        entity.setMotherboard(getMotherboard());
+        entity.setPcOwner(getPcOwner());
+        entity.setPcName(getPcName());
+        return entity;
     }
 
     public String getPcName() {
@@ -37,15 +61,51 @@ public class DeviceProperty extends BaseProperty{
         this.pcName.set(pcName);
     }
 
-    public String getLicenseKey() {
-        return licenseKey.get();
+    public String getPcOwner() {
+        return pcOwner.get();
     }
 
-    public StringProperty licenseKeyProperty() {
-        return licenseKey;
+    public StringProperty pcOwnerProperty() {
+        return pcOwner;
     }
 
-    public void setLicenseKey(String licenseKey) {
-        this.licenseKey.set(licenseKey);
+    public void setPcOwner(String pcOwner) {
+        this.pcOwner.set(pcOwner);
+    }
+
+    public String getHdd() {
+        return hdd.get();
+    }
+
+    public StringProperty hddProperty() {
+        return hdd;
+    }
+
+    public void setHdd(String hdd) {
+        this.hdd.set(hdd);
+    }
+
+    public String getCpu() {
+        return cpu.get();
+    }
+
+    public StringProperty cpuProperty() {
+        return cpu;
+    }
+
+    public void setCpu(String cpu) {
+        this.cpu.set(cpu);
+    }
+
+    public String getMotherboard() {
+        return motherboard.get();
+    }
+
+    public StringProperty motherboardProperty() {
+        return motherboard;
+    }
+
+    public void setMotherboard(String motherboard) {
+        this.motherboard.set(motherboard);
     }
 }

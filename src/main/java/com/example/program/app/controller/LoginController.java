@@ -3,8 +3,8 @@ package com.example.program.app.controller;
 import com.example.program.app.App;
 import com.example.program.app.AppManager;
 import com.example.program.app.Login;
-import com.example.program.app.property.DeviceService;
 import com.example.program.app.property.UserProperty;
+import com.example.program.app.service.DeviceService;
 import com.example.program.app.service.LoginService;
 import com.example.program.app.service.SettingService;
 import com.example.program.app.service.UserService;
@@ -14,11 +14,13 @@ import com.example.program.util.Dialog;
 import com.example.program.util.Field;
 import com.example.program.util.Message;
 import com.example.program.util.StringConfig;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -44,19 +46,23 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        txtPassword.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.ENTER){
+                login();
+            }
+        });
     }
 
 
     void login(){
 
-        if (!txtLogin.getText().isEmpty()) {
+        if (txtLogin.getText().isEmpty()) {
             Field.errorLogin(txtLogin);
             return;
         }
 
-        if(txtPassword.getText().length() < 4){
-            Message.error("At least 4 numbers!!!");
+        if(txtPassword.getText().isEmpty()){
+//            Message.error("At least 4 numbers!!!");
             Field.error(txtPassword, "at least 4 numbers");
             return;
         }
@@ -82,7 +88,6 @@ public class LoginController implements Initializable {
 
         Stage appStage = new Stage();
         appStage.setOnCloseRequest(event -> {
-//            System.out.println("Close button click");
             Dialog.Answer response = Message.confirm(StringConfig.getValue("application.close.request") + " ?");
 
             if (response == Dialog.Answer.NO) {
@@ -99,4 +104,9 @@ public class LoginController implements Initializable {
         new FadeInLeftTransition(txtUser).play();
         new FadeInLeftTransition(txtPassword).play();
     }
+    @FXML
+    public void login(Event e){
+        login();
+    }
+
 }
