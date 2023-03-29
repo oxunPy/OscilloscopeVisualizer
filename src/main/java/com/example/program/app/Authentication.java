@@ -1,6 +1,7 @@
 package com.example.program.app;
 
 import com.example.program.app.entity.OsciUserEntity;
+import com.example.program.app.entity.OsciUserEntity.UserType;
 import com.example.program.app.property.DeviceProperty;
 import com.example.program.app.property.SettingProperty;
 import com.example.program.app.service.DeviceService;
@@ -312,6 +313,7 @@ class AuthenticationUtil {
         if (adminUser == null) {
             adminUser = new OsciUserEntity();
             adminUser.setAuthSet(false);
+            adminUser.setUserType(UserType.ADMIN);
             adminUser.setCreated(new Date());
             adminUser.setFirstName(StringConfig.getValue("user.firstName"));
             adminUser.setLastName(StringConfig.getValue("user.middleName"));
@@ -325,7 +327,7 @@ class AuthenticationUtil {
     }
 
     public static OsciUserEntity getAdminUser(){
-        return userService.getUser();
+        return userService.getAdminUser();
     }
 
     public static boolean getAuthSet(){

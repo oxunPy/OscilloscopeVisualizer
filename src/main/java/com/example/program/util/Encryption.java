@@ -33,12 +33,5 @@ public class Encryption {
     }
 
     public static void main(String[] args) {
-        Pattern PIN4_NUMBER_PATTERN = Pattern.compile("^\\d{1,5}$");
-        System.out.println(PIN4_NUMBER_PATTERN.matcher("2323").matches());
-        System.out.println(PIN4_NUMBER_PATTERN.matcher("20323").matches());
-        System.out.println(PIN4_NUMBER_PATTERN.matcher("2f23").matches());
-        System.out.println(PIN4_NUMBER_PATTERN.matcher("032").matches());
-        System.out.println(PIN4_NUMBER_PATTERN.matcher("23d9").matches());
-        System.out.println(PIN4_NUMBER_PATTERN.matcher("2009").matches());
     }
 }

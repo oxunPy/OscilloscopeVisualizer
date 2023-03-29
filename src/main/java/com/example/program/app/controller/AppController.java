@@ -54,7 +54,7 @@ public class AppController implements Initializable {
                 .welcomeScreen(new SettingController())
                 .build();
 
-        navigationScreen.startScreen(new NavigationScreen.Dansho(SettingController.class, new Bundle()));
+        navigationScreen.startScreen(new NavigationScreen.Dansho(MainController.class, new Bundle()));
     }
 
     @FXML

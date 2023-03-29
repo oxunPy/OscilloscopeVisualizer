@@ -22,6 +22,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
@@ -83,7 +84,7 @@ public class LaunchController implements Initializable {
                         }
 
                         // 2-STEP run SQL Functions
-                        HibernateUtil.executeSQLQuery("sql/function.sql", Collections.singletonList("getSecretUser"));
+                        HibernateUtil.executeSQLQuery("sql/function.sql", Arrays.asList("getSecretUser", "insertSecretUser") );
 
                         //  3-STEP
                         OsciUserEntity adminUser = AuthenticationUtil.getAdminUser();

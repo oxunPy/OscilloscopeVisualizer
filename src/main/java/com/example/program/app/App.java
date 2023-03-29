@@ -41,7 +41,7 @@ public class App extends Application {
             stage.setWidth(window.getWidth());
             stage.setHeight(window.getHeight());
 
-            stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/img/oscilloscope/oscilloscope.png"))));
+            stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/img/oscilloscope/icon.png"))));
 
             stage.setScene(scene);
             stage.show();

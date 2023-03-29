@@ -1,6 +1,7 @@
 package com.example.program.app.service;
 
 import com.example.program.app.entity.OsciUserEntity;
+import com.example.program.app.entity.OsciUserEntity.UserType;
 import com.example.program.app.property.UserProperty;
 import com.example.program.common.service.BaseService;
 import com.example.program.common.status.EntityStatus;
@@ -32,8 +33,8 @@ public class UserService extends BaseService {
         return entity;
     }
 
-    public OsciUserEntity getUser(){
-        List<OsciUserEntity> entities = list();
+    public OsciUserEntity getAdminUser(){
+        List<OsciUserEntity> entities = list(UserType.ADMIN);
         if(entities.size() == 0) return null;
         if(entities.size() == 1) return entities.get(0);
         throw new UnsafeUpdateException("Only one adminUser must be active.", this.getClass());
@@ -53,12 +54,12 @@ public class UserService extends BaseService {
         return result;
     }
 
-    public List<OsciUserEntity> list(){
+    public List<OsciUserEntity> list(UserType type){
         openCurrentSession();
 
         List<OsciUserEntity> entities = new ArrayList<>();
         try{
-            entities = userDao.find("from OsciUserEntity where status=? ORDER BY id", new Object[]{EntityStatus.ACTIVE});
+            entities = userDao.find("from OsciUserEntity where status=? and userType = ? ORDER BY id", new Object[]{EntityStatus.ACTIVE, type});
         } catch(Exception ex){
             log.print(StringConfig.getValue("err.db.list") + "\n" + ex);
         }

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 @Getter
@@ -12,6 +14,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "osci_user")
 public class OsciUserEntity extends BaseEntity {
+
+    public enum UserType{
+        ADMIN,
+        SECRET,
+        SIMPLE,
+    }
+
+
 
     private String firstName;
 
@@ -28,4 +38,7 @@ public class OsciUserEntity extends BaseEntity {
     private String info;
 
     private Boolean authSet;
+
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 }

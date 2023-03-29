@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<?import javafx.scene.layout.HBox?>
+<fx:root type="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="614.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+       <HBox AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" fx:id="hbChart">
+<!--           <LineChart title="Hantek6022BE" fx:id="lnChartHantek" style="-fx-font-weight: bold;" HBox.hgrow="ALWAYS">
+               <xAxis>
+                   <NumberAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                   <NumberAxis side="LEFT" />
+               </yAxis>
+               <cursor>
+                   <Cursor fx:constant="W_RESIZE" />
+               </cursor>
+           </LineChart>-->
+       </HBox>
+   </children>
+</fx:root>

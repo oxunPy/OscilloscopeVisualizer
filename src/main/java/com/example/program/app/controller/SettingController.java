@@ -17,7 +17,8 @@ public class SettingController extends NavigationScreen.Screen {
             fxml.load();
         } catch (IOException ex) {
             Message.error(StringConfig.getValue("err.ui.load") + "\n" + ex);
-        }    }
+        }
+    }
 
     @Override
     public void onStart(){
