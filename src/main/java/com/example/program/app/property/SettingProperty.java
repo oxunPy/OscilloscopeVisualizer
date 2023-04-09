@@ -1,6 +1,6 @@
 package com.example.program.app.property;
 
-import com.example.program.app.entity.SettingEntity;
+import com.example.program.app.entity.OsciSettingEntity;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -17,7 +17,7 @@ public class SettingProperty extends BaseProperty{
 
     private StringProperty authorContact = new SimpleStringProperty();
 
-    public static SettingProperty newInstance(SettingEntity entity, boolean withUpdate){
+    public static SettingProperty newInstance(OsciSettingEntity entity, boolean withUpdate){
         if(entity == null) return null;
 
         SettingProperty settingProperty = new SettingProperty();
@@ -35,11 +35,11 @@ public class SettingProperty extends BaseProperty{
         return settingProperty;
     }
 
-    public SettingEntity toEntity(boolean withUpdate){
-        return toEntity(new SettingEntity(), withUpdate);
+    public OsciSettingEntity toEntity(boolean withUpdate){
+        return toEntity(new OsciSettingEntity(), withUpdate);
     }
 
-    public SettingEntity toEntity(SettingEntity entity, boolean withUpdate){
+    public OsciSettingEntity toEntity(OsciSettingEntity entity, boolean withUpdate){
         baseEntity(entity);
 
         entity.setVersion(getVersion());

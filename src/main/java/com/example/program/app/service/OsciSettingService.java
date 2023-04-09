@@ -1,12 +1,12 @@
 package com.example.program.app.service;
 
-import com.example.program.app.entity.SettingEntity;
+import com.example.program.app.entity.OsciSettingEntity;
 import com.example.program.app.property.SettingProperty;
 import com.example.program.common.service.BaseService;
 import com.example.program.util.LogUtil;
 import com.example.program.util.StringConfig;
 
-public class SettingService extends BaseService {
+public class OsciSettingService extends BaseService {
 
     private final LogUtil log = LogUtil.getLog(this.getClass());
 
@@ -16,7 +16,7 @@ public class SettingService extends BaseService {
         SettingProperty property = null;
         try{
             String hql = "from SettingEntity where id > ?";
-            SettingEntity entity = settingDao.findFirst(hql, new Object[]{0});
+            OsciSettingEntity entity = settingDao.findFirst(hql, new Object[]{0});
             property = SettingProperty.newInstance(entity, false);
         }catch(Exception ex){
             log.print(StringConfig.getValue("err.db.setting") + ex.getMessage());
@@ -28,7 +28,7 @@ public class SettingService extends BaseService {
 
     public Integer insert(SettingProperty settingProperty){
         openCurrentSessionWithTransaction();
-        SettingEntity entity = settingProperty.toEntity(new SettingEntity(), false);
+        OsciSettingEntity entity = settingProperty.toEntity(new OsciSettingEntity(), false);
         settingDao.saveOrUpdate(entity);
         closeCurrentSessionWithTransaction();
         return entity.getId();

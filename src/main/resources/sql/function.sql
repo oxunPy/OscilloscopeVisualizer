@@ -1,4 +1,3 @@
--- Bunda funksiyalar turadi va programma ishga tushganda bularni ham yozadi. ortiqcha narsalar yozmaslikka harakat qiling!!!!
 -- #getSecretUser
 CREATE OR REPLACE FUNCTION getSecretUser()
   RETURNS TABLE(id integer, firstname varchar, lastname varchar, middlename varchar, printableName varchar) AS

@@ -1,12 +1,12 @@
 package com.example.program.app.service;
 
-import com.example.program.app.entity.DeviceEntity;
+import com.example.program.app.entity.OsciDeviceEntity;
 import com.example.program.app.property.DeviceProperty;
 import com.example.program.common.service.BaseService;
 import com.example.program.util.LogUtil;
 import com.example.program.util.StringConfig;
 
-public class DeviceService extends BaseService {
+public class OsciDeviceService extends BaseService {
 
     private LogUtil log = LogUtil.getLog(this.getClass());
 
@@ -14,7 +14,7 @@ public class DeviceService extends BaseService {
         openCurrentSession();
         try{
             String hql = "from DeviceEntity where 1=1";
-            DeviceEntity entity = deviceDao.get(hql, new Object[]{});
+            OsciDeviceEntity entity = deviceDao.get(hql, new Object[]{});
             return DeviceProperty.newInstance(entity, false);
         } catch(Exception ex){
             log.print(StringConfig.getValue("err.db.get"));
@@ -28,7 +28,7 @@ public class DeviceService extends BaseService {
         openCurrentSessionWithTransaction();
         Integer result = 0;
         try{
-            DeviceEntity entity = property.toEntity(false);
+            OsciDeviceEntity entity = property.toEntity(false);
             deviceDao.saveOrUpdate(entity);
             result = entity.getId();
         }catch (Exception ex){

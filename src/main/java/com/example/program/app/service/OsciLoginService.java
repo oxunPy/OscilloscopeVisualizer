@@ -9,7 +9,7 @@ import com.example.program.util.StringConfig;
 
 import java.io.Serializable;
 
-public class LoginService extends BaseService {
+public class OsciLoginService extends BaseService {
 
     private LogUtil log = LogUtil.getLog(this.getClass());
 

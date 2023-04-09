@@ -3,7 +3,7 @@ package com.example.program.app.controller;
 import com.example.program.app.App;
 import com.example.program.app.AppManager;
 import com.example.program.app.Login;
-import com.example.program.app.service.SettingService;
+import com.example.program.app.service.OsciSettingService;
 import com.example.program.common.screen.Bundle;
 import com.example.program.common.screen.NavigationScreen;
 import javafx.fxml.FXML;
@@ -25,11 +25,11 @@ public class AppController implements Initializable {
 
     private AppManager manager = AppManager.getInstance();
 
-    private final SettingService settingService = new SettingService();
+    private final OsciSettingService settingService = new OsciSettingService();
 
-    private NavigationScreen navigationScreen;
+    private static NavigationScreen navigationScreen;
 
-
+    double x, y = 0;
     public NavigationScreen getNavigateScreen(){
         return navigationScreen;
     }

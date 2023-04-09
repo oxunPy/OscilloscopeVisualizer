@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class UserService extends BaseService {
+public class OsciUserService extends BaseService {
     private final LogUtil log = LogUtil.getLog(this.getClass());
 
     public Integer insert(OsciUserEntity osciUserEntity){

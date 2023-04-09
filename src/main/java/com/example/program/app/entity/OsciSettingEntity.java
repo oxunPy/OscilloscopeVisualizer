@@ -10,15 +10,15 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name = "device")
-public class DeviceEntity extends BaseEntity {
-    private String pcName;
+@Table(name = "osci_setting")
+public class OsciSettingEntity extends BaseEntity {
+    private String appName;
 
-    private String pcOwner;
+    private String version;
 
-    private String hdd;
+    private String techSupport;
 
-    private String cpu;
+    private String authorName;
 
-    private String motherboard;
+    private String authorContact;
 }

@@ -1,7 +1,7 @@
 package com.example.program.app;
 
-import com.example.program.app.service.SettingService;
-import com.example.program.app.service.UserService;
+import com.example.program.app.service.OsciSettingService;
+import com.example.program.app.service.OsciUserService;
 import com.example.program.util.StringConfig;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -27,8 +27,8 @@ public class Login extends Application {
     private Screen screen = Screen.getPrimary();
     private final Rectangle2D windows = screen.getVisualBounds();
 
-    private final SettingService settingService = new SettingService();
-    private final UserService userService = new UserService();
+    private final OsciSettingService settingService = new OsciSettingService();
+    private final OsciUserService userService = new OsciUserService();
     public LoginWindowType currentLoginType = null;
 
     public enum LoginWindowType {

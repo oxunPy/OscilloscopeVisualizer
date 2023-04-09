@@ -4,10 +4,10 @@ import com.example.program.app.App;
 import com.example.program.app.AppManager;
 import com.example.program.app.Login;
 import com.example.program.app.property.UserProperty;
-import com.example.program.app.service.DeviceService;
-import com.example.program.app.service.LoginService;
-import com.example.program.app.service.SettingService;
-import com.example.program.app.service.UserService;
+import com.example.program.app.service.OsciDeviceService;
+import com.example.program.app.service.OsciLoginService;
+import com.example.program.app.service.OsciSettingService;
+import com.example.program.app.service.OsciUserService;
 import com.example.program.common.animation.FadeInLeftTransition;
 import com.example.program.common.animation.FadeInRightTransition;
 import com.example.program.util.Dialog;
@@ -28,10 +28,10 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
-    private LoginService loginService = new LoginService();
-    private SettingService settingService = new SettingService();
-    private UserService userService = new UserService();
-    private DeviceService deviceService = new DeviceService();
+    private OsciLoginService osciLoginService = new OsciLoginService();
+    private OsciSettingService settingService = new OsciSettingService();
+    private OsciUserService userService = new OsciUserService();
+    private OsciDeviceService deviceService = new OsciDeviceService();
 
     @FXML
     private Label txtUser;
@@ -70,8 +70,8 @@ public class LoginController implements Initializable {
         String login = txtLogin.getText();
         String password = txtPassword.getText();
 
-        if (loginService.authenticatePassword(login, password)) {
-            UserProperty user = loginService.getLoggedUser(login);
+        if (osciLoginService.authenticatePassword(login, password)) {
+            UserProperty user = osciLoginService.getLoggedUser(login);
             finishLogin(user);
         } else {
             Message.error("Incorrect password, check the values!");

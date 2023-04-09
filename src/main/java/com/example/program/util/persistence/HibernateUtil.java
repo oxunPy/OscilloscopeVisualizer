@@ -1,10 +1,7 @@
 package com.example.program.util.persistence;
 
 import com.example.program.app.Launch;
-import com.example.program.app.entity.DeviceEntity;
-import com.example.program.app.entity.OsciDataEntity;
-import com.example.program.app.entity.SettingEntity;
-import com.example.program.app.entity.OsciUserEntity;
+import com.example.program.app.entity.*;
 import com.example.program.util.LogUtil;
 import com.example.program.util.SQLFile;
 import com.example.program.util.StringUtil;
@@ -82,10 +79,14 @@ public class HibernateUtil {
             Configuration configuration = new Configuration();
             configuration.addProperties(properties);
             configuration.addPackage("com.example.program.app.entity");
-            configuration.addAnnotatedClass(DeviceEntity.class);
-            configuration.addAnnotatedClass(OsciDataEntity.class);
+            configuration.addAnnotatedClass(OsciDeviceEntity.class);
             configuration.addAnnotatedClass(OsciUserEntity.class);
-            configuration.addAnnotatedClass(SettingEntity.class);
+            configuration.addAnnotatedClass(OsciDataEntity.class);
+            configuration.addAnnotatedClass(OsciLanguageEntity.class);
+            configuration.addAnnotatedClass(OsciLogHistory.class);
+            configuration.addAnnotatedClass(OsciFileEntity.class);
+            configuration.addAnnotatedClass(OsciToolEntity.class);
+            configuration.addAnnotatedClass(OsciSettingEntity.class);
 
             ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(properties).buildServiceRegistry();
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);

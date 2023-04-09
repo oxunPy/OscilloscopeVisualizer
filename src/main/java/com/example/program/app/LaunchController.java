@@ -1,7 +1,7 @@
 package com.example.program.app;
 
 import com.example.program.app.entity.OsciUserEntity;
-import com.example.program.app.service.UserService;
+import com.example.program.app.service.OsciUserService;
 import com.example.program.common.animation.FadeInLeftTransition;
 import com.example.program.common.animation.FadeInRightTransition;
 import com.example.program.common.animation.FadeInTransition;
@@ -23,13 +23,12 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class LaunchController implements Initializable {
 
 
-    private UserService userService = new UserService();
+    private OsciUserService userService = new OsciUserService();
 
     private enum Result {
         NOT_AVAILABLE_DATABASE,

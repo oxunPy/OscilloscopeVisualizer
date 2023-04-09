@@ -23,6 +23,7 @@
 .box {
     -fx-background-color: #fff;
     /*-fx-border-color: #2f2f2f;*/
+    -fx-border-insets: 5px 0px 0px 0px;
     -fx-border-width: 0 0.5 0 0;
 }
 

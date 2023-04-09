@@ -4,9 +4,9 @@ import com.example.program.app.entity.OsciUserEntity;
 import com.example.program.app.entity.OsciUserEntity.UserType;
 import com.example.program.app.property.DeviceProperty;
 import com.example.program.app.property.SettingProperty;
-import com.example.program.app.service.DeviceService;
-import com.example.program.app.service.SettingService;
-import com.example.program.app.service.UserService;
+import com.example.program.app.service.OsciDeviceService;
+import com.example.program.app.service.OsciSettingService;
+import com.example.program.app.service.OsciUserService;
 import com.example.program.common.status.EntityStatus;
 import com.example.program.util.*;
 import com.example.program.util.persistence.HibernateUtil;
@@ -197,10 +197,10 @@ class AuthenticationData {
 }
 
 class AuthenticationUtil {
-    private static SettingService settingsService = new SettingService();
-    private static UserService userService = new UserService();
+    private static OsciSettingService settingsService = new OsciSettingService();
+    private static OsciUserService userService = new OsciUserService();
 
-    private static DeviceService deviceService = new DeviceService();
+    private static OsciDeviceService deviceService = new OsciDeviceService();
 
     public static boolean isDatabaseAvailable(String ipAddress) {
         //  1-STEP

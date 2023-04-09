@@ -1446,6 +1446,13 @@ footer-box-cell-label {
 .mini-button {
     -fx-pref-height: 40px;
     -fx-pref-width: 120px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.mini-button:hover{
+    -fx-border-color: rgba(34, 84, 111, 0.58);
+    -fx-border-width: 0px 0px 2px 0px;
 }
 
 .sales-box-text-area {

@@ -1,6 +1,6 @@
 package com.example.program.app.property;
 
-import com.example.program.app.entity.DeviceEntity;
+import com.example.program.app.entity.OsciDeviceEntity;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -18,7 +18,7 @@ public class DeviceProperty extends BaseProperty{
     private StringProperty motherboard = new SimpleStringProperty();
 
 
-    public static DeviceProperty newInstance(DeviceEntity entity, boolean withUpdate){
+    public static DeviceProperty newInstance(OsciDeviceEntity entity, boolean withUpdate){
         if(entity == null) return null;
 
         DeviceProperty deviceProperty = new DeviceProperty();
@@ -35,11 +35,11 @@ public class DeviceProperty extends BaseProperty{
         return deviceProperty;
     }
 
-    public DeviceEntity toEntity(boolean withUpdate){
-        return toEntity(new DeviceEntity(), withUpdate);
+    public OsciDeviceEntity toEntity(boolean withUpdate){
+        return toEntity(new OsciDeviceEntity(), withUpdate);
     }
 
-    public DeviceEntity toEntity(DeviceEntity entity, boolean withUpdate){
+    public OsciDeviceEntity toEntity(OsciDeviceEntity entity, boolean withUpdate){
         baseEntity(entity);
         entity.setCpu(getCpu());
         entity.setHdd(getHdd());
