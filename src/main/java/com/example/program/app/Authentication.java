@@ -287,6 +287,10 @@ class AuthenticationUtil {
             setting.setVersion("OSCILLOSCOPE_1.0");
             setting.setAuthorContact("+998 91 407-34-38");
             setting.setAuthorName("https://t.me/programmer_anarchy");
+            // init default language
+            if(settingsService.hasLanguageByCode("ru")){
+                settingsService.insertDefaultLanguage("ru");
+            }
             settingsService.insert(setting);
         }
     }

@@ -82,7 +82,7 @@ public class LoginController implements Initializable {
     private void finishLogin(UserProperty user) {
         AppManager.Builder builder = new AppManager.Builder();
         builder.user(userService.userProperty(user.getId()))
-                .setting(settingService.getApplicationSetting())
+                .setting(settingService.getApplicationSetting(true))
                 .device(deviceService.getDevice())
                 .build();
 

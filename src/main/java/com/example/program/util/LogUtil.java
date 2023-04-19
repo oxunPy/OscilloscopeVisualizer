@@ -6,9 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
-/**
- * Created by Xurshidbek on 04.12.2017.
- */
 public class LogUtil {
 
     private Class clazz;

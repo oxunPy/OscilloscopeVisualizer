@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
@@ -20,7 +19,6 @@ public class OsciDataEntity extends BaseEntity {
     @JoinColumn(name = "osci_tool_id", insertable = false, updatable = false)
     private OsciToolEntity osciTool;
 
-
     @Column(name = "file_id")
     private Long osciFileId;
     @OneToOne(fetch = FetchType.LAZY)
@@ -32,4 +30,7 @@ public class OsciDataEntity extends BaseEntity {
 
     @Column(columnDefinition = "varchar(255)")
     private String dataName;
+
+    @Column(columnDefinition = "TEXT")
+    private String info;
 }

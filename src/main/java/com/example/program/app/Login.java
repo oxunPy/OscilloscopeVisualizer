@@ -39,8 +39,6 @@ public class Login extends Application {
     public void start(final Stage stage) {
         try {
             //start login
-//            UserEntity user = userService.getUser();
-//            if(user == null) throw new UnsafeUpdateException("User is not exist", this.getClass());
             show(stage);
         } catch (Exception ex) {
             System.out.println("Login Initialization Error!" + ex);

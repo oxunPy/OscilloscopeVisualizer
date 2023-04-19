@@ -7,10 +7,17 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
 
 /**
  * Create dialog windows
@@ -24,6 +31,25 @@ public class Dialog {
     private static Answer answer = Answer.CANCEL;
     private static Button printBtn = null;
     private static Button exit = null;
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class TextObject {
+        private String text;
+        private String style;
+        private String styleClass;
+        private String url;
+
+        public TextObject(String text) {
+            this.text = text;
+        }
+
+        public TextObject(String text, String style) {
+            this.text = text;
+            this.style = style;
+        }
+    }
 
     private static Label icon(String type) {
 
@@ -91,6 +117,32 @@ public class Dialog {
         box(icon(type), text(title, message), actions());
 
         return answer;
+    }
+
+    public static Answer messages(String type, String title, List<TextObject> list){
+        box(icon(type), text(title, list), actions());
+        return answer;
+    }
+
+    private static VBox text(String title, List<TextObject> list) {
+        Label lblTitle = new Label(title);
+        lblTitle.getStyleClass().add("title-dialogs");
+
+        TextFlow tfMessage = new TextFlow();
+        list.forEach(obj -> {
+            Text text = new Text(obj.getText());
+            if(!StringUtil.isNullEmptySpace(obj.getStyle())) text.setStyle(obj.getStyle());
+            if(!StringUtil.isNullEmptySpace(obj.getStyleClass())) text.getStyleClass().add(obj.getStyleClass());
+            if(!StringUtil.isNullEmptySpace(obj.getUrl())){
+                text.setOnMouseClicked(event -> Link.address(obj.getUrl()));
+            }
+            tfMessage.getChildren().add(text);
+        });
+
+        VBox box = new VBox();
+        box.getChildren().addAll(lblTitle, tfMessage);
+        box.getStyleClass().add("box-message");
+        return box;
     }
 
     /**

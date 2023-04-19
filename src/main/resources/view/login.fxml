@@ -67,7 +67,8 @@
                                                                <Button mnemonicParsing="false" onAction="#login" prefHeight="42.0" prefWidth="156.0" style="-fx-border-radius: 15px; -fx-background-radius: 15px; -fx-text-fill: #ffffff; -fx-background-color: #E8503C;" styleClass="bt-login" text="Login">
                                                                   <font>
                                                                      <Font name="Berlin Sans FB" size="21.0" />
-                                                                  </font></Button>
+                                                                  </font>
+                                                               </Button>
                                                             </HBox>
                                                          </children>
                                                       </VBox>

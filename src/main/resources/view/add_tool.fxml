@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import java.net.URL?>
+
+<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0">
+            <HBox alignment="CENTER_LEFT" styleClass="header-box">
+                <Button mnemonicParsing="false" fx:id="btnBack">
+                    <styleClass>
+                        <String fx:value="menus-tela"/>
+                        <String fx:value="menu-back"/>
+                    </styleClass>
+                </Button>
+                <Separator opacity="0"/>
+                <Label fx:id="lblHeader" style="-fx-padding: 0 0 0 10" styleClass="titulo" text="%label.add.model"/>
+            </HBox>
+            <VBox styleClass="invoice-box" VBox.vgrow="ALWAYS">
+                <GridPane fx:id="formScreen" hgap="20.0" vgap="30.0">
+                    <columnConstraints>
+                        <ColumnConstraints/>
+                        <ColumnConstraints/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                    </rowConstraints>
+                    <children>
+                        <!--Accounts-->
+                        <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <children>
+                                <Label text="payment.column.account" fx:id="lblTitleAccount">
+                                    <styleClass>
+                                        <String fx:value="titulo-campos"/>
+                                        <String fx:value="lb-info-requerido"/>
+                                    </styleClass>
+                                </Label>
+
+                                <ComboBox fx:id="cbAccounts" maxWidth="1.7976931348623157E308"
+                                          styleClass="campo-combos"/>
+
+                                <HBox spacing="3.0">
+                                    <children>
+                                        <Label text="label.currentBalance">
+                                            <styleClass>
+                                                <String fx:value="titulo-campos"/>
+                                            </styleClass>
+                                        </Label>
+                                        <Label fx:id="lblAccountBalance"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <!--Clients-->
+                        <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                            <children>
+                                <Label text="label.client" fx:id="lblTitleClient">
+                                    <styleClass>
+                                        <String fx:value="titulo-campos"/>
+                                        <String fx:value="lb-info-requerido"/>
+                                    </styleClass>
+                                </Label>
+
+                                <ComboBox fx:id="cbClient" maxWidth="1.7976931348623157E308" styleClass="campo-combos"/>
+                                <HBox spacing="3.0">
+                                    <children>
+                                        <Label text="label.currentBalance">
+                                            <styleClass>
+                                                <String fx:value="titulo-campos"/>
+                                            </styleClass>
+                                        </Label>
+                                        <Label fx:id="lblClientBalance"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                        <VBox spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <children>
+                                <!--Date-->
+                                <Label text="%label.date" GridPane.columnIndex="1">
+                                    <styleClass>
+                                        <String fx:value="titulo-campos"/>
+                                        <String fx:value="lb-info-requerido"/>
+                                    </styleClass>
+                                </Label>
+                                <DatePicker fx:id="dpDate" styleClass="campo-date-picker" GridPane.columnIndex="1"
+                                            GridPane.rowIndex="1"/>
+                            </children>
+                        </VBox>
+                        <VBox spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <children>
+                                <!--Amount-->
+                                <Label text="label.amount" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                    <styleClass>
+                                        <String fx:value="titulo-campos"/>
+                                        <String fx:value="lb-info-requerido"/>
+                                    </styleClass>
+                                </Label>
+                                <TextField fx:id="txtAmount" styleClass="campo-texto" GridPane.columnIndex="1"
+                                           GridPane.rowIndex="5"/>
+                            </children>
+                        </VBox>
+                        <!--Info-->
+                        <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                            <children>
+                                <Label styleClass="lb-info" text="%label.info"/>
+                                <TextArea fx:id="txtInfo" styleClass="campo-areo" wrapText="true"/>
+                            </children>
+                        </VBox>
+                        <!--Button-->
+                        <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                            <Button contentDisplay="TOP" mnemonicParsing="false" fx:id="btnSave" styleClass="campo-bt"
+                                    text="button.save">
+                                <styleClass>
+                                    <String fx:value="menus-acoes"/>
+                                    <String fx:value="acao-salvar"/>
+                                    <String fx:value="menu-green"/>
+                                </styleClass>
+                            </Button>
+                            <Button contentDisplay="TOP" mnemonicParsing="false" fx:id="btnCancel"
+                                    styleClass="campo-bt"
+                                    text="button.cancel">
+                                <styleClass>
+                                    <String fx:value="menus-acoes"/>
+                                    <String fx:value="acao-cancelar"/>
+                                    <String fx:value="menu-laranja"/>
+                                </styleClass>
+                            </Button>
+                            <Button fx:id="btnDelete" mnemonicParsing="false" styleClass="campo-bt"
+                                    text="button.delete">
+                                <styleClass>
+                                    <String fx:value="menus-acoes"/>
+                                    <String fx:value="acao-remover"/>
+                                    <String fx:value="menu-red"/>
+                                </styleClass>
+                                <tooltip>
+                                    <Tooltip text="Hello this is tooltip"/>
+                                </tooltip>
+                            </Button>
+                        </HBox>
+
+                    </children>
+                </GridPane>
+
+            </VBox>
+        </VBox>
+    </children>
+    <stylesheets>
+        <URL value="@../css/default.css"/>
+        <URL value="@../css/custom.css"/>
+    </stylesheets>
+</fx:root>

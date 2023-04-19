@@ -162,3 +162,12 @@
     -fx-alignment: top-left;
     -fx-padding: 5px;
 }
+
+.link {
+    -fx-font-style: italic;
+}
+.link:hover {
+    -fx-cursor: hand;
+    -fx-fill: #4b73bf;
+    -fx-underline: true;
+}

@@ -1,6 +1,8 @@
 package com.example.program.app.property;
 
 import com.example.program.app.entity.OsciSettingEntity;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -16,6 +18,10 @@ public class SettingProperty extends BaseProperty{
     private StringProperty authorName = new SimpleStringProperty();
 
     private StringProperty authorContact = new SimpleStringProperty();
+
+    private StringProperty languageCode = new SimpleStringProperty();
+
+    private IntegerProperty languageId = new SimpleIntegerProperty();
 
     public static SettingProperty newInstance(OsciSettingEntity entity, boolean withUpdate){
         if(entity == null) return null;
@@ -114,5 +120,29 @@ public class SettingProperty extends BaseProperty{
 
     public void setAuthorContact(String authorContact) {
         this.authorContact.set(authorContact);
+    }
+
+    public String getLanguageCode() {
+        return languageCode.get();
+    }
+
+    public StringProperty languageCodeProperty() {
+        return languageCode;
+    }
+
+    public void setLanguageCode(String languageCode) {
+        this.languageCode.set(languageCode);
+    }
+
+    public int getLanguageId() {
+        return languageId.get();
+    }
+
+    public IntegerProperty languageIdProperty() {
+        return languageId;
+    }
+
+    public void setLanguageId(int languageId) {
+        this.languageId.set(languageId);
     }
 }

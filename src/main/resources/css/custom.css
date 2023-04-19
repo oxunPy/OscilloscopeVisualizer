@@ -206,6 +206,22 @@
     -fx-cursor: hand;
 }
 
+.menus-tela-bigger{
+    -fx-background-color: transparent;
+    -fx-border-color: #f7750a;
+    -fx-border-radius: 50;
+    -fx-border-width: 2;
+    -fx-background-radius: 60;
+    -fx-pref-height: 50px;
+    -fx-pref-width: 50px;
+    -fx-max-height: 50px;
+    -fx-max-width: 50px;
+    -fx-min-height: 50px;
+    -fx-min-width: 50px;
+    -fx-content-display: graphic-only;
+    -fx-cursor: hand;
+}
+
 .menus:hover,
 .menus:selected {
     -fx-background-color: #f7ae0a;
@@ -1404,6 +1420,11 @@ footer-box-cell-label {
     -fx-font-weight: bold;
 }
 
+.simple-info-label{
+    -fx-font-size: 1.1em;
+    -fx-font-family: "Agency FB";
+}
+
 .quantity-total-label {
     -fx-font-size: 1.2em;
     -fx-font-weight: bolder;
@@ -1456,7 +1477,7 @@ footer-box-cell-label {
 }
 
 .sales-box-text-area {
-    -fx-pref-height: 48px;
-    -fx-max-height: 48px;
-    -fx-min-height: 48px;
+    -fx-pref-height: 60px;
+    -fx-max-height: 60px;
+    -fx-min-height: 60px;
 }

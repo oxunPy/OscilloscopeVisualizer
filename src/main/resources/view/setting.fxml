@@ -4,9 +4,9 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -17,8 +17,8 @@
 <fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox spacing="10" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-            <HBox alignment="CENTER_LEFT" styleClass="header-box">
-                <Label style="-fx-padding: 0 0 0 10" styleClass="titulo" text="menu.settings" />
+            <HBox alignment="CENTER" styleClass="header-box">
+                <Label style="-fx-padding: 0 0 0 10" styleClass="titulo" text="%label.setting" />
             </HBox>
             <GridPane hgap="10" VBox.vgrow="ALWAYS">
                 <columnConstraints>
@@ -31,8 +31,6 @@
                     <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                 </columnConstraints>
                 <rowConstraints>
-                    <RowConstraints />
-                    <RowConstraints prefHeight="30.0" />
                     <RowConstraints />
                     <RowConstraints minHeight="10.0" prefHeight="30.0" />
                     <RowConstraints />
@@ -50,42 +48,32 @@
                     <RowConstraints />
                 </rowConstraints>
                 <children>
-                    <Label text="sales.invoice.currency" GridPane.columnIndex="0" GridPane.rowIndex="0" HBox.hgrow="ALWAYS" />
-
+                    <Label text="label.app.name" GridPane.columnIndex="0" HBox.hgrow="ALWAYS" />
                     <VBox GridPane.columnIndex="1">
-                        <ComboBox fx:id="cbSalesCurrency" styleClass="campo-combos-wider" />
+                  <TextField />
                     </VBox>
-                    <Label text="sales.invoice.client" GridPane.columnIndex="0" GridPane.rowIndex="2" HBox.hgrow="ALWAYS" />
-                    <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
-                        <ComboBox fx:id="cbClient" editable="true" styleClass="campo-combos-wider" />
-                    </VBox>
-                    <Label text="sales.allow.zero.balance" GridPane.columnIndex="4" GridPane.rowIndex="4" HBox.hgrow="ALWAYS" />
-                    <VBox GridPane.columnIndex="5" GridPane.rowIndex="4">
-                        <CheckBox fx:id="cbZeroBalance" styleClass="campo-combos-wider" text="" />
-                    </VBox>
+                    <VBox GridPane.columnIndex="5" GridPane.rowIndex="2" />
 
-                    <Label text="Okna Gruppa-Tovari / Postupleniya-Spisaniya" GridPane.columnIndex="0" GridPane.rowIndex="4" HBox.hgrow="ALWAYS" />
+                    <Label text="label.app.version" GridPane.columnIndex="0" GridPane.rowIndex="2" HBox.hgrow="ALWAYS" />
+                    <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField />
+                    </VBox>
+                    <Label text="label.tech.support" GridPane.columnIndex="0" GridPane.rowIndex="4" HBox.hgrow="ALWAYS" />
                     <VBox GridPane.columnIndex="1" GridPane.rowIndex="4">
-                        <ComboBox fx:id="cbDefaultVoucherWindow" editable="true" styleClass="campo-combos-wider" />
+                  <TextField />
                     </VBox>
-                    <Label text="defaultAppWindowOnLaunch" GridPane.columnIndex="0" GridPane.rowIndex="6" HBox.hgrow="ALWAYS" />
+                    <Label text="label.author.name" GridPane.columnIndex="0" GridPane.rowIndex="6" HBox.hgrow="ALWAYS" />
                     <VBox GridPane.columnIndex="1" GridPane.rowIndex="6">
-                        <ComboBox fx:id="cbDefaultAppWindow" editable="true" styleClass="campo-combos-wider" />
+                  <TextField />
                     </VBox>
-                    <Label text="Pin Login / Username-Password Login" GridPane.columnIndex="0" GridPane.rowIndex="8" HBox.hgrow="ALWAYS" />
+                    <Label text="label.author.contact" GridPane.columnIndex="0" GridPane.rowIndex="8" HBox.hgrow="ALWAYS" />
                     <VBox GridPane.columnIndex="1" GridPane.rowIndex="8">
-                        <ComboBox fx:id="cbDefaultLoginWindow" editable="true" styleClass="campo-combos-wider" />
+                  <TextField />
                     </VBox>
-                    <Label text="Add Product Invoice Setting" GridPane.columnIndex="0" GridPane.rowIndex="10" HBox.hgrow="ALWAYS" />
-                    <VBox GridPane.columnIndex="1" GridPane.rowIndex="10">
-                        <ComboBox fx:id="cbDefaultProductBuyAmount" editable="true" styleClass="campo-combos-wider" />
-                    </VBox>
-                    <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="14" />
-                    <Label text="Default Nalichniy Schet" GridPane.columnIndex="4" />
-                    <ComboBox fx:id="cbDefaultCashAccount" editable="true" styleClass="campo-combos-wider" GridPane.columnIndex="5" />
-                    <Label text="Default BezNalichniy Schet" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                    <ComboBox fx:id="cbDefaultCardAccount" editable="true" styleClass="campo-combos-wider" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                    <HBox alignment="TOP_CENTER" GridPane.columnIndex="5" GridPane.rowIndex="13" GridPane.vgrow="ALWAYS">
+                    <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+                    <Label text="label.language" GridPane.columnIndex="4" />
+                    <ComboBox fx:id="cbDefaultCardAccount" editable="true" styleClass="campo-combos-wider" GridPane.columnIndex="5" />
+                    <HBox alignment="TOP_CENTER" GridPane.columnIndex="5" GridPane.rowIndex="11" GridPane.vgrow="ALWAYS">
                         <children>
                             <Button fx:id="btnSave" contentDisplay="TOP" mnemonicParsing="false" styleClass="campo-bt" text="button.save">
                                 <styleClass>
@@ -96,15 +84,12 @@
                             </Button>
                         </children>
                     </HBox>
-                    <HBox GridPane.columnSpan="2" GridPane.rowIndex="1" style = "-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px"/>
-                    <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1" style = "-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px"/>
-                    <HBox GridPane.columnSpan="2" GridPane.rowIndex="3" style = "-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px"/>
-                    <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3" style = "-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px"/>
-                    <HBox GridPane.columnSpan="2" GridPane.rowIndex="5" style = "-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px"/>
-                    <HBox GridPane.columnSpan="2" GridPane.rowIndex="7" style = "-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px"/>
-                    <HBox GridPane.columnSpan="2" GridPane.rowIndex="9" style = "-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px"/>
-                    <HBox GridPane.columnSpan="2" GridPane.rowIndex="11" style = "-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px"/>
-                    <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5" style = "-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px"/>
+                    <HBox style="-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                    <HBox style="-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                    <HBox style="-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                    <HBox style="-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                    <HBox style="-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                    <HBox style="-fx-border-color: #c5d7ec;-fx-border-width: 0px 0px 2px 0px; -fx-max-height: 2px" GridPane.columnSpan="2" GridPane.rowIndex="9" />
                 </children>
                 <opaqueInsets>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

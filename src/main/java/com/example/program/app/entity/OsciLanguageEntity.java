@@ -14,7 +14,7 @@ public class OsciLanguageEntity extends BaseEntity {
 
     private String name;
 
-    private String code;
+    private String code;            // code is the same with flag type file filename
 
     @Column(name = "flag_file_id", nullable = true)
     private Long flagFileId;

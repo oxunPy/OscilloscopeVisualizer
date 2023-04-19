@@ -1,5 +1,7 @@
 package com.example.program.util;
 
+import java.util.List;
+
 /**
  * Message creation from the dialog class
  */
@@ -11,6 +13,10 @@ public class Message {
 
     public static Dialog.Answer info(String message, String title) {
         return Dialog.messages("INFO", title, message);
+    }
+
+    public static Dialog.Answer info(List<Dialog.TextObject> list, String title){
+        return Dialog.messages("INFO", title, list);
     }
 
     public static Dialog.Answer error(String message) {

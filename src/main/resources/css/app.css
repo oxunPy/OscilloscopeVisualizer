@@ -3,7 +3,7 @@
 }
 
 .logo {
-    -fx-image: url("../img/logo-app2.png");
+    -fx-image: url("../img/app-logo.png");
 }
 
 .box-logo {
@@ -113,6 +113,10 @@
 .menu-emprestimo {
     -fx-graphic: url("../img/icon/emprestimo-b.png");
 }
+.menu-file{
+    -fx-graphic: url("../img/icon/file.png")
+}
+
 
 .menu-emprestimo:selected {
     -fx-graphic: url("../img/icon/emprestimo.png");
@@ -177,6 +181,22 @@
     -fx-graphic: url("../img/icon/util-b.png");
 }
 
+.menu-save{
+    -fx-graphic: url("../img/icon/save.png")
+}
+
+.menu-record{
+    -fx-graphic: url("../img/icon/record.png")
+}
+.menu-setting{
+    -fx-graphic: url("../img/icon/settings.png");
+}
+
+.menu-home{
+    -fx-graphic: url("../img/icon/home.png");
+}
+
+
 .menu-utilidade:selected {
     -fx-graphic: url("../img/icon/util.png");
 }
@@ -186,7 +206,7 @@
     /*-fx-padding: 0 0 0 45;*/
     -fx-padding: 0 0 0 0;
     -fx-font-weight: bold;
-    -fx-font-size: 12px;
+    -fx-font-size: 14px;
     -fx-cursor: hand;
 }
 
@@ -194,7 +214,7 @@
     -fx-background-color: #ffffff;
     /*-fx-padding: 0 0 0 45;*/
     -fx-padding: 0 0 0 0;
-    -fx-font-size: 12px;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-cursor: hand;
 }
@@ -239,6 +259,19 @@
     -fx-content-display: right;
     -fx-graphic-text-gap: 10;
     -fx-graphic: url("../img/icon/sair.png");
+}
+
+.menu-info{
+    -fx-text-fill: #7a7a7a;
+    /*-fx-background-color: transparent;*/
+    -fx-cursor: hand;
+    -fx-content-display: right;
+    -fx-graphic-text-gap: 10;
+    -fx-graphic: url("../img/icon/info-2-24.png");
+}
+.menu-info:hover,
+.menu-info:selected {
+    -fx-opacity: 0.7;
 }
 
 .menu-sair:hover,

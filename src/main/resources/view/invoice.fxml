@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox styleClass="header-box">
+                    <Label fx:id="lblHeader" styleClass="titulo" text="%label.oscilloscope.version" />
+                </HBox>
+                <VBox spacing="5" styleClass="invoice-box" VBox.vgrow="ALWAYS">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10" VBox.vgrow="NEVER">
+                            <children>
+
+                                <Label styleClass="filter-content-sub-label" text="%label.period" />
+
+                                <DatePicker fx:id="dpFromDate" maxWidth="200" styleClass="campo-date-picker" />
+
+                                <DatePicker fx:id="dpToDate" maxWidth="200" styleClass="campo-date-picker" />
+
+
+                                <Button fx:id="btnRefresh" disable="true" mnemonicParsing="false">
+                                    <styleClass>
+                                        <String fx:value="menus-tela" />
+                                        <String fx:value="menu-refresh" />
+                                    </styleClass>
+                                </Button>
+
+                                <Separator orientation="VERTICAL" />
+
+                                <Label styleClass="filter-content-sub-label" text="%label.filter" />
+
+
+                                <ComboBox fx:id="cbClient" maxWidth="Infinity" styleClass="campo-combos" />
+
+
+                                <Button fx:id="btnFilter" disable="true" mnemonicParsing="false">
+                                    <styleClass>
+                                        <String fx:value="menus-tela" />
+                                        <String fx:value="menu-filter" />
+                                    </styleClass>
+                                </Button>
+
+                                <Button fx:id="btnClear" disable="true" mnemonicParsing="false">
+                                    <styleClass>
+                                        <String fx:value="menus-tela" />
+                                        <String fx:value="menu-clear" />
+                                    </styleClass>
+                                </Button>
+
+                        <Separator prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                        <Button alignment="TOP_LEFT" graphicTextGap="0.0" mnemonicParsing="false" textOverrun="CENTER_WORD_ELLIPSIS">
+                            <graphic>
+                                <HBox alignment="CENTER_LEFT">
+                                    <children>
+                                        <BorderPane fx:id="barcodeIconPane" prefHeight="35.0" prefWidth="36.0" />
+                                        <VBox alignment="CENTER_LEFT">
+                                            <children>
+                                                <Label maxWidth="1.7976931348623157E308" text="%label.draw.graph">
+                                                    <font>
+                                                        <Font size="12.0" />
+                                                    </font></Label>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                            </graphic>
+                        </Button>
+                            </children>
+                        </HBox>
+
+                        <GridPane hgap="5" VBox.vgrow="ALWAYS">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="35.0" />
+                                <ColumnConstraints percentWidth="65.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints vgrow="ALWAYS" />
+                            </rowConstraints>
+                     <VBox>
+                        <children>
+      
+      
+                                  <TableView fx:id="tbInvoice" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                      <columns>
+                                          <TableColumn fx:id="colDataId" text="invoice.table.number">
+                                              <cellValueFactory>
+                                                  <PropertyValueFactory property="id" />
+                                              </cellValueFactory>
+                                          </TableColumn>
+                                          <TableColumn fx:id="colDataName" text="invoice.table.date">
+                                              <cellValueFactory>
+                                                  <PropertyValueFactory property="date" />
+                                              </cellValueFactory>
+                                          </TableColumn>
+                                          <TableColumn fx:id="colToolName" text="invoice.table.client">
+                                              <cellValueFactory>
+                                                  <PropertyValueFactory property="client" />
+                                              </cellValueFactory>
+                                          </TableColumn>
+                                          <TableColumn fx:id="colDataInfo" text="%label.info">
+                                              <cellValueFactory>
+                                                  <PropertyValueFactory property="info" />
+                                              </cellValueFactory>
+                                          </TableColumn>
+                                      </columns>
+                                  </TableView>
+                                   <HBox alignment="CENTER_RIGHT" spacing="20" styleClass="total-box">
+                                       <children>
+                                           <HBox alignment="CENTER_LEFT" maxHeight="Infinity" spacing="10" HBox.hgrow="ALWAYS">
+                                               <Button fx:id="btnDeleteInvoice" disable="true" mnemonicParsing="false">
+                                                   <styleClass>
+                                                       <String fx:value="menus-tela-bigger" />
+                                                       <String fx:value="menu-excluir" />
+                                                   </styleClass>
+                                               </Button>
+                                           </HBox>
+   
+                                           <Separator orientation="VERTICAL" />
+                                           <VBox>
+                                               <Label alignment="CENTER_RIGHT" minHeight="35" minWidth="100" styleClass="simple-info-label" text="%label.info.campo" />
+                                               <TextArea fx:id="txtInfoArea" minWidth="200" styleClass="sales-box-text-area" HBox.hgrow="ALWAYS"/>
+                                           </VBox>
+                                       </children>
+                                   </HBox>
+                        </children>
+                     </VBox>
+
+                            <VBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <LineChart maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                            </VBox>
+
+                        </GridPane>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </children>
+    <stylesheets>
+        <URL value="@../css/default.css" />
+        <URL value="@../css/custom.css" />
+    </stylesheets>
+</fx:root>

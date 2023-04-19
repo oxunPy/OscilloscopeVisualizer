@@ -24,5 +24,5 @@ public class OsciToolEntity extends BaseEntity {
     private Long imageFileId;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_file_id", insertable = false, updatable = false)
-    private OsciLanguageEntity osciLanguage;
+    private OsciFileEntity osciFileEntity;
 }
