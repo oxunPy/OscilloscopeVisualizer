@@ -288,9 +288,9 @@ class AuthenticationUtil {
             setting.setAuthorContact("+998 91 407-34-38");
             setting.setAuthorName("https://t.me/programmer_anarchy");
             // init default language
-            if(settingsService.hasLanguageByCode("ru")){
-                settingsService.insertDefaultLanguage("ru");
-            }
+//            if(settingsService.hasLanguageByCode("ru")){
+//                settingsService.insertDefaultLanguage("ru");
+//            }
             settingsService.insert(setting);
         }
     }

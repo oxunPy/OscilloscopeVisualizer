@@ -687,7 +687,7 @@
     -fx-font-family: 'Segoe UI', sans-serif;
     /*-fx-text-fill: #555;*/
     -fx-text-fill: -fx-rxr-font-color;
-    -fx-font-weight: 700;
+    -fx-font-weight: 100;
 }
 .table-view-voucher extends .table-view{
     -fx-pref-height: 30;
@@ -704,7 +704,7 @@
     -fx-font-size: 30px;
     -fx-font-family: 'Segoe UI', sans-serif;
     -fx-text-fill: -fx-rxr-font-color;
-    -fx-font-weight: 400;
+    -fx-font-weight: 100;
 }
 
 .table-view *.filler {

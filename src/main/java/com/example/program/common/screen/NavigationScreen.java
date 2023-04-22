@@ -176,7 +176,10 @@ public class NavigationScreen {
         }
 
         public void onScreenResult(int requestCode, int resultCode, Bundle data){
-
+            this.getDansho().setResult(data);
+            this.getDansho().resultCode = resultCode;
+            this.getDansho().requestCode = requestCode;
+            onCreate();
         }
 
         public void startScreenForResult(NavigationScreen.Dansho dansho, int requestCode){
@@ -193,6 +196,10 @@ public class NavigationScreen {
             else{
                 Note.error(StringConfig.getValue("err.ui.load"));
             }
+        }
+
+        public Dansho getDansho(){
+            return dansho;
         }
     }
 
@@ -272,6 +279,10 @@ public class NavigationScreen {
 
         private void currentStart() {
             if (currentScreen != null) currentScreen.onStart();
+        }
+
+        public int getResultCode(){
+            return resultCode;
         }
     }
 }

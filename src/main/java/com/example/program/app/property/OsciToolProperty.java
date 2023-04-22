@@ -1,36 +1,36 @@
 package com.example.program.app.property;
 
+import com.example.program.app.entity.OsciFileEntity;
 import com.example.program.app.entity.OsciToolEntity;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import java.util.Date;
 
 public class OsciToolProperty extends BaseProperty{
     private StringProperty name = new SimpleStringProperty();
 
-    private StringProperty characteristics = new SimpleStringProperty();
+    private StringProperty model = new SimpleStringProperty();
 
     private StringProperty info = new SimpleStringProperty();
 
-    private LongProperty imageFileId = new SimpleLongProperty();
+    private LongProperty imageId = new SimpleLongProperty();
+
+    private ObjectProperty<OsciFileProperty> toolImage = new SimpleObjectProperty<>(new OsciFileProperty(OsciFileEntity.FileType.IMG));
 
 
-    public static OsciToolProperty newInstance(OsciToolEntity entity, boolean withUpdate){
+    public static OsciToolProperty newInstance(OsciToolEntity entity, boolean withImageFile){
         if(entity == null) return null;
 
         OsciToolProperty property = new OsciToolProperty();
         property.populateBase(entity);
 
         property.setName(entity.getName());
-        property.setCharacteristics(entity.getCharacteristics());
-        property.setImageFileId(entity.getImageFileId());
         property.setInfo(entity.getInfo());
+        property.setModel(entity.getModel());
+        property.setImageId(entity.getImageFileId());
 
-        if(withUpdate){
-            property.setUpdatedDate(new Date());
+        if(withImageFile){
+            property.setToolImage(new OsciFileProperty(OsciFileEntity.FileType.IMG));
         }
         return property;
     }
@@ -42,9 +42,9 @@ public class OsciToolProperty extends BaseProperty{
     public OsciToolEntity toEntity(OsciToolEntity entity, boolean withUpdate){
         baseEntity(entity);
         entity.setName(getName());
-        entity.setCharacteristics(getCharacteristics());
-        entity.setImageFileId(getImageFileId());
-        entity.setInfo(entity.getInfo());
+        entity.setInfo(getInfo());
+        entity.setImageFileId(getImageId());
+        entity.setModel(getModel());
 
         if(withUpdate){
             entity.setUpdated(new Date());
@@ -64,18 +64,6 @@ public class OsciToolProperty extends BaseProperty{
         this.name.set(name);
     }
 
-    public String getCharacteristics() {
-        return characteristics.get();
-    }
-
-    public StringProperty characteristicsProperty() {
-        return characteristics;
-    }
-
-    public void setCharacteristics(String characteristics) {
-        this.characteristics.set(characteristics);
-    }
-
     public String getInfo() {
         return info.get();
     }
@@ -88,15 +76,39 @@ public class OsciToolProperty extends BaseProperty{
         this.info.set(info);
     }
 
-    public long getImageFileId() {
-        return imageFileId.get();
+    public OsciFileProperty getToolImage() {
+        return toolImage.get();
     }
 
-    public LongProperty imageFileIdProperty() {
-        return imageFileId;
+    public ObjectProperty<OsciFileProperty> toolImageProperty() {
+        return toolImage;
     }
 
-    public void setImageFileId(Long imageFileId) {
-        this.imageFileId.set(imageFileId == null ? 0 : imageFileId);
+    public void setToolImage(OsciFileProperty toolImage) {
+        this.toolImage.set(toolImage);
+    }
+
+    public String getModel() {
+        return model.get();
+    }
+
+    public StringProperty modelProperty() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model.set(model);
+    }
+
+    public long getImageId() {
+        return imageId.get();
+    }
+
+    public LongProperty imageIdProperty() {
+        return imageId;
+    }
+
+    public void setImageId(Long imageId) {
+        this.imageId.set(imageId == null ? 0 : imageId);
     }
 }

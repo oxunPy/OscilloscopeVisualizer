@@ -15,10 +15,4 @@ public class OsciLanguageEntity extends BaseEntity {
     private String name;
 
     private String code;            // code is the same with flag type file filename
-
-    @Column(name = "flag_file_id", nullable = true)
-    private Long flagFileId;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "flag_file_id", insertable = false, updatable = false)
-    private OsciFileEntity osciFile;
 }

@@ -9,13 +9,11 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "osci_file", uniqueConstraints = {@UniqueConstraint(name = "ID_FILENAME", columnNames = {"id", "file_name"}),
-                                                @UniqueConstraint(name = "ID_FLAGCODE", columnNames = {"id", "flag_code"})})
+@Table(name = "osci_file")
 public class OsciFileEntity extends BaseEntity {
 
     public enum FileType{
         OSCI_DATA,
-        FLAG,
         IMG,
     }
 
@@ -24,15 +22,6 @@ public class OsciFileEntity extends BaseEntity {
 
     @Column(name = "original_name")
     private String originalName;
-
-    @Column(name = "flag_code")
-    private String flagCode;
-
-    @Column(name = "data_size")
-    private Double dataSize;
-
-    @Column(name = "file_path")
-    private String filePath;
 
     @Enumerated(EnumType.STRING)
     private FileType fileType;

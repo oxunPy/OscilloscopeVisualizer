@@ -76,7 +76,7 @@
                     </children>
                 </HBox>
 
-                <TableView fx:id="tbTool" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tbTool" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS" styleClass="table-view-voucher">
                     <columns>
                         <TableColumn fx:id="colId" text="%label.id">
                             <cellValueFactory>
@@ -88,9 +88,14 @@
                                 <PropertyValueFactory property="name" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn fx:id="colCharacteristic" text="%label.characteristic">
+                        <TableColumn fx:id="colImageId" text="%label.id.image">
                             <cellValueFactory>
-                                <PropertyValueFactory property="characteristic" />
+                                <PropertyValueFactory property="imageId" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="colModel" text="%label.model">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="model" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn fx:id="colInfo" text="%label.info.campo">
@@ -98,7 +103,7 @@
                                 <PropertyValueFactory property="info" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn fx:id="colImageFileId" text="%label.id.image">
+                        <TableColumn fx:id="colImageFile" text="%label.image">
                             <cellValueFactory>
                                 <PropertyValueFactory property="imageFileId" />
                             </cellValueFactory>

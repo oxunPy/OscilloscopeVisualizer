@@ -16,8 +16,6 @@ public class OsciToolEntity extends BaseEntity {
 
     private String model;
 
-    private String characteristics;
-
     private String info;
 
     @Column(name = "image_file_id", nullable = true)

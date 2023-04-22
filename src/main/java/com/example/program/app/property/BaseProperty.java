@@ -3,10 +3,7 @@ package com.example.program.app.property;
 import com.example.program.app.entity.base.BaseEntity;
 import com.example.program.common.status.EntityStatus;
 import com.sun.istack.NotNull;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 
 import java.util.Date;
 
@@ -27,24 +24,24 @@ public class BaseProperty {
         return entity;
     }
 
-    private IntegerProperty id = new SimpleIntegerProperty();
+    private LongProperty id = new SimpleLongProperty();
 
     private ObjectProperty<Date> createdDate = new SimpleObjectProperty<>();
 
     private ObjectProperty<Date> updatedDate = new SimpleObjectProperty<>();
 
-    private ObjectProperty<EntityStatus> status = new SimpleObjectProperty<>();
+    private ObjectProperty<EntityStatus> status = new SimpleObjectProperty<>(EntityStatus.ACTIVE);
 
-    public Integer getId() {
+    public Long getId() {
         return id.get() == 0 ? null : id.get();
     }
 
-    public IntegerProperty idProperty() {
+    public LongProperty idProperty() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id.set(id);
+    public void setId(Long id) {
+        this.id.set(id == null ? 0 : id);
     }
 
     public Date getCreatedDate() {

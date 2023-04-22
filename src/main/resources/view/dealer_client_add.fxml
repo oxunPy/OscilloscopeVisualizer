@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox spacing="4" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+              AnchorPane.topAnchor="5.0">
+            <HBox styleClass="header-box">
+                <Label fx:id="lbTitle" styleClass="titulo" text="Title"/>
+            </HBox>
+
+            <GridPane hgap="10.0" vgap="10.0" styleClass="base-content">
+                <columnConstraints>
+                    <ColumnConstraints prefWidth="320"/>
+                    <ColumnConstraints prefWidth="320"/>
+                    <ColumnConstraints/>
+                    <ColumnConstraints prefWidth="200"/>
+                    <ColumnConstraints/>
+                    <ColumnConstraints prefWidth="200"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                </rowConstraints>
+
+                <children>
+                    <!--FirstName-->
+                    <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <children>
+                            <Label text="%label.firstName">
+                                <styleClass>
+                                    <String fx:value="titulo-campos"/>
+                                    <String fx:value="lb-info-requerido"/>
+                                </styleClass>
+                            </Label>
+                            <TextField fx:id="txtFirstName" styleClass="campo-texto"/>
+                        </children>
+                    </VBox>
+                    <!--LastName-->
+                    <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <children>
+                            <Label text="label.lastName">
+                                <styleClass>
+                                    <String fx:value="titulo-campos"/>
+                                    <String fx:value="lb-info-requerido"/>
+                                </styleClass>
+                            </Label>
+                            <TextField fx:id="txtLastName" styleClass="campo-texto"/>
+                        </children>
+                    </VBox>
+                    <!--FathersName-->
+                    <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                        <children>
+                            <Label text="label.patronymic">
+                                <styleClass>
+                                    <String fx:value="titulo-campos"/>
+                                    <String fx:value="lb-info-requerido"/>
+                                </styleClass>
+                            </Label>
+                            <TextField fx:id="txtPatronymic" styleClass="campo-texto"/>
+                        </children>
+                    </VBox>
+                    <!--Passport-->
+                    <HBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                        <children>
+                            <VBox>
+                                <children>
+                                    <Label text="label.passportSeries">
+                                        <styleClass>
+                                            <String fx:value="titulo-campos"/>
+                                            <String fx:value="lb-info-requerido"/>
+                                        </styleClass>
+                                    </Label>
+                                </children>
+                            </VBox>
+                            <VBox>
+                                <children>
+                                    <Label text="label.passportNumber">
+                                        <styleClass>
+                                            <String fx:value="titulo-campos"/>
+                                            <String fx:value="lb-info-requerido"/>
+                                        </styleClass>
+                                    </Label>
+                                </children>
+                            </VBox>
+                        </children>
+                    </HBox>
+                    <!--Phone-->
+                    <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                        <children>
+                            <Label text="dealerClient.phone">
+                                <styleClass>
+                                    <String fx:value="titulo-campos"/>
+                                    <String fx:value="lb-info-requerido"/>
+                                </styleClass>
+                            </Label>
+
+                        </children>
+                    </VBox>
+                    <!--birthDay-->
+                    <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                        <children>
+                            <Label text="label.birthDay">
+                                <styleClass>
+                                    <String fx:value="titulo-campos"/>
+                                    <String fx:value="lb-info"/>
+                                </styleClass>
+                            </Label>
+                            <DatePicker fx:id="dpBirthDay" maxWidth="1.7976931348623157E308"
+                                        styleClass="campo-date-picker"/>
+                        </children>
+                    </VBox>
+                    <!--Name-->
+                    <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="6">
+                        <children>
+                            <Label text="label.printable-name">
+                                <styleClass>
+                                    <String fx:value="titulo-campos"/>
+                                    <String fx:value="lb-info-requerido"/>
+                                </styleClass>
+                            </Label>
+                            <TextField fx:id="txtName" styleClass="campo-texto"/>
+                        </children>
+                    </VBox>
+                    <Separator orientation="VERTICAL" GridPane.columnIndex="2" GridPane.rowIndex="0"
+                               GridPane.rowSpan="8"/>
+                    <!--Account type-->
+                    <VBox spacing="3.0" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                        <children>
+                            <Label text="dealerClient.accountType">
+                                <styleClass>
+                                    <String fx:value="titulo-campos"/>
+                                    <String fx:value="lb-info-requerido"/>
+                                </styleClass>
+                            </Label>
+                            <ComboBox fx:id="cbAccountType" maxHeight="1.7976931348623157E308"
+                                      styleClass="campo-combos"/>
+                        </children>
+                    </VBox>
+                    <!--Opening balance-->
+                    <VBox spacing="3.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                        <children>
+                            <Label text="dealerClient.openingBalance" GridPane.rowIndex="4">
+                                <styleClass>
+                                    <String fx:value="titulo-campos"/>
+                                    <String fx:value="lb-info"/>
+                                </styleClass>
+                            </Label>
+                            <TextField fx:id="txtOpeningBalance" styleClass="campo-texto"/>
+                        </children>
+                    </VBox>
+
+                    <!--Info-->
+                    <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.columnSpan="1" GridPane.rowIndex="7">
+                        <children>
+                            <Label text="%label.info">
+                                <styleClass>
+                                    <String fx:value="titulo-campos"/>
+                                    <String fx:value="lb-info"/>
+                                </styleClass>
+                            </Label>
+                            <TextArea fx:id="txtInfo" styleClass="campo-areo" wrapText="true" maxHeight="100"/>
+                        </children>
+                    </VBox>
+
+                    <VBox spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="7">
+                        <children>
+                            <Label text="label.region">
+                                <styleClass>
+                                    <String fx:value="titulo-campos"/>
+                                    <String fx:value="lb-info-requerido"/>
+                                </styleClass>
+                            </Label>
+                            <TreeView fx:id="tvRegion" prefHeight="370" styleClass="campo-tree"/>
+                        </children>
+                    </VBox>
+                    <VBox spacing="3.0" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.rowSpan="5">
+                        <children>
+                            <Label text="label.type">
+                                <styleClass>
+                                    <String fx:value="titulo-campos"/>
+                                    <String fx:value="lb-info"/>
+                                </styleClass>
+                            </Label>
+                            <TreeView fx:id="tvClientSeries" prefHeight="260" styleClass="campo-tree"/>
+                        </children>
+                    </VBox>
+
+                    <VBox spacing="3.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                        <children>
+                            <!--CompanyName-->
+                            <Label text="label.companyName">
+                                <styleClass>
+                                    <String fx:value="titulo-campos"/>
+                                    <String fx:value="lb-info"/>
+                                </styleClass>
+                            </Label>
+                            <TextField fx:id="txtCompanyName" styleClass="campo-texto"/>
+                            <Separator orientation="HORIZONTAL" prefHeight="10"/>
+
+                            <CheckBox fx:id="chBranch" text="label.branch"/>
+
+                            <CheckBox fx:id="chActive" text="label.active"/>
+
+                            <Label text="dealerClient.status-info" wrapText="true">
+                                <styleClass>
+                                    <String fx:value="titulo-campos"/>
+                                    <String fx:value="lb-info"/>
+                                </styleClass>
+                            </Label>
+
+                        </children>
+                    </VBox>
+
+                    <VBox spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <children>
+                            <VBox fx:id="vbClientType" spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="8">
+                                <children>
+
+                                    <Label text="%dealerClient.type" wrapText="true">
+                                        <styleClass>
+                                            <String fx:value="titulo-campos"/>
+                                        </styleClass>
+                                    </Label>
+
+                                    <CheckBox fx:id="cbClientType" text="%dealerClient.vip"/>
+
+                                </children>
+                            </VBox>
+                            <Separator orientation="HORIZONTAL" prefHeight="10"/>
+                            <VBox fx:id="vbDiscountCard" spacing="3.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="9">
+                                <children>
+
+                                    <Label text="%dealerClient.discountcard" wrapText="true">
+                                        <styleClass>
+                                            <String fx:value="titulo-campos"/>
+                                        </styleClass>
+                                    </Label>
+                                    <HBox spacing="3">
+                                        <children>
+                                            <TextField fx:id="txtDiscountCard" styleClass="campo-combos"/>
+                                            <!--<Button fx:id="btnDiscardCheck" text="%label.check"/>-->
+                                            <ProgressIndicator fx:id="piDiscardStatus" prefHeight="30"/>
+                                            <Label fx:id="lbDiscardStatus" text="Success"/>
+                                        </children>
+                                    </HBox>
+
+                                </children>
+                            </VBox>
+                        </children>
+                    </VBox>
+
+                    <!--Button-->
+                    <HBox spacing="10" GridPane.rowIndex="10" GridPane.columnIndex="0">
+                        <Button fx:id="btnSave" contentDisplay="TOP" mnemonicParsing="false" styleClass="campo-bt"
+                                text="%button.save">
+                            <styleClass>
+                                <String fx:value="menus-acoes"/>
+                                <String fx:value="acao-salvar"/>
+                                <String fx:value="menu-green"/>
+                            </styleClass>
+                        </Button>
+                        <Button fx:id="btnCancel" contentDisplay="TOP" mnemonicParsing="false" styleClass="campo-bt"
+                                text="%button.cancel">
+                            <styleClass>
+                                <String fx:value="menus-acoes"/>
+                                <String fx:value="acao-cancelar"/>
+                                <String fx:value="menu-laranja"/>
+                            </styleClass>
+                        </Button>
+                    </HBox>
+                    <Separator GridPane.rowIndex="0" GridPane.columnIndex="4" orientation="VERTICAL" GridPane.rowSpan="8"/>
+                    <VBox visible="false" spacing="3" GridPane.rowIndex="0" GridPane.columnIndex="5" GridPane.rowSpan="5" fx:id="vbQRCode">
+                        <Label text="%label.scan.qr_code" wrapText="true">
+                            <styleClass>
+                                <String fx:value="lb-info"/>
+                            </styleClass>
+                        </Label>
+                        <StackPane>
+                            <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" fx:id="ivQRCode"/>
+                            <Button visible="false" text="%button.needToSynchronize" fx:id="btnOpenSyncPage">
+                                <styleClass>
+                                    <String fx:value="menus-large-acoes"/>
+                                    <String fx:value="menu-laranja"/>
+                                </styleClass>
+                            </Button>
+                        </StackPane>
+                    </VBox>
+                </children>
+            </GridPane>
+
+
+        </VBox>
+    </children>
+    <stylesheets>
+        <URL value="@../css/default.css"/>
+        <URL value="@../css/custom.css"/>
+    </stylesheets>
+</fx:root>

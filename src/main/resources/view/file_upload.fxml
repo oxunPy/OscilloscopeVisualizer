@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox spacing="4" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+            <HBox alignment="CENTER" styleClass="header-box">
+                <Label fx:id="lbTitle" styleClass="titulo" text="Title" />
+            </HBox>
+
+            <HBox alignment="CENTER" spacing="10">
+                <children>
+                    <Separator HBox.hgrow="ALWAYS" />
+                    <Label fx:id="lbDate" styleClass="filter-content-sub-label" text="%label.date" />
+                    <DatePicker fx:id="dpDate" maxWidth="200" styleClass="campo-date-picker" />
+                    <Separator orientation="VERTICAL" />
+                    <ComboBox fx:id="cbTool" maxWidth="200" styleClass="campo-combos-wider" />
+               <Separator HBox.hgrow="ALWAYS" />
+
+                </children>
+            </HBox>
+
+            <GridPane alignment="TOP_CENTER" hgap="10.0" styleClass="base-content" vgap="10.0">
+                <columnConstraints>
+               <ColumnConstraints minWidth="10.0" percentWidth="5.0" prefWidth="100.0" />
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+               <ColumnConstraints hgrow="ALWAYS" />
+                </columnConstraints>
+                <rowConstraints>
+               <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+               <RowConstraints />
+                </rowConstraints>
+
+                <children>
+                    <!--FirstName-->
+                    <VBox spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <children>
+                            <Label text="%label.dataname">
+                                <styleClass>
+                                    <String fx:value="titulo-campos" />
+                                    <String fx:value="lb-info-requerido" />
+                                </styleClass>
+                            </Label>
+                            <TextField fx:id="txtDataName" styleClass="campo-texto" />
+                        </children>
+                    </VBox>
+                    <!--FathersName-->
+                    <VBox spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <children>
+                            <Label text="%label.path">
+                                <styleClass>
+                                    <String fx:value="titulo-campos" />
+                                    <String fx:value="lb-info-requerido" />
+                                </styleClass>
+                            </Label>
+                            <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <TextField fx:id="tfLabelPath" HBox.hgrow="ALWAYS" styleClass="campo-texto"/>
+                            </HBox>
+                        </children>
+                    </VBox>
+                    <!--Name-->
+                    <VBox spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <children>
+                            <Label text="%label.info">
+                                <styleClass>
+                                    <String fx:value="titulo-campos" />
+                                    <String fx:value="lb-info-requerido" />
+                                </styleClass>
+                            </Label>
+                            <TextArea fx:id="txtInfo" maxHeight="100" styleClass="campo-areo" wrapText="true" />
+                        </children>
+                    </VBox>
+
+                    <!--Drag-Drop-->
+                    <VBox alignment="CENTER" GridPane.columnIndex="3" GridPane.rowSpan="6">
+                      <children>
+<!--                         <BorderPane fx:id="dragDropPane" prefHeight="300.0" />-->
+                          <ImageView fx:id="imgDropBox" fitHeight="300" fitWidth="300" preserveRatio="true">
+                              <Image url="@../img/dropbox.png"/>
+                          </ImageView>
+                      </children>
+                    </VBox>
+
+                       <!--Button-->
+                    <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <Button fx:id="btnSave" contentDisplay="TOP" mnemonicParsing="false" styleClass="campo-bt" text="%button.save">
+                            <styleClass>
+                                <String fx:value="menus-acoes" />
+                                <String fx:value="acao-salvar" />
+                                <String fx:value="menu-green" />
+                            </styleClass>
+                        </Button>
+                        <Button fx:id="btnCancel" contentDisplay="TOP" mnemonicParsing="false" styleClass="campo-bt" text="%button.cancel">
+                            <styleClass>
+                                <String fx:value="menus-acoes" />
+                                <String fx:value="acao-cancelar" />
+                                <String fx:value="menu-laranja" />
+                            </styleClass>
+                        </Button>
+                    </HBox>
+               <VBox alignment="TOP_CENTER" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                  <children>
+                           <Button fx:id="btnBrowseFile" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" text="Browse!">
+                               <font>
+                                   <Font name="Berlin Sans FB" size="15.0" />
+                               </font>
+                           </Button>
+                  </children>
+               </VBox>
+                </children>
+            </GridPane>
+
+
+        </VBox>
+    </children>
+    <stylesheets>
+        <URL value="@../css/default.css" />
+        <URL value="@../css/custom.css" />
+    </stylesheets>
+</fx:root>

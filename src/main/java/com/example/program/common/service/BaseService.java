@@ -52,6 +52,13 @@ public class BaseService {
         }
     };
 
+    protected BaseDaoI<OsciFileEntity> osciFileDao = new BaseSimpleDaoImpl<OsciFileEntity>() {
+        @Override
+        public Session getCurrentSession() {
+            return BaseService.this.getCurrentSession();
+        }
+    };
+
     private Session currentSession;
 
     private Transaction currentTransaction;

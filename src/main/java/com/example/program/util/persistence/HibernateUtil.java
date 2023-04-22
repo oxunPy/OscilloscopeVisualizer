@@ -83,7 +83,6 @@ public class HibernateUtil {
             configuration.addAnnotatedClass(OsciUserEntity.class);
             configuration.addAnnotatedClass(OsciDataEntity.class);
             configuration.addAnnotatedClass(OsciLanguageEntity.class);
-            configuration.addAnnotatedClass(OsciLogHistory.class);
             configuration.addAnnotatedClass(OsciFileEntity.class);
             configuration.addAnnotatedClass(OsciToolEntity.class);
             configuration.addAnnotatedClass(OsciSettingEntity.class);

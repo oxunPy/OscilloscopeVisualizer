@@ -2,6 +2,7 @@ package com.example.program.app.controller;
 
 import com.example.program.app.property.OsciDataProperty;
 import com.example.program.app.service.OsciDataService;
+import com.example.program.common.screen.Bundle;
 import com.example.program.common.screen.NavigationScreen;
 import com.example.program.util.*;
 import javafx.beans.property.ListProperty;
@@ -10,10 +11,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 
@@ -31,10 +29,12 @@ public class OsciDataController extends NavigationScreen.Screen {
     private TextField txtSearch;
     @FXML
     private StackPane spData;
+    @FXML
+    private Button btnAdd;
+    @FXML
+    private Button btnRefresh;
 
     private TablePagination<OsciDataProperty> tbData;
-
-    private ListProperty<OsciDataProperty> listData = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     private OsciDataService osciDataService = new OsciDataService();
 
@@ -51,7 +51,15 @@ public class OsciDataController extends NavigationScreen.Screen {
 
     @Override
     public void onStart() {
+        btnAdd.setOnMouseClicked(event -> {
+            NavigationScreen.Dansho dansho = new NavigationScreen.Dansho(this, FileUploadController.class,
+                    Bundle.create());
+            startScreenForResult(dansho, 15);
+        });
 
+        btnRefresh.setOnMouseClicked(event -> {
+            tbData.reload();
+        });
     }
 
     @Override
@@ -67,8 +75,8 @@ public class OsciDataController extends NavigationScreen.Screen {
             protected Map<String, Object> getParam() {
                 Map<String, Object> param = new HashMap<>();
                 param.put("name", txtSearch.getText());
-                param.put("fromDate", dpFromDate.getValue() == null ? DateUtil.parse("1970-01-01", "yyyy-mm-dd") : dpFromDate.getValue());
-                param.put("toDate", dpToDate.getValue() == null ? DateUtil.parse("2100-01-01", "yyyy-mm-dd") : dpToDate.getValue());
+                param.put("fromDate", dpFromDate.getValue() == null ? "1970-01-01" : DateUtil.format(DateUtil.fromLocale(dpFromDate.getValue()), DateUtil.PATTERN2));
+                param.put("toDate", dpToDate.getValue() == null ? "2100-01-01" : DateUtil.format(DateUtil.fromLocale(dpToDate.getValue()), DateUtil.PATTERN2));
                 return param;
             }
 
@@ -96,11 +104,11 @@ public class OsciDataController extends NavigationScreen.Screen {
 
         TableColumn<OsciDataProperty, Long> colToolId = new TableColumn<>(StringConfig.getValue("label.tool.id"));
         colToolId.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getOsciToolId()));
-        colToolId.prefWidthProperty().bind(table.widthProperty().multiply(0.1).subtract(1));
+        colToolId.prefWidthProperty().bind(table.widthProperty().multiply(0.2).subtract(1));
 
         TableColumn<OsciDataProperty, Long> colFileId = new TableColumn<>(StringConfig.getValue("label.file.id"));
         colFileId.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getOsciFileId()));
-        colFileId.prefWidthProperty().bind(table.widthProperty().multiply(0.1).subtract(1));
+        colFileId.prefWidthProperty().bind(table.widthProperty().multiply(0.2).subtract(1));
 
         table.getColumns().addAll(colId, colDataName, colInfo, colToolId, colFileId);
         table.setTableMenuButtonVisible(false);

@@ -2,6 +2,7 @@ package com.example.program.app.property;
 
 import com.example.program.app.entity.OsciDataEntity;
 import com.example.program.app.entity.OsciToolEntity;
+import com.example.program.common.status.EntityStatus;
 import javafx.beans.property.*;
 
 import java.util.Date;
@@ -17,8 +18,17 @@ public class OsciDataProperty extends BaseProperty {
 
     private StringProperty info = new SimpleStringProperty();
 
+    private ObjectProperty<OsciFileProperty> dataFile = new SimpleObjectProperty<>(new OsciFileProperty());
 
-    public OsciDataProperty newInstance(OsciDataEntity entity, boolean withUpdate){
+    public OsciDataProperty(boolean withFile){
+        if(withFile){
+            setDataFile(new OsciFileProperty());
+        }
+    }
+
+    public OsciDataProperty(){}
+
+    public static OsciDataProperty newInstance(OsciDataEntity entity, boolean withUpdate){
         if(entity == null) return null;
 
         OsciDataProperty property = new OsciDataProperty();
@@ -44,7 +54,15 @@ public class OsciDataProperty extends BaseProperty {
 
         populateBase(entity);
         entity.setDate(getDate());
+        entity.setInfo(getInfo());
+        entity.setDataName(getDataName());
+        entity.setOsciToolId(getOsciToolId());
         entity.setOsciFileId(getOsciFileId());
+
+        if(withUpdate){
+            entity.setStatus(EntityStatus.UPDATED);
+            entity.setUpdated(new Date());
+        }
         return entity;
     }
 
@@ -58,8 +76,8 @@ public class OsciDataProperty extends BaseProperty {
         return osciToolId;
     }
 
-    public void setOsciToolId(long osciToolId) {
-        this.osciToolId.set(osciToolId);
+    public void setOsciToolId(Long osciToolId) {
+        this.osciToolId.set(osciToolId == null ? 0 : osciToolId);
     }
 
     public long getOsciFileId() {
@@ -70,8 +88,8 @@ public class OsciDataProperty extends BaseProperty {
         return osciFileId;
     }
 
-    public void setOsciFileId(long osciFileId) {
-        this.osciFileId.set(osciFileId);
+    public void setOsciFileId(Long osciFileId) {
+        this.osciFileId.set(osciFileId == null ? 0 : osciFileId);
     }
 
     public Date getDate() {
@@ -108,5 +126,18 @@ public class OsciDataProperty extends BaseProperty {
 
     public void setInfo(String info) {
         this.info.set(info);
+    }
+
+
+    public OsciFileProperty getDataFile() {
+        return dataFile.get();
+    }
+
+    public ObjectProperty<OsciFileProperty> dataFileProperty() {
+        return dataFile;
+    }
+
+    public void setDataFile(OsciFileProperty dataFile) {
+        this.dataFile.set(dataFile);
     }
 }

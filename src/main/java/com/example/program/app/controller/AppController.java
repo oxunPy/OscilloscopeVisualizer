@@ -78,7 +78,7 @@ public class AppController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        instance = this;
         navigationScreen = new NavigationScreen.Builder()
                 .content(boxContent)
                 .task(NavigationScreen.SINGLE_TOP_TASK)

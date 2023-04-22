@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox spacing="10" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <HBox alignment="CENTER" styleClass="header-box">
@@ -48,34 +40,34 @@
                     <RowConstraints />
                 </rowConstraints>
                 <children>
-                    <Label text="label.app.name" GridPane.columnIndex="0" HBox.hgrow="ALWAYS" />
+                    <Label text="%label.app.name" GridPane.columnIndex="0" HBox.hgrow="ALWAYS" />
                     <VBox GridPane.columnIndex="1">
-                  <TextField />
+                  <TextField fx:id="tfAppName" />
                     </VBox>
                     <VBox GridPane.columnIndex="5" GridPane.rowIndex="2" />
 
-                    <Label text="label.app.version" GridPane.columnIndex="0" GridPane.rowIndex="2" HBox.hgrow="ALWAYS" />
+                    <Label text="%label.app.version" GridPane.columnIndex="0" GridPane.rowIndex="2" HBox.hgrow="ALWAYS" />
                     <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
-                  <TextField />
+                  <TextField fx:id="tfAppVersion" />
                     </VBox>
-                    <Label text="label.tech.support" GridPane.columnIndex="0" GridPane.rowIndex="4" HBox.hgrow="ALWAYS" />
+                    <Label text="%label.tech.support" GridPane.columnIndex="0" GridPane.rowIndex="4" HBox.hgrow="ALWAYS" />
                     <VBox GridPane.columnIndex="1" GridPane.rowIndex="4">
-                  <TextField />
+                  <TextField fx:id="tfTechSupport" />
                     </VBox>
-                    <Label text="label.author.name" GridPane.columnIndex="0" GridPane.rowIndex="6" HBox.hgrow="ALWAYS" />
+                    <Label text="%label.author.name" GridPane.columnIndex="0" GridPane.rowIndex="6" HBox.hgrow="ALWAYS" />
                     <VBox GridPane.columnIndex="1" GridPane.rowIndex="6">
-                  <TextField />
+                  <TextField fx:id="tfAuthorName" />
                     </VBox>
-                    <Label text="label.author.contact" GridPane.columnIndex="0" GridPane.rowIndex="8" HBox.hgrow="ALWAYS" />
+                    <Label text="%label.author.contact" GridPane.columnIndex="0" GridPane.rowIndex="8" HBox.hgrow="ALWAYS" />
                     <VBox GridPane.columnIndex="1" GridPane.rowIndex="8">
-                  <TextField />
+                  <TextField fx:id="tfAuthorContact" />
                     </VBox>
                     <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="12" />
-                    <Label text="label.language" GridPane.columnIndex="4" />
-                    <ComboBox fx:id="cbDefaultCardAccount" editable="true" styleClass="campo-combos-wider" GridPane.columnIndex="5" />
+                    <Label text="%label.app.language" GridPane.columnIndex="4" />
+                    <ComboBox fx:id="cbDefaultLanguage" editable="false" styleClass="campo-combos-wider" GridPane.columnIndex="5" />
                     <HBox alignment="TOP_CENTER" GridPane.columnIndex="5" GridPane.rowIndex="11" GridPane.vgrow="ALWAYS">
                         <children>
-                            <Button fx:id="btnSave" contentDisplay="TOP" mnemonicParsing="false" styleClass="campo-bt" text="button.save">
+                            <Button fx:id="btnSave" contentDisplay="TOP" mnemonicParsing="false" styleClass="campo-bt" text="%button.save">
                                 <styleClass>
                                     <String fx:value="menus-acoes" />
                                     <String fx:value="acao-salvar" />

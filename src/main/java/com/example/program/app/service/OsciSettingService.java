@@ -7,8 +7,10 @@ import com.example.program.common.service.BaseService;
 import com.example.program.common.status.EntityStatus;
 import com.example.program.util.LogUtil;
 import com.example.program.util.StringConfig;
+import com.example.program.util.exception.UnsafeUpdateException;
 import org.apache.commons.collections.MapUtils;
 import org.h2.engine.Setting;
+import sun.util.resources.et.CalendarData_et;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -40,20 +42,39 @@ public class OsciSettingService extends BaseService {
         String sql = "select os.*, ol.id as languageId, ol.code as languageCode\n" +
                      "from osci_setting os\n" +
                      "left join osci_language ol on os.default_language_id = ol.id\n" +
-                     "where os.status <> 'DELETED' and ol.status <> 'DELETED'";
+                     "where os.status <> 'DELETED'";
         Map map = settingDao.getSQL(sql, new HashMap<>());
         SettingProperty setting = new SettingProperty();
-        setting.setId(MapUtils.getInteger(map, "id"));
+        setting.setId(MapUtils.getLong(map, "id"));
         setting.setStatus(EntityStatus.valueOf(MapUtils.getString(map, "status")));
         setting.setAppName(MapUtils.getString(map, "appname"));
         setting.setAuthorContact(MapUtils.getString(map, "authorcontact"));
         setting.setAuthorName(MapUtils.getString(map, "authorname"));
-        setting.setLanguageId(MapUtils.getInteger(map, "default_language_id"));
+        setting.setLanguageId(MapUtils.getLong(map, "default_language_id"));
         setting.setTechSupport(MapUtils.getString(map, "techsupport"));
         setting.setVersion(MapUtils.getString(map, "version"));
         setting.setLanguageCode(MapUtils.getString(map, "languagecode"));
         closeCurrentSession();
         return setting;
+    }
+
+    public boolean edit(SettingProperty item){
+        openCurrentSessionWithTransaction();
+
+        try{
+            OsciSettingEntity entity = item.toEntity(new OsciSettingEntity(), true);
+            entity.setStatus(EntityStatus.UPDATED);
+            entity.setUpdated(new Date());
+
+            settingDao.update(entity);
+            closeCurrentSessionWithTransaction();
+            return true;
+        }
+        catch(Exception ex){
+            log.print(StringConfig.getValue("err.db.edit") + "\n" + ex);
+            closeCurrentSessionWithTransaction();
+            throw new UnsafeUpdateException(ex.getMessage(), OsciSettingService.class);
+        }
     }
 
 
@@ -63,7 +84,7 @@ public class OsciSettingService extends BaseService {
         return count > 0;
     }
 
-    public Integer insertDefaultLanguage(String code){
+    public Long insertDefaultLanguage(String code){
         openCurrentSessionWithTransaction();
         OsciLanguageEntity entity = new OsciLanguageEntity();
         entity.setCode("ru");
@@ -74,7 +95,7 @@ public class OsciSettingService extends BaseService {
         return entity.getId();
     }
 
-    public Integer insert(SettingProperty settingProperty){
+    public Long insert(SettingProperty settingProperty){
         openCurrentSessionWithTransaction();
         OsciSettingEntity entity = settingProperty.toEntity(new OsciSettingEntity(), false);
         settingDao.saveOrUpdate(entity);

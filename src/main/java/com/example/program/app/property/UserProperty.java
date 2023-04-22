@@ -1,6 +1,8 @@
 package com.example.program.app.property;
 
 import com.example.program.app.entity.OsciUserEntity;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -21,6 +23,8 @@ public class UserProperty extends BaseProperty{
 
     private StringProperty info = new SimpleStringProperty();
 
+    private ObjectProperty<OsciUserEntity.UserType> userType = new SimpleObjectProperty<>();
+
     public static UserProperty newInstance(OsciUserEntity osciUserEntity, boolean withPassword, boolean withCreatedAndUpdated){
         if(osciUserEntity == null) return null;
         UserProperty userProperty = new UserProperty();
@@ -31,6 +35,7 @@ public class UserProperty extends BaseProperty{
         userProperty.setMiddleName(osciUserEntity.getMiddleName());
         userProperty.setInfo(osciUserEntity.getInfo());
         userProperty.setPrintableName(osciUserEntity.getPrintableName());
+        userProperty.setUserType(osciUserEntity.getUserType());
 
         if(withPassword){
             userProperty.setPass(osciUserEntity.getPass());
@@ -57,6 +62,7 @@ public class UserProperty extends BaseProperty{
         user.setLogin(getLogin());
         user.setPass(getPass());
         user.setInfo(getInfo());
+        user.setUserType(getUserType());
 
         if(updatePassword){
             user.setPass(getPass());
@@ -151,5 +157,17 @@ public class UserProperty extends BaseProperty{
 
     public void setInfo(String info) {
         this.info.set(info);
+    }
+
+    public OsciUserEntity.UserType getUserType() {
+        return userType.get();
+    }
+
+    public ObjectProperty<OsciUserEntity.UserType> userTypeProperty() {
+        return userType;
+    }
+
+    public void setUserType(OsciUserEntity.UserType userType) {
+        this.userType.set(userType);
     }
 }

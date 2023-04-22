@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tooltip?>
 <fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox spacing="3.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
@@ -51,6 +52,17 @@
                                 <String fx:value="acao-salvar"/>
                                 <String fx:value="menu-green"/>
                             </styleClass>
+                        </Button>
+                        <Button fx:id="btnDelete" mnemonicParsing="false" styleClass="campo-bt"
+                                text="%label.delete">
+                            <styleClass>
+                                <String fx:value="menus-acoes"/>
+                                <String fx:value="acao-remover"/>
+                                <String fx:value="menu-red"/>
+                            </styleClass>
+                            <tooltip>
+                                <Tooltip text="Hello this is tooltip"/>
+                            </tooltip>
                         </Button>
                     </children>
                 </HBox>

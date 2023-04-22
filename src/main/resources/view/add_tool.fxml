@@ -1,148 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import java.lang.*?>
-<?import java.net.URL?>
+<?import javafx.scene.text.*?>
 
-<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-              AnchorPane.topAnchor="0.0">
+        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <HBox alignment="CENTER_LEFT" styleClass="header-box">
-                <Button mnemonicParsing="false" fx:id="btnBack">
+                <Button fx:id="btnBack" mnemonicParsing="false">
                     <styleClass>
-                        <String fx:value="menus-tela"/>
-                        <String fx:value="menu-back"/>
+                        <String fx:value="menus-tela" />
+                        <String fx:value="menu-back" />
                     </styleClass>
                 </Button>
-                <Separator opacity="0"/>
-                <Label fx:id="lblHeader" style="-fx-padding: 0 0 0 10" styleClass="titulo" text="%label.add.model"/>
+                <Separator opacity="0" />
+                <Label fx:id="lblHeader" style="-fx-padding: 0 0 0 10" styleClass="titulo" text="%label.add.model" />
             </HBox>
             <VBox styleClass="invoice-box" VBox.vgrow="ALWAYS">
-                <GridPane fx:id="formScreen" hgap="20.0" vgap="30.0">
+                <GridPane fx:id="formScreen" hgap="20.0" vgap="20.0">
                     <columnConstraints>
-                        <ColumnConstraints/>
-                        <ColumnConstraints/>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints/>
-                        <RowConstraints/>
-                        <RowConstraints/>
-                        <RowConstraints/>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
                     </rowConstraints>
                     <children>
-                        <!--Accounts-->
                         <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                             <children>
-                                <Label text="payment.column.account" fx:id="lblTitleAccount">
+                                <Label fx:id="lbToolName" text="label.name">
                                     <styleClass>
-                                        <String fx:value="titulo-campos"/>
-                                        <String fx:value="lb-info-requerido"/>
+                                        <String fx:value="titulo-campos" />
+                                        <String fx:value="lb-info-requerido" />
                                     </styleClass>
                                 </Label>
-
-                                <ComboBox fx:id="cbAccounts" maxWidth="1.7976931348623157E308"
-                                          styleClass="campo-combos"/>
-
-                                <HBox spacing="3.0">
-                                    <children>
-                                        <Label text="label.currentBalance">
-                                            <styleClass>
-                                                <String fx:value="titulo-campos"/>
-                                            </styleClass>
-                                        </Label>
-                                        <Label fx:id="lblAccountBalance"/>
-                                    </children>
-                                </HBox>
+                                <TextField fx:id="txtToolName" styleClass="campo-texto" />
                             </children>
                         </VBox>
 
-                        <!--Clients-->
                         <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
                             <children>
-                                <Label text="label.client" fx:id="lblTitleClient">
+                                <Label fx:id="lblModel" text="label.model">
                                     <styleClass>
-                                        <String fx:value="titulo-campos"/>
-                                        <String fx:value="lb-info-requerido"/>
+                                        <String fx:value="titulo-campos" />
+                                        <String fx:value="lb-info-requerido" />
                                     </styleClass>
                                 </Label>
-
-                                <ComboBox fx:id="cbClient" maxWidth="1.7976931348623157E308" styleClass="campo-combos"/>
                                 <HBox spacing="3.0">
                                     <children>
-                                        <Label text="label.currentBalance">
-                                            <styleClass>
-                                                <String fx:value="titulo-campos"/>
-                                            </styleClass>
-                                        </Label>
-                                        <Label fx:id="lblClientBalance"/>
+                                        <TextField fx:id="txtModel" styleClass="campo-texto" HBox.hgrow="ALWAYS" />
                                     </children>
                                 </HBox>
                             </children>
                         </VBox>
                         <VBox spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                             <children>
-                                <!--Date-->
-                                <Label text="%label.date" GridPane.columnIndex="1">
+                                <!--TOOL image-->
+                                <Label text="label.image" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                     <styleClass>
-                                        <String fx:value="titulo-campos"/>
-                                        <String fx:value="lb-info-requerido"/>
+                                        <String fx:value="titulo-campos" />
+                                        <String fx:value="lb-info-requerido" />
                                     </styleClass>
                                 </Label>
-                                <DatePicker fx:id="dpDate" styleClass="campo-date-picker" GridPane.columnIndex="1"
-                                            GridPane.rowIndex="1"/>
-                            </children>
-                        </VBox>
-                        <VBox spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                            <children>
-                                <!--Amount-->
-                                <Label text="label.amount" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                    <styleClass>
-                                        <String fx:value="titulo-campos"/>
-                                        <String fx:value="lb-info-requerido"/>
-                                    </styleClass>
-                                </Label>
-                                <TextField fx:id="txtAmount" styleClass="campo-texto" GridPane.columnIndex="1"
-                                           GridPane.rowIndex="5"/>
+                                <HBox>
+                                    <TextField fx:id="tfDirImage" styleClass="campo-combos-wider" HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="btnBrowseImage" graphicTextGap="0.0" mnemonicParsing="false" textOverrun="CENTER_WORD_ELLIPSIS">
+                                        <graphic>
+                                            <HBox alignment="CENTER_LEFT" spacing="2.0">
+                                                <BorderPane fx:id="browseImagePane" />
+                                                <VBox alignment="CENTER_LEFT">
+                                                    <Label text="Browse">
+                                                        <font>
+                                                            <Font size="11.0" />
+                                                        </font>
+                                                    </Label>
+                                                </VBox>
+                                            </HBox>
+                                        </graphic>
+                                    </Button>
+                                </HBox>
                             </children>
                         </VBox>
                         <!--Info-->
                         <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
                             <children>
-                                <Label styleClass="lb-info" text="%label.info"/>
-                                <TextArea fx:id="txtInfo" styleClass="campo-areo" wrapText="true"/>
+                                <Label styleClass="lb-info" text="%label.info" />
+                                <TextArea fx:id="txtInfo" styleClass="campo-areo" wrapText="true" />
                             </children>
                         </VBox>
                         <!--Button-->
                         <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="3">
-                            <Button contentDisplay="TOP" mnemonicParsing="false" fx:id="btnSave" styleClass="campo-bt"
-                                    text="button.save">
+                            <Button fx:id="btnSave" contentDisplay="TOP" mnemonicParsing="false" styleClass="campo-bt" text="%button.save">
                                 <styleClass>
-                                    <String fx:value="menus-acoes"/>
-                                    <String fx:value="acao-salvar"/>
-                                    <String fx:value="menu-green"/>
+                                    <String fx:value="menus-acoes" />
+                                    <String fx:value="acao-salvar" />
+                                    <String fx:value="menu-green" />
                                 </styleClass>
                             </Button>
-                            <Button contentDisplay="TOP" mnemonicParsing="false" fx:id="btnCancel"
-                                    styleClass="campo-bt"
-                                    text="button.cancel">
+                            <Button fx:id="btnCancel" contentDisplay="TOP" mnemonicParsing="false" styleClass="campo-bt" text="%button.cancel">
                                 <styleClass>
-                                    <String fx:value="menus-acoes"/>
-                                    <String fx:value="acao-cancelar"/>
-                                    <String fx:value="menu-laranja"/>
+                                    <String fx:value="menus-acoes" />
+                                    <String fx:value="acao-cancelar" />
+                                    <String fx:value="menu-laranja" />
                                 </styleClass>
-                            </Button>
-                            <Button fx:id="btnDelete" mnemonicParsing="false" styleClass="campo-bt"
-                                    text="button.delete">
-                                <styleClass>
-                                    <String fx:value="menus-acoes"/>
-                                    <String fx:value="acao-remover"/>
-                                    <String fx:value="menu-red"/>
-                                </styleClass>
-                                <tooltip>
-                                    <Tooltip text="Hello this is tooltip"/>
-                                </tooltip>
                             </Button>
                         </HBox>
 
@@ -153,7 +119,7 @@
         </VBox>
     </children>
     <stylesheets>
-        <URL value="@../css/default.css"/>
-        <URL value="@../css/custom.css"/>
+        <URL value="@../css/default.css" />
+        <URL value="@../css/custom.css" />
     </stylesheets>
 </fx:root>

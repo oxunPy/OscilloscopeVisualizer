@@ -24,9 +24,9 @@ public class OsciDeviceService extends BaseService {
     }
 
 
-    public Integer insert(DeviceProperty property){
+    public Long insert(DeviceProperty property){
         openCurrentSessionWithTransaction();
-        Integer result = 0;
+        Long result = 0L;
         try{
             OsciDeviceEntity entity = property.toEntity(false);
             deviceDao.saveOrUpdate(entity);
