@@ -1,27 +1,219 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import com.jfoenix.controls.JFXColorPicker?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox styleClass="header-box">
+                    <Label fx:id="lblHeader" styleClass="titulo" text="%label.oscilloscope.version"/>
+                </HBox>
+                <VBox spacing="5" styleClass="invoice-box" VBox.vgrow="ALWAYS">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10" VBox.vgrow="NEVER">
+                            <children>
+
+                                <Label styleClass="filter-content-sub-label" text="%label.period"/>
+
+                                <DatePicker fx:id="dpFromDate" maxWidth="200" styleClass="campo-date-picker"/>
+
+                                <DatePicker fx:id="dpToDate" maxWidth="200" styleClass="campo-date-picker"/>
 
 
-<?import javafx.scene.layout.HBox?>
-<fx:root type="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="614.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-       <HBox AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" fx:id="hbChart">
-<!--           <LineChart title="Hantek6022BE" fx:id="lnChartHantek" style="-fx-font-weight: bold;" HBox.hgrow="ALWAYS">
-               <xAxis>
-                   <NumberAxis side="BOTTOM" />
-               </xAxis>
-               <yAxis>
-                   <NumberAxis side="LEFT" />
-               </yAxis>
-               <cursor>
-                   <Cursor fx:constant="W_RESIZE" />
-               </cursor>
-           </LineChart>-->
-       </HBox>
-   </children>
+                                <Separator orientation="VERTICAL"/>
+
+                                <Label styleClass="filter-content-sub-label" text="%label.filter"/>
+
+
+                                <ComboBox fx:id="cbTool" maxWidth="Infinity" styleClass="campo-combos"/>
+
+
+                                <JFXButton fx:id="btnFilter" mnemonicParsing="false">
+                                    <styleClass>
+                                        <String fx:value="menus-tela"/>
+                                        <String fx:value="menu-filter"/>
+                                    </styleClass>
+                                </JFXButton>
+
+                                <JFXButton fx:id="btnClear" mnemonicParsing="false">
+                                    <styleClass>
+                                        <String fx:value="menus-tela"/>
+                                        <String fx:value="menu-clear"/>
+                                    </styleClass>
+                                </JFXButton>
+
+                                <Separator prefWidth="200.0" HBox.hgrow="ALWAYS"/>
+                                <Button alignment="TOP_LEFT" graphicTextGap="0.0" mnemonicParsing="false"
+                                        textOverrun="CENTER_WORD_ELLIPSIS" fx:id="btnDrawLineChart">
+                                    <graphic>
+                                        <HBox alignment="CENTER_LEFT">
+                                            <children>
+                                                <BorderPane fx:id="lineChartIconPane" prefHeight="35.0"
+                                                            prefWidth="36.0"/>
+                                                <VBox alignment="CENTER_LEFT">
+                                                    <children>
+                                                        <Label maxWidth="1.7976931348623157E308"
+                                                               text="%label.draw.graph">
+                                                            <font>
+                                                                <Font size="12.0"/>
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </HBox>
+                                    </graphic>
+                                </Button>
+                                <Separator orientation="VERTICAL"/>
+                                <Button alignment="TOP_LEFT" graphicTextGap="0.0" mnemonicParsing="false"
+                                        textOverrun="CENTER_WORD_ELLIPSIS" fx:id="btnAbsoluteError">
+                                    <graphic>
+                                        <HBox alignment="CENTER_LEFT">
+                                            <children>
+                                                <BorderPane fx:id="absoluteErrorPane" prefHeight="35.0"
+                                                            prefWidth="36.0"/>
+                                                <VBox alignment="CENTER_LEFT">
+                                                    <children>
+                                                        <Label maxWidth="1.7976931348623157E308"
+                                                               text="%label.absolute.error">
+                                                            <font>
+                                                                <Font size="12.0"/>
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </HBox>
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </HBox>
+
+                        <GridPane hgap="5" VBox.vgrow="ALWAYS">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="30.0"/>
+                                <ColumnConstraints percentWidth="70.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints vgrow="ALWAYS"/>
+                            </rowConstraints>
+                            <VBox>
+                                <children>
+
+
+                                    <TableView fx:id="tbData" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                        <columns>
+                                            <TableColumn fx:id="colId" text="%label.id">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="id"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn fx:id="colDataName" text="%label.name">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="dataName"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn fx:id="colDate" text="%label.name"/>
+                                            <TableColumn fx:id="colInfo" text="%label.info">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="info"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn fx:id="colToolId" text="%label.tool.id">
+                                                <cellValueFactory>
+                                                    <PropertyValueFactory property="osciToolId"/>
+                                                </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn fx:id="colFileName" text="%label.file.name"/>
+                                        </columns>
+                                    </TableView>
+                                    <HBox alignment="CENTER_RIGHT" spacing="20" styleClass="total-box">
+                                        <children>
+                                            <HBox alignment="CENTER_LEFT" maxHeight="Infinity" spacing="10"
+                                                  HBox.hgrow="ALWAYS">
+                                                <JFXButton fx:id="btnDelete" mnemonicParsing="false">
+                                                    <styleClass>
+                                                        <String fx:value="menus-tela-bigger"/>
+                                                        <String fx:value="menu-excluir"/>
+                                                    </styleClass>
+                                                </JFXButton>
+                                            </HBox>
+
+                                            <Separator orientation="VERTICAL"/>
+                                            <VBox>
+                                                <Label alignment="CENTER_RIGHT" minHeight="35" minWidth="100"
+                                                       styleClass="simple-info-label" text="%label.info.campo"/>
+                                                <TextArea fx:id="txtInfoArea" minWidth="200"
+                                                          styleClass="sales-box-text-area" HBox.hgrow="ALWAYS"/>
+                                            </VBox>
+                                        </children>
+                                    </HBox>
+                                </children>
+                            </VBox>
+
+                            <VBox GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <LineChart fx:id="lchGraphs" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                    <xAxis>
+                                        <NumberAxis side="BOTTOM" upperBound="1000" tickUnit="50" fx:id="xAxis"/>
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis side="LEFT" lowerBound="-3" upperBound="3" fx:id="yAxis"/>
+                                    </yAxis>
+                                </LineChart>
+                                <HBox alignment="CENTER" spacing="20" styleClass="total-box">
+                                    <children>
+                                        <VBox>
+                                            <Label alignment="CENTER_RIGHT" minHeight="35" minWidth="100"
+                                                   styleClass="simple-info-label" text="%label.graph1"/>
+                                            <HBox alignment="CENTER">
+                                                <JFXCheckBox fx:id="chbGraph1"/>
+                                                <JFXColorPicker minWidth="200" styleClass="sales-box-text-area"
+                                                                HBox.hgrow="ALWAYS" fx:id="cpGraph1"/>
+                                            </HBox>
+                                        </VBox>
+                                        <Separator orientation="VERTICAL"/>
+                                        <VBox>
+                                            <Label alignment="CENTER_RIGHT" minHeight="35" minWidth="100"
+                                                   styleClass="simple-info-label" text="%label.graph2"/>
+                                            <HBox alignment="CENTER">
+                                                <JFXCheckBox fx:id="chbGraph2"/>
+                                                <JFXColorPicker minWidth="200" styleClass="sales-box-text-area"
+                                                                HBox.hgrow="ALWAYS" fx:id="cpGraph2"/>
+                                            </HBox>
+                                        </VBox>
+                                        <Separator orientation="VERTICAL"/>
+                                        <VBox>
+                                            <Label alignment="CENTER_RIGHT" minHeight="35" minWidth="100"
+                                                   styleClass="simple-info-label" text="%label.graph3"/>
+                                            <HBox alignment="CENTER">
+                                                <JFXCheckBox fx:id="chbGraph3"/>
+                                                <JFXColorPicker minWidth="200" styleClass="sales-box-text-area"
+                                                                HBox.hgrow="ALWAYS" fx:id="cpGraph3"/>
+                                            </HBox>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                            </VBox>
+
+                        </GridPane>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </children>
+    <stylesheets>
+        <URL value="@../css/default.css"/>
+        <URL value="@../css/custom.css"/>
+    </stylesheets>
 </fx:root>

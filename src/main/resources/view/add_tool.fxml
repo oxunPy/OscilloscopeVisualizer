@@ -34,7 +34,7 @@
                     <children>
                         <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                             <children>
-                                <Label fx:id="lbToolName" text="label.name">
+                                <Label fx:id="lbToolName" text="%label.name">
                                     <styleClass>
                                         <String fx:value="titulo-campos" />
                                         <String fx:value="lb-info-requerido" />
@@ -46,7 +46,7 @@
 
                         <VBox spacing="3.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
                             <children>
-                                <Label fx:id="lblModel" text="label.model">
+                                <Label fx:id="lblModel" text="%label.model">
                                     <styleClass>
                                         <String fx:value="titulo-campos" />
                                         <String fx:value="lb-info-requerido" />
@@ -62,7 +62,7 @@
                         <VBox spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                             <children>
                                 <!--TOOL image-->
-                                <Label text="label.image" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                <Label text="%label.image" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                     <styleClass>
                                         <String fx:value="titulo-campos" />
                                         <String fx:value="lb-info-requerido" />

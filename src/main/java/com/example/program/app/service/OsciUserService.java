@@ -98,7 +98,7 @@ public class OsciUserService extends BaseService {
         return result;
     }
 
-    public Boolean editAppUser(UserProperty userProperty) {
+    public void editAppUser(UserProperty userProperty) {
         openCurrentSessionWithTransaction();
         try {
             OsciUserEntity entity = userDao.findFirst("from OsciUserEntity where id = ?", new Object[]{userProperty.getId()});
@@ -107,11 +107,8 @@ public class OsciUserService extends BaseService {
                 if (!StringUtils.isEmpty(userProperty.getPass())) entity.setPass(userProperty.getPass());
                 if (!StringUtils.isEmpty(userProperty.getFirstName())) entity.setFirstName(userProperty.getFirstName());
                 if (!StringUtils.isEmpty(userProperty.getLastName())) entity.setLastName(userProperty.getLastName());
-                if (!StringUtils.isEmpty(userProperty.getMiddleName()))
-                    entity.setMiddleName(userProperty.getMiddleName());
-                if (!StringUtils.isEmpty(userProperty.getInfo())) entity.setInfo(userProperty.getInfo());
+                if (!StringUtils.isEmpty(userProperty.getMiddleName())) entity.setMiddleName(userProperty.getMiddleName());
                 userDao.save(entity);
-                return true;
             }
         } catch (Exception ex) {
             log.print(StringConfig.getValue("err.db.get") + " \n" + ex.getMessage());
@@ -119,6 +116,5 @@ public class OsciUserService extends BaseService {
             throw new UnsafeUpdateException(StringConfig.getValue("err.db.edit"), getClass());
         }
         closeCurrentSessionWithTransaction();
-        return false;
     }
 }

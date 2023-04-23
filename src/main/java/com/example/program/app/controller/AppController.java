@@ -68,6 +68,9 @@ public class AppController implements Initializable {
                         new TextObject(StringConfig.formatValue("text.version", "")),
                         new TextObject(Launch.properties.getStr("app-version") + "\n\n", "-fx-font-weight : bold;"),
 
+                        new TextObject(StringConfig.formatValue("text.developers", "")),
+                        new TextObject(Launch.properties.getStr("app.developers") + "\n\n", "-fx-font-weight: bold;"),
+
                         new TextObject("Telegram: "),
                         new TextObject(Launch.properties.getStr("link-telegram"), "", "link", Launch.properties.getStr("link-telegram")),
 
@@ -105,7 +108,7 @@ public class AppController implements Initializable {
                         .iconStyleClass("menu-home")
                         .addChild(Navigation.item()
                                 .title(StringConfig.getValue("label.graph.visualizer"))
-                                .screen(MainController2.class, Bundle.create()))
+                                .screen(MainController.class, Bundle.create()))
                         .addChild(Navigation.item()
                                 .title(StringConfig.getValue("label.compare.graphs")))
                         .addChild(Navigation.item()

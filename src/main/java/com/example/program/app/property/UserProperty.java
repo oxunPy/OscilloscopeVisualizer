@@ -1,6 +1,7 @@
 package com.example.program.app.property;
 
 import com.example.program.app.entity.OsciUserEntity;
+import com.example.program.util.Encryption;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -25,7 +26,7 @@ public class UserProperty extends BaseProperty{
 
     private ObjectProperty<OsciUserEntity.UserType> userType = new SimpleObjectProperty<>();
 
-    public static UserProperty newInstance(OsciUserEntity osciUserEntity, boolean withPassword, boolean withCreatedAndUpdated){
+    public static UserProperty newInstance(OsciUserEntity osciUserEntity, boolean withPassword, boolean withUpdate){
         if(osciUserEntity == null) return null;
         UserProperty userProperty = new UserProperty();
         userProperty.populateBase(osciUserEntity);
@@ -34,6 +35,7 @@ public class UserProperty extends BaseProperty{
         userProperty.setLastName(osciUserEntity.getLastName());
         userProperty.setMiddleName(osciUserEntity.getMiddleName());
         userProperty.setInfo(osciUserEntity.getInfo());
+        userProperty.setLogin(osciUserEntity.getLogin());
         userProperty.setPrintableName(osciUserEntity.getPrintableName());
         userProperty.setUserType(osciUserEntity.getUserType());
 
@@ -41,9 +43,8 @@ public class UserProperty extends BaseProperty{
             userProperty.setPass(osciUserEntity.getPass());
         }
 
-        if(withCreatedAndUpdated){
-            userProperty.setCreatedDate(osciUserEntity.getCreated());
-            userProperty.setUpdatedDate(osciUserEntity.getUpdated());
+        if(withUpdate){
+            userProperty.setUpdatedDate(new Date());
         }
         return userProperty;
     }
@@ -65,7 +66,7 @@ public class UserProperty extends BaseProperty{
         user.setUserType(getUserType());
 
         if(updatePassword){
-            user.setPass(getPass());
+            user.setPass(Encryption.convert(getPass()));
         }
 
         if(withUpdate){

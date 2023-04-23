@@ -1,9 +1,15 @@
 package com.example.program.util;
 
+import com.example.program.app.App;
+import com.example.program.app.Launch;
+import com.example.program.app.Login;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -17,6 +23,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -122,6 +129,38 @@ public class Dialog {
     public static Answer messages(String type, String title, List<TextObject> list){
         box(icon(type), text(title, list), actions());
         return answer;
+    }
+
+    public static void messageAbsoluteError(ImageView absErrorImg, Double percent){
+        VBox vBox = new VBox();
+        vBox.setSpacing(2.0);
+        vBox.getStyleClass().add("box-msg");
+        //box avg-err.formula
+        HBox boxCentral = new HBox(absErrorImg);
+        boxCentral.setAlignment(Pos.CENTER);
+
+        //box avg-err.percent
+        HBox boxAvgErrorPercent = new HBox();
+        JFXTextField tfAvgError = new JFXTextField(StringConfig.formatValue("label.approximation.err", percent));
+        tfAvgError.setDisable(true);
+        tfAvgError.setAlignment(Pos.CENTER);
+        tfAvgError.setStyle("-fx-font-weight: bold; -fx-font-family: 'Arial Rounded MT Bold'; -fx-font-size: 16; " +
+                            "-fx-min-width: 529; -fx-max-width: 529; -fx-pref-width: 529; " +
+                            "-fx-background-color: white; -fx-border-color: #ff6666");
+        boxAvgErrorPercent.getChildren().add(tfAvgError);
+        boxAvgErrorPercent.setAlignment(Pos.CENTER);
+
+
+        vBox.getChildren().addAll(boxCentral, boxAvgErrorPercent);
+        Scene scene = new Scene(vBox);
+        scene.getStylesheets().add("css/dialog.css");
+        scene.setFill(Color.TRANSPARENT);
+        scene.setOnMouseClicked(e -> {
+            dialog.close();
+        });
+
+        dialog = new MyDialog(scene);
+        dialog.display();
     }
 
     private static VBox text(String title, List<TextObject> list) {
@@ -247,6 +286,19 @@ public class Dialog {
      */
     private static class MyDialog extends Stage {
 
+        public MyDialog(Scene scene) {
+            Stage stage = getBackgroundShowingStage();
+
+            initStyle(StageStyle.TRANSPARENT);
+            initModality(Modality.APPLICATION_MODAL);
+            initOwner(stage);
+            setX(stage.getX());
+            setY(stage.getY());
+            setWidth(stage.getWidth());
+            setHeight(stage.getHeight());
+            setScene(scene);
+        }
+
         public MyDialog(Stage stage, Scene scene) {
             initStyle(StageStyle.TRANSPARENT);
             initModality(Modality.APPLICATION_MODAL);
@@ -263,6 +315,14 @@ public class Dialog {
             initModality(Modality.APPLICATION_MODAL);
             initOwner(stage);
             setScene(scene);
+        }
+
+        private Stage getBackgroundShowingStage(){
+            List<Stage> stages = Arrays.asList(Launch.stage, Login.stage, App.stage);
+            return stages.stream()
+                    .filter(stage -> stage != null && stage.isShowing())
+                    .findFirst()
+                    .orElse(new Stage());
         }
 
         public void display() {

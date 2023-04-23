@@ -7,8 +7,10 @@ import com.example.program.common.service.BaseService;
 import com.example.program.common.status.EntityStatus;
 import com.example.program.util.LogUtil;
 import com.example.program.util.StringConfig;
+import com.example.program.util.exception.SimpleDesktopException;
 import com.example.program.util.exception.UnsafeUpdateException;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.StringUtils;
 import org.h2.engine.Setting;
 import sun.util.resources.et.CalendarData_et;
 
@@ -58,17 +60,39 @@ public class OsciSettingService extends BaseService {
         return setting;
     }
 
-    public boolean edit(SettingProperty item){
+    public OsciSettingEntity findById(Long id, boolean withSession){
+        if(id == null) return null;
+        if(withSession) openCurrentSession();
+        OsciSettingEntity entity = null;
+        try{
+            entity = settingDao.findFirst("from OsciSettingEntity where id = ?", new Object[]{id});
+        }
+        catch(Exception ex){
+            log.print(StringConfig.getValue("err.db.get") + "\n " + ex);
+            if(withSession) closeCurrentSession();
+            throw new SimpleDesktopException(StringConfig.getValue("err.db.get"), getClass());
+        }
+        if(withSession) closeCurrentSession();
+        return entity;
+    }
+
+
+    public void edit(SettingProperty item){
         openCurrentSessionWithTransaction();
 
         try{
-            OsciSettingEntity entity = item.toEntity(new OsciSettingEntity(), true);
+            OsciSettingEntity entity = findById(item.getId(), false);
             entity.setStatus(EntityStatus.UPDATED);
             entity.setUpdated(new Date());
+            if(!StringUtils.isEmpty(item.getAppName())) entity.setAppName(item.getAppName());
+            if(!StringUtils.isEmpty(item.getVersion())) entity.setVersion(item.getVersion());
+            if(!StringUtils.isEmpty(item.getTechSupport())) entity.setTechSupport(item.getTechSupport());
+            if(!StringUtils.isEmpty(item.getAuthorName())) entity.setAuthorName(item.getAuthorName());
+            if(!StringUtils.isEmpty(item.getAuthorContact())) entity.setAuthorContact(item.getAuthorContact());
+            if(item.getLanguageId() != null && item.getLanguageId() != 0L) entity.setLanguageId(item.getLanguageId());
 
-            settingDao.update(entity);
+            settingDao.saveOrUpdate(entity);
             closeCurrentSessionWithTransaction();
-            return true;
         }
         catch(Exception ex){
             log.print(StringConfig.getValue("err.db.edit") + "\n" + ex);
@@ -79,8 +103,8 @@ public class OsciSettingService extends BaseService {
 
 
     public boolean hasLanguageByCode(String code){
-        String hql = "from OsciLanguageEntity where code = ?";
-        Long count = languageDao.count(hql, new Object[]{"ru"});
+        String hql = "from OsciLanguageEntity where code = ? and status <> ?";
+        Long count = languageDao.count(hql, new Object[]{"ru", EntityStatus.DELETED});
         return count > 0;
     }
 

@@ -4,6 +4,9 @@ import com.example.program.app.property.OsciToolProperty;
 import com.example.program.app.service.OsciToolService;
 import com.example.program.common.screen.Bundle;
 import com.example.program.common.screen.NavigationScreen;
+import com.example.program.util.DateUtil;
+import com.example.program.util.Dialog;
+import com.example.program.util.Message;
 import com.example.program.util.Note;
 import com.example.program.util.StringConfig;
 import javafx.beans.property.ListProperty;
@@ -12,14 +15,17 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class ToolListController extends NavigationScreen.Screen{
@@ -43,9 +49,18 @@ public class ToolListController extends NavigationScreen.Screen{
     private Button btnEdit;
     @FXML
     private Button btnDelete;
+    @FXML
+    private Button btnRefresh;
+    @FXML
+    private Button btnClear;
+    @FXML
+    private DatePicker dpFromDate;
+    @FXML
+    private DatePicker dpToDate;
+    @FXML
+    private TextField txtSearch;
 
     private OsciToolService osciToolService = new OsciToolService();
-
     private ListProperty<OsciToolProperty> listTools = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     public ToolListController(){
@@ -63,7 +78,7 @@ public class ToolListController extends NavigationScreen.Screen{
     private void syncBase(){
         listTools.clear();
 
-        listTools.setAll(osciToolService.listTools());
+        listTools.setAll(osciToolService.listTools(null));
         tbTool.scrollTo(0);
     }
 
@@ -88,12 +103,34 @@ public class ToolListController extends NavigationScreen.Screen{
         });
 
         btnDelete.setOnMouseClicked(event -> {
-            deleteAction();
+            if (tbTool.getSelectionModel().getSelectedItem() == null){
+                Note.alert(StringConfig.getValue("err.select.item"));
+                return;
+            }
+
+            Dialog.Answer response = Message.confirm(StringConfig.getValue("item.delete.request"));
+            if(response == Dialog.Answer.NO){
+                event.consume();
+            }
+            else{
+                deleteAction();
+            }
+        });
+        btnRefresh.setOnMouseClicked(event -> reloadTable());
+
+        btnClear.setOnMouseClicked(event -> {
+            txtSearch.setText("");
+            dpFromDate.setValue(DateUtil.toLocale(DateUtil.atStartOfMonth(new Date())));
+            dpToDate.setValue(LocalDate.now());
+            reloadTable();
         });
     }
 
     @Override
     public void onCreate() {
+        dpFromDate.setValue(DateUtil.toLocale(DateUtil.atStartOfMonth(new Date())));
+        dpToDate.setValue(LocalDate.now());
+
         syncBase();
         table();
 
@@ -131,5 +168,15 @@ public class ToolListController extends NavigationScreen.Screen{
             Note.info(StringConfig.getValue("info.deleted.successfully"));
             syncBase();
         }
+    }
+
+    public void reloadTable(){
+        Map<String, Object> filterMap = new HashMap<>();
+        filterMap.put("fromDate", DateUtil.fromLocale(dpFromDate.getValue()));
+        filterMap.put("toDate", DateUtil.fromLocale(dpToDate.getValue()));
+        filterMap.put("search", txtSearch.getText());
+
+        listTools.setAll(osciToolService.listTools(filterMap));
+        tbTool.scrollTo(0);
     }
 }

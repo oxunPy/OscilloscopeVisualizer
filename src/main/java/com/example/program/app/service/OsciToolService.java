@@ -11,6 +11,8 @@ import com.example.program.util.Note;
 import com.example.program.util.StringConfig;
 import com.example.program.util.exception.SimpleDesktopException;
 import net.coobird.thumbnailator.Thumbnails;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.StringUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -20,19 +22,23 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OsciToolService extends BaseService {
 
     private final LogUtil log = LogUtil.getLog(this.getClass());
 
-    public List<OsciToolProperty> listTools() {
+    public List<OsciToolProperty> listTools(Map<String, Object> filterMap) {
         List<OsciToolProperty> list = new ArrayList<>();
 
         openCurrentSession();
         try {
-            String hql = "from OsciToolEntity where 1 = 1 and status <> ? ";
-            List<OsciToolEntity> listEntities = toolDao.find(hql, new Object[]{EntityStatus.DELETED});
+            String hql = "from OsciToolEntity t where 1 = 1 and t.status <> ? ";
+            List<Object> values = new ArrayList<>();
+            values.add(EntityStatus.DELETED);
+            if(filterMap != null) hql = addWhere(hql, filterMap, values);
+            List<OsciToolEntity> listEntities = toolDao.find(hql, values.toArray());
             if (!listEntities.isEmpty()) {
                 list = listEntities.stream().map(e -> OsciToolProperty.newInstance(e, false)).collect(Collectors.toList());
             }
@@ -40,6 +46,22 @@ public class OsciToolService extends BaseService {
             Note.error(StringConfig.getValue("err.db.get") + "\n" + e);
         }
         return list;
+    }
+
+    public String addWhere(String hql, Map<String, Object> filterMap, List<Object> values){
+        if(filterMap.containsKey("search") && !StringUtils.isEmpty(MapUtils.getString(filterMap, "search"))){
+            hql += " and t.name like '%'|| ? ||'%'";
+            values.add(filterMap.get("search"));
+        }
+        if(filterMap.containsKey("fromDate") && filterMap.get("fromDate") != null){
+            hql += " and t.created >= ? ";
+            values.add(filterMap.get("fromDate"));
+        }
+        if(filterMap.containsKey("toDate") && filterMap.get("toDate") != null){
+            hql += " and t.created <= ?";
+            values.add(filterMap.get("toDate"));
+        }
+        return hql;
     }
 
     public InputStream getToolPhoto(Long toolId){

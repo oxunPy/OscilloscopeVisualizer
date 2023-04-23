@@ -1,6 +1,7 @@
 package com.example.program.app.controller;
 
 import com.example.program.app.App;
+import com.example.program.app.Launch;
 import com.example.program.app.entity.OsciFileEntity;
 import com.example.program.app.property.OsciDataProperty;
 import com.example.program.app.property.OsciFileProperty;
@@ -25,7 +26,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import org.apache.commons.lang.StringUtils;
 
@@ -38,8 +38,6 @@ public class FileUploadController extends NavigationScreen.Screen{
 
     @FXML
     private Button btnBrowseFile;
-    @FXML
-    private Button btnDirChoose;
     @FXML
     private ImageView imgDropBox;
     @FXML
@@ -77,6 +75,9 @@ public class FileUploadController extends NavigationScreen.Screen{
 
     @Override
     public void onStart(){
+        tfDirFiles.setText(Launch.properties.getStr("osci.upload.file.path"));
+        tfDirFiles.setDisable(true);
+
         dpDate.setValue(LocalDate.now());
         txtDataName.textProperty().addListener((observable, oldValue, newValue) -> {
             osciDataObject.get().setDataName(txtDataName.getText());
@@ -111,7 +112,7 @@ public class FileUploadController extends NavigationScreen.Screen{
 //                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
                 File file = db.getFiles().get(0);
                 draggedFile.set(file);
-                Note.info(file.getName());
+//                Note.info(file.getName());
             }
 //            event.consume();
         });
@@ -149,8 +150,12 @@ public class FileUploadController extends NavigationScreen.Screen{
 
         btnSave.setOnMouseClicked(event -> {
             saveOsciData();
-            NavigationScreen.Dansho dansho = new NavigationScreen.Dansho(MainController2.class, Bundle.create());
+            NavigationScreen.Dansho dansho = new NavigationScreen.Dansho(MainController.class, Bundle.create());
             startScreenForResult(dansho, 15);
+        });
+        btnCancel.setOnMouseClicked(event -> {
+            NavigationScreen.Dansho dansho = new NavigationScreen.Dansho(OsciDataController.class, Bundle.create());
+            startScreenForResult(dansho, 11);
         });
     }
 
@@ -175,7 +180,7 @@ public class FileUploadController extends NavigationScreen.Screen{
 
     private void comboTools(){
         Platform.runLater(() -> {
-            List<OsciToolProperty> listTools = osciToolService.listTools();
+            List<OsciToolProperty> listTools = osciToolService.listTools(null);
             cbTool.setItems(FXCollections.observableArrayList(listTools));
         });
     }

@@ -5,10 +5,9 @@ import com.example.program.app.service.OsciDataService;
 import com.example.program.common.screen.Bundle;
 import com.example.program.common.screen.NavigationScreen;
 import com.example.program.util.*;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
+import com.example.program.util.Dialog;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -16,6 +15,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +33,11 @@ public class OsciDataController extends NavigationScreen.Screen {
     @FXML
     private Button btnAdd;
     @FXML
+    private Button btnDelete;
+    @FXML
     private Button btnRefresh;
+    @FXML
+    private Button btnClear;
 
     private TablePagination<OsciDataProperty> tbData;
 
@@ -60,10 +65,33 @@ public class OsciDataController extends NavigationScreen.Screen {
         btnRefresh.setOnMouseClicked(event -> {
             tbData.reload();
         });
+        btnDelete.setOnMouseClicked(event -> {
+            if (tbData.getSelectionModel().getSelectedItem() == null) {
+                Note.alert(StringConfig.getValue("err.select.item"));
+                return;
+            }
+            Dialog.Answer response = Message.confirm(StringConfig.getValue("item.delete.request"));
+            if(response == Dialog.Answer.NO){
+                event.consume();
+            }
+            else{
+                deleteAction();
+            }
+        });
+
+        btnClear.setOnMouseClicked(event -> {
+            txtSearch.setText("");
+            dpFromDate.setValue(DateUtil.toLocale(DateUtil.atStartOfMonth(new Date())));
+            dpToDate.setValue(LocalDate.now());
+            tbData.reload();
+        });
     }
 
     @Override
     public void onCreate() {
+        dpFromDate.setValue(DateUtil.toLocale(DateUtil.atStartOfMonth(new Date())));
+        dpToDate.setValue(LocalDate.now());
+
         table();
 
         spData.getChildren().add(tbData);
@@ -104,18 +132,28 @@ public class OsciDataController extends NavigationScreen.Screen {
 
         TableColumn<OsciDataProperty, Long> colToolId = new TableColumn<>(StringConfig.getValue("label.tool.id"));
         colToolId.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getOsciToolId()));
-        colToolId.prefWidthProperty().bind(table.widthProperty().multiply(0.2).subtract(1));
+        colToolId.prefWidthProperty().bind(table.widthProperty().multiply(0.1).subtract(1));
 
         TableColumn<OsciDataProperty, Long> colFileId = new TableColumn<>(StringConfig.getValue("label.file.id"));
         colFileId.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getOsciFileId()));
-        colFileId.prefWidthProperty().bind(table.widthProperty().multiply(0.2).subtract(1));
+        colFileId.prefWidthProperty().bind(table.widthProperty().multiply(0.1).subtract(1));
 
-        table.getColumns().addAll(colId, colDataName, colInfo, colToolId, colFileId);
+        TableColumn<OsciDataProperty, String> colFileName = new TableColumn<>(StringConfig.getValue("label.file.name"));
+        colFileName.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getDataFile() != null ? param.getValue().getDataFile().getOriginalName() : ""));
+        colFileName.prefWidthProperty().bind(table.widthProperty().multiply(0.2).subtract(1));
+
+        table.getColumns().addAll(colId, colDataName, colInfo, colToolId, colFileId, colFileName);
         table.setTableMenuButtonVisible(false);
 
         table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("12131313");
         });
         return table;
+    }
+
+    private void deleteAction() {
+        //delete
+        if (osciDataService.deleteData(tbData.getSelectionModel().getSelectedItem().getId())) tbData.reload();
+        else Note.error(StringConfig.getValue("err.db.delete"));
     }
 }

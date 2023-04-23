@@ -16,6 +16,8 @@ public class OsciDataProperty extends BaseProperty {
 
     private StringProperty dataName = new SimpleStringProperty();
 
+    private StringProperty toolName = new SimpleStringProperty();
+
     private StringProperty info = new SimpleStringProperty();
 
     private ObjectProperty<OsciFileProperty> dataFile = new SimpleObjectProperty<>(new OsciFileProperty());
@@ -139,5 +141,17 @@ public class OsciDataProperty extends BaseProperty {
 
     public void setDataFile(OsciFileProperty dataFile) {
         this.dataFile.set(dataFile);
+    }
+
+    public String getToolName() {
+        return toolName.get();
+    }
+
+    public StringProperty toolNameProperty() {
+        return toolName;
+    }
+
+    public void setToolName(String toolName) {
+        this.toolName.set(toolName);
     }
 }

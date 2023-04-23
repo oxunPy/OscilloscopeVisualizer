@@ -124,75 +124,16 @@
             <version>${poi.version}</version>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>net.sf.jasperreports</groupId>-->
-        <!--            <artifactId>jasperreports</artifactId>-->
-        <!--            <version>6.1.1</version>-->
-        <!--        </dependency>-->
-
-        <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports-fonts</artifactId>
-            <version>6.0.0</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
-        <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports</artifactId>
-            <version>6.19.1</version>
-        </dependency>
-
         <dependency>
             <groupId>com.sun.istack</groupId>
             <artifactId>istack-commons-runtime</artifactId>
             <version>3.0.10</version>
         </dependency>
 
-
-        <dependency>
-            <groupId>org.apache.xmlgraphics</groupId>
-            <artifactId>batik-bridge</artifactId>
-            <version>1.9.1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/net.sf.barcode4j/barcode4j -->
-        <dependency>
-            <groupId>net.sf.barcode4j</groupId>
-            <artifactId>barcode4j</artifactId>
-            <version>2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sourceforge.barbecue</groupId>
-            <artifactId>barbecue</artifactId>
-            <version>1.5-beta1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/jasperreports/jasperreports -->
-        <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports</artifactId>
-            <version>6.19.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>net.lingala.zip4j</groupId>
-            <artifactId>zip4j</artifactId>
-            <version>1.3.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.squareup.okhttp</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>2.2.0</version>
-        </dependency>
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
             <version>8.40.14</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/net.sf.barcode4j/barcode4j -->
-        <dependency>
-            <groupId>net.sf.barcode4j</groupId>
-            <artifactId>barcode4j</artifactId>
-            <version>2.1</version>
         </dependency>
 
         <dependency>
@@ -267,23 +208,6 @@
             <version>0.4.0</version>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>2.0.1.Final</version>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
@@ -299,6 +223,13 @@
             <artifactId>hibernate-types-55</artifactId>
             <version>${hibernate-types.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/eu.hansolo/tilesfx -->
+        <dependency>
+            <groupId>eu.hansolo</groupId>
+            <artifactId>tilesfx</artifactId>
+            <version>1.6.8</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>

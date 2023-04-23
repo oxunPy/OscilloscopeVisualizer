@@ -1,5 +1,6 @@
 package com.example.program.app.controller;
 
+import com.example.program.app.App;
 import com.example.program.app.AppManager;
 import com.example.program.app.property.OsciLanguageProperty;
 import com.example.program.app.property.SettingProperty;
@@ -12,6 +13,7 @@ import com.example.program.util.StringConfig;
 import com.example.program.util.widget.combo.LanguageComboboxConverter;
 import com.example.program.util.widget.combo.LanguageComboboxItem;
 import javafx.application.Platform;
+import javafx.beans.binding.LongBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -23,6 +25,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 public class SettingController extends NavigationScreen.Screen {
 
@@ -61,6 +64,12 @@ public class SettingController extends NavigationScreen.Screen {
     @Override
     public void onStart(){
         settings.set(AppManager.getInstance().getSetting());
+
+        settings.get().appNameProperty().bind(tfAppName.textProperty());
+        settings.get().versionProperty().bind(tfAppVersion.textProperty());
+        settings.get().techSupportProperty().bind(tfTechSupport.textProperty());
+        settings.get().authorNameProperty().bind(tfAuthorName.textProperty());
+        settings.get().authorContactProperty().bind(tfAuthorContact.textProperty());
     }
 
     @Override
@@ -70,6 +79,7 @@ public class SettingController extends NavigationScreen.Screen {
         tfAppVersion.setText(appSetting.getVersion());
         tfTechSupport.setText(appSetting.getTechSupport());
         tfAuthorContact.setText(appSetting.getAuthorContact());
+        tfAuthorName.setText(appSetting.getAuthorName());
 
         cbDefaultLanguage.setCellFactory(param -> new LanguageComboboxItem());
         cbDefaultLanguage.setConverter(new LanguageComboboxConverter());
@@ -79,8 +89,6 @@ public class SettingController extends NavigationScreen.Screen {
             if(newValue != null) settings.get().setLanguageId(newValue.getId());
         }));
         btnSave.setOnAction(event -> save());
-
-        tfAppName.textProperty().addListener(event -> settings.get().setAppName(tfAppName.getText()));
 
         comboLanguage();
     }
@@ -99,6 +107,8 @@ public class SettingController extends NavigationScreen.Screen {
         Platform.runLater(() -> {
             List<OsciLanguageProperty> list = osciLanguageService.list();
             cbDefaultLanguage.setItems(FXCollections.observableArrayList(list));
+            // select applicationSetting lang-value
+            cbDefaultLanguage.setValue(cbDefaultLanguage.getItems().stream().filter(l -> Objects.equals(l.getId(), AppManager.getInstance().getSetting().getLanguageId())).findFirst().orElse(null));
         });
     }
 
