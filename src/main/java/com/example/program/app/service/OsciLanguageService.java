@@ -7,7 +7,6 @@ import com.example.program.common.status.EntityStatus;
 import com.example.program.util.LogUtil;
 import com.example.program.util.StringConfig;
 import com.example.program.util.exception.UnsafeUpdateException;
-import org.python.netty.channel.Channel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -163,14 +163,32 @@
                             </VBox>
 
                             <VBox GridPane.columnIndex="1" GridPane.rowIndex="0">
-                                <LineChart fx:id="lchGraphs" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                    <xAxis>
-                                        <NumberAxis side="BOTTOM" upperBound="1000" tickUnit="50" fx:id="xAxis"/>
-                                    </xAxis>
-                                    <yAxis>
-                                        <NumberAxis side="LEFT" lowerBound="-3" upperBound="3" fx:id="yAxis"/>
-                                    </yAxis>
-                                </LineChart>
+                                <HBox VBox.vgrow="ALWAYS" alignment="CENTER">
+                                    <JFXButton alignment="TOP_LEFT" graphicTextGap="0.0" mnemonicParsing="false"
+                                            textOverrun="CENTER_WORD_ELLIPSIS" fx:id="btnPrevChart">
+                                        <graphic>
+                                            <HBox alignment="CENTER_LEFT">
+                                                <BorderPane fx:id="prevLineChartPane" prefHeight="25.0" prefWidth="25.0"/>
+                                            </HBox>
+                                        </graphic>
+                                    </JFXButton>
+                                    <LineChart fx:id="lchGraphs" maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                        <xAxis>
+                                            <NumberAxis side="BOTTOM" upperBound="1000" tickUnit="50" fx:id="xAxis"/>
+                                        </xAxis>
+                                        <yAxis>
+                                            <NumberAxis side="LEFT" lowerBound="-3" upperBound="3" fx:id="yAxis"/>
+                                        </yAxis>
+                                    </LineChart>
+                                    <JFXButton alignment="TOP_LEFT" graphicTextGap="0.0" mnemonicParsing="false"
+                                            textOverrun="CENTER_WORD_ELLIPSIS" fx:id="btnNextChart">
+                                        <graphic>
+                                            <HBox alignment="CENTER_LEFT">
+                                                <BorderPane fx:id="nextLineChartPane" prefHeight="25.0" prefWidth="25.0"/>
+                                            </HBox>
+                                        </graphic>
+                                    </JFXButton>
+                                </HBox>
                                 <HBox alignment="CENTER" spacing="20" styleClass="total-box">
                                     <children>
                                         <VBox>

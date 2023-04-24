@@ -30,6 +30,6 @@ public abstract class HotKeySingleListener implements HotKeyListener {
     }
 
 
-    abstract void onAction();
+    protected abstract void onAction();
 
 }

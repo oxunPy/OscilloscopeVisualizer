@@ -13,6 +13,7 @@ import com.example.program.util.StringConfig;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -32,6 +33,10 @@ public class AppController implements Initializable {
     private VBox boxMenu;
     @FXML
     private Button btnInfo;
+    @FXML
+    private Label lbLoggedUser;
+    @FXML
+    private Label lbVersion;
     private static AppController instance;
 
     private AppManager manager = AppManager.getInstance();
@@ -88,8 +93,10 @@ public class AppController implements Initializable {
                 .welcomeScreen(new SettingController())
                 .build();
 
-        createMenu();
+        lbLoggedUser.setText(AppManager.getInstance().getLoggedUser().getPrintableName());
+        lbVersion.setText(StringConfig.formatValue("text.version", "") + Launch.properties.getStr("app-version"));
 
+        createMenu();
         initBase();
     }
 

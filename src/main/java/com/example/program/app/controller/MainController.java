@@ -11,6 +11,8 @@ import com.example.program.util.*;
 import com.example.program.util.Dialog;
 import com.example.program.util.widget.combo.ToolComboboxConverter;
 import com.example.program.util.widget.combo.ToolComboboxItem;
+import com.example.program.util.widget.hotkey.HotKeyListener;
+import com.example.program.util.widget.hotkey.HotKeyManager;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
@@ -26,11 +28,18 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Path;
 import org.apache.commons.lang.math.NumberUtils;
+import org.gillius.jfxutils.chart.ChartPanManager;
+import org.gillius.jfxutils.chart.JFXChartUtil;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -39,6 +48,10 @@ public class MainController extends NavigationScreen.Screen{
     private BorderPane lineChartIconPane;
     @FXML
     private BorderPane absoluteErrorPane;
+    @FXML
+    private BorderPane prevLineChartPane;
+    @FXML
+    private BorderPane nextLineChartPane;
     @FXML
     private TableColumn<OsciDataProperty, Long> colId;
     @FXML
@@ -65,6 +78,10 @@ public class MainController extends NavigationScreen.Screen{
     private Button btnDrawLineChart;
     @FXML
     private Button btnAbsoluteError;
+    @FXML
+    private Button btnPrevChart;
+    @FXML
+    private Button btnNextChart;
     @FXML
     private TableView<OsciDataProperty> tbData;
     @FXML
@@ -95,11 +112,26 @@ public class MainController extends NavigationScreen.Screen{
     private final XYChart.Series<Number, Number> graph3Series = new XYChart.Series<>();
 
     double x, y = 0;
+    private final Integer MAX_UNIT_SIZE = 500;
+    private IntegerProperty currentPage = new SimpleIntegerProperty(0);
+
+    private StringProperty graph1Filename = new SimpleStringProperty();
+    private StringProperty graph2Filename = new SimpleStringProperty();
+    private StringProperty graph3Filename = new SimpleStringProperty();
 
     private final OsciToolService osciToolService = new OsciToolService();
     private final OsciDataService osciDataService = new OsciDataService();
 
     private ListProperty<OsciDataProperty> listData = new SimpleListProperty<>(FXCollections.observableArrayList());
+
+    private HotKeyListener hot = event -> {
+        if(event.getCode() == KeyCode.LEFT){
+            prevLineChart();
+        }
+        else if(event.getCode() == KeyCode.RIGHT){
+            nextLineChart();
+        }
+    };
 
     public MainController() {
         try {
@@ -108,7 +140,7 @@ public class MainController extends NavigationScreen.Screen{
             fxml.setRoot(this);
             fxml.setController(this);
             fxml.load();
-            handleMousePosition();
+//            handleMousePosition();
         } catch (IOException ex) {
             Message.error(StringConfig.getValue("err.ui.load") + "\n" + ex);
         }
@@ -138,6 +170,8 @@ public class MainController extends NavigationScreen.Screen{
         tbData.setEditable(true);
         lineChartIconPane.setCenter(GlyphsDude.createIcon(FontAwesomeIcon.LINE_CHART, "22px"));
         absoluteErrorPane.setCenter(GlyphsDude.createIcon(MaterialDesignIcon.DELTA, "22px"));
+        prevLineChartPane.setCenter(GlyphsDude.createIcon(MaterialDesignIcon.ARROW_LEFT, "20px"));
+        nextLineChartPane.setCenter(GlyphsDude.createIcon(MaterialDesignIcon.ARROW_RIGHT, "20px"));
         btnFilter.setOnMouseClicked(event -> syncBase());
         btnClear.setOnMouseClicked(event -> {
             dpFromDate.setValue(DateUtil.toLocale(DateUtil.atStartOfMonth(new Date())));
@@ -180,6 +214,9 @@ public class MainController extends NavigationScreen.Screen{
 
     @Override
     public void onStart() {
+        // zooming line chart
+        zoomLineChart();
+
         cbTool.setCellFactory(param -> new ToolComboboxItem());
         cbTool.setConverter(new ToolComboboxConverter());
         cbTool.setButtonCell(new ToolComboboxItem());
@@ -212,6 +249,15 @@ public class MainController extends NavigationScreen.Screen{
 //            line.setStyle("-fx-stroke: " + rgb);
                 ((Path) line).setStroke(newValue);
         });
+
+        btnPrevChart.setOnMouseClicked(event -> {
+            prevLineChart();
+        });
+        btnNextChart.setOnMouseClicked(event -> {
+            nextLineChart();
+        });
+
+        HotKeyManager.getInstance().addListener(hot);
     }
 
     void handleMousePosition() {
@@ -301,26 +347,41 @@ public class MainController extends NavigationScreen.Screen{
 
         String fileName = tbData.getSelectionModel().getSelectedItem().getDataFile().getFilename();
         File fileToDraw = new File(Launch.properties.getStr("osci.upload.file.path") + File.separator + fileName);
-        if(!fileToDraw.exists()) Note.error(StringConfig.getValue("err.file.notFound"));
+        if(!fileToDraw.exists()) {
+            Note.error(StringConfig.getValue("err.file.notFound"));
+            return;
+        }
 
         XYChart.Series<Number, Number> linechart = null;
-        if(chbGraph1.isSelected()) linechart = graph1Series;
-        else if(chbGraph2.isSelected()) linechart = graph2Series;
-        else linechart = graph3Series;
+        if(chbGraph1.isSelected()) {
+            linechart = graph1Series;
+            graph1Filename.setValue(fileName);
+        }
+        else if(chbGraph2.isSelected()){
+            linechart = graph2Series;
+            graph2Filename.setValue(fileName);
+        }
+        else {
+            linechart = graph3Series;
+            graph3Filename.setValue(fileName);
+        }
 
         List<Double> readDataFromFile = null;
         try {
             // reading data from file...
             readDataFromFile = readFromFile(new FileInputStream(fileToDraw));
 
-            linechart.getData().clear();
-
-            for(int i = 0; i < 500; i++){
-                linechart.getData().add(new XYChart.Data<>(i, readDataFromFile.get(i)));
-            }
+           drawSeries(readDataFromFile, linechart);
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void drawSeries(List<Double> data, XYChart.Series<Number, Number> linechart){
+        linechart.getData().clear();
+        for(int i = currentPage.get() * MAX_UNIT_SIZE; (i < currentPage.get() * MAX_UNIT_SIZE + MAX_UNIT_SIZE && i < data.size()) ; i++){
+            linechart.getData().add(new XYChart.Data<>(i, data.get(i)));
         }
     }
 
@@ -362,5 +423,63 @@ public class MainController extends NavigationScreen.Screen{
 
     private Double absoluteErrorPercent(){
         return 0.34;
+    }
+
+
+    private void nextLineChart(){
+//        Note.info("NEXT LINE CHART");
+        currentPage.setValue(currentPage.get() + 1);
+        updateGraphics();
+    }
+
+    private void prevLineChart(){
+//        Note.info("PREV LINE CHART");
+        if(currentPage.get() > 0) currentPage.setValue(currentPage.get() - 1);
+        updateGraphics();
+    }
+
+    private void updateGraphics(){
+        try {
+            if (!graph1Series.getData().isEmpty()) {
+                File fileToDraw = new File(Launch.properties.getStr("osci.upload.file.path") + File.separator + graph1Filename.get());
+                if(!fileToDraw.exists()) Note.error(StringConfig.getValue("err.file.notFound"));
+                else drawSeries(readFromFile(Files.newInputStream(fileToDraw.toPath())), graph1Series);
+            }
+            if (!graph2Series.getData().isEmpty()) {
+                File fileToDraw = new File(Launch.properties.getStr("osci.upload.file.path") + File.separator + graph2Filename.get());
+                if(!fileToDraw.exists()) Note.error(StringConfig.getValue("err.file.notFound"));
+                else drawSeries(readFromFile(Files.newInputStream(fileToDraw.toPath())), graph2Series);
+            }
+            if (!graph3Series.getData().isEmpty()) {
+                File fileToDraw = new File(Launch.properties.getStr("osci.upload.file.path") + File.separator + graph3Filename.get());
+                if(!fileToDraw.exists()) Note.error(StringConfig.getValue("err.file.notFound"));
+                else drawSeries(readFromFile(Files.newInputStream(fileToDraw.toPath())), graph3Series);
+            }
+        }
+        catch(IOException ex){
+            Note.error(StringConfig.getValue("err.file.notFound"));
+        }
+    }
+
+    private void zoomLineChart(){
+        //zooming linechart
+        ChartPanManager panner = new ChartPanManager(lchGraphs);
+        //while presssing the left mouse button, you can drag to navigate
+        panner.setMouseFilter(mouseEvent -> {
+            if(mouseEvent.getButton() == MouseButton.PRIMARY){ //set your custom combination to trigger navigation
+
+            }
+            else{
+                mouseEvent.consume();
+            }
+        });
+        panner.start();
+
+        JFXChartUtil.setupZooming(lchGraphs, mouseEvent -> {
+            if(mouseEvent.getButton() != MouseButton.SECONDARY){ //set your custom combination to trigger rectangle zooming
+                mouseEvent.consume();
+            }
+        });
+
     }
 }

@@ -9,7 +9,7 @@ import com.example.program.util.LogUtil;
 import com.example.program.util.StringConfig;
 import com.example.program.util.exception.SimpleDesktopException;
 import com.example.program.util.exception.UnsafeUpdateException;
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.h2.engine.Setting;
 import sun.util.resources.et.CalendarData_et;

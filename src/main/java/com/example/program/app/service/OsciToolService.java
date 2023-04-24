@@ -11,7 +11,7 @@ import com.example.program.util.Note;
 import com.example.program.util.StringConfig;
 import com.example.program.util.exception.SimpleDesktopException;
 import net.coobird.thumbnailator.Thumbnails;
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang.StringUtils;
 
 import javax.imageio.ImageIO;

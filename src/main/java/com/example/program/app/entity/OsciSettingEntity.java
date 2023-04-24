@@ -1,7 +1,6 @@
 package com.example.program.app.entity;
 
 import com.example.program.app.entity.base.BaseEntity;
-import com.ziclix.python.sql.Fetch;
 import lombok.Getter;
 import lombok.Setter;
 
