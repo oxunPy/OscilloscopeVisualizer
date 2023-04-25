@@ -29,17 +29,16 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Path;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -113,6 +112,7 @@ public class MainController extends NavigationScreen.Screen{
 
     double x, y = 0;
     private final Integer MAX_UNIT_SIZE = 500;
+    private final Integer MAX_WAVE_DATAS = 250_000;
     private IntegerProperty currentPage = new SimpleIntegerProperty(0);
 
     private StringProperty graph1Filename = new SimpleStringProperty();
@@ -422,7 +422,7 @@ public class MainController extends NavigationScreen.Screen{
     }
 
     private Double absoluteErrorPercent(){
-        return 0.34;
+        return Math.abs(percentComparisonOfGraphs());
     }
 
 
@@ -481,5 +481,43 @@ public class MainController extends NavigationScreen.Screen{
             }
         });
 
+    }
+
+    public Double percentComparisonOfGraphs(){
+        int count = 0;
+        if(StringUtils.isEmpty(graph1Filename.get())) count++;
+        if(StringUtils.isEmpty(graph2Filename.get())) count++;
+        if(StringUtils.isEmpty(graph3Filename.get())) count++;
+
+        if(count >= 2){
+            Note.error(StringConfig.getValue("err.ui.load"));
+            return 0.0;
+        }
+        File oldFileData = null;
+        File newFileData = null;
+
+        if(!graph1Filename.get().isEmpty()) oldFileData = new File(Launch.properties.getStr("osci.upload.file.path") + File.separator + graph1Filename.get());
+        if(!graph2Filename.get().isEmpty()) newFileData = new File(Launch.properties.getStr("osci.upload.file.path") + File.separator + graph2Filename.get());
+
+        if(oldFileData == null || newFileData == null || !oldFileData.exists() || !newFileData.exists()) {
+            Note.error(StringConfig.getValue("err.file.notFound"));
+            return 0.0;
+        }
+        try{
+            List<Double> oldData = readFromFile(Files.newInputStream(oldFileData.toPath()));
+            List<Double> newData = readFromFile(Files.newInputStream(newFileData.toPath()));
+
+            Double sumSigmas = 0.0;
+            int NUMBER_POINTS = Math.min(oldData.size(), newData.size());
+            for(int i = NUMBER_POINTS - MAX_WAVE_DATAS; i < NUMBER_POINTS; i++){
+                double sigma = oldData.get(i) == 0 ? 0 : (newData.get(i) - oldData.get(i)) / oldData.get(i);
+                sumSigmas += Math.abs(sigma);
+            }
+            return sumSigmas / MAX_WAVE_DATAS;
+        }
+        catch (IOException ex){
+            Note.error(StringConfig.getValue("err.calculate.absolute") + "\n " + ex);
+        }
+        return 0.0;
     }
 }
