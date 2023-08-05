@@ -13,7 +13,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
-
+// prob
 public class App extends Application {
     public static Stage stage;
     public static Scene scene;
