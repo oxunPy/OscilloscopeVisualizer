@@ -20,7 +20,7 @@ public class App extends Application {
     public static Stage stage;
     public static Scene scene;
 
-    private static AnchorPane page;
+    private static AnchorPane page;//klkl
 
     private final Screen screen = Screen.getPrimary();
 
