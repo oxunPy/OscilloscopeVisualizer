@@ -13,14 +13,12 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
-// prob111
-// pp
-// jj
+
 public class App extends Application {
     public static Stage stage;
     public static Scene scene;
 
-    private static AnchorPane page;//klkl
+    private static AnchorPane page;
 
     private final Screen screen = Screen.getPrimary();
 
