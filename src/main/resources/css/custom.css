@@ -1481,3 +1481,14 @@ footer-box-cell-label {
     -fx-max-height: 60px;
     -fx-min-height: 60px;
 }
+
+.centered-table-view extends .table-view {
+}
+
+.centered-table-view *.column-header .label {
+    -fx-alignment: center;
+}
+
+.custom-centralize-table-cell .table-cell {
+    -fx-alignment: CENTER;
+}

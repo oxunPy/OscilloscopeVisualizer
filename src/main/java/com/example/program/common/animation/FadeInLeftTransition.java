@@ -25,7 +25,7 @@ import javafx.util.Duration;
  * @author Jasper Potts
  */
 @SuppressWarnings("deprecation")
-public class FadeInLeftTransition extends ConfigAnimasi {
+public class FadeInLeftTransition extends ConfigAnimation {
     /**
      * Create new FadeInLeftTransition
      * 

@@ -15,7 +15,7 @@ import javafx.util.Duration;
     Author     : herudi-pc
 */
 
-public class FadeInUpTransition extends ConfigAnimasi {
+public class FadeInUpTransition extends ConfigAnimation {
     /**
      * Create new FadeInUpTransition
      * 

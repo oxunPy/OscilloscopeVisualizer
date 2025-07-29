@@ -3,12 +3,8 @@ package com.example.program.util.widget.hotkey;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-/**
- * Created by User on 3/6/2018.
- */
 public abstract class HotKeySingleListener implements HotKeyListener {
-
-    private KeyCode kc[];
+    private final KeyCode[] kc;
 
     public HotKeySingleListener(KeyCode... codes) {
         kc = codes;
@@ -29,7 +25,5 @@ public abstract class HotKeySingleListener implements HotKeyListener {
         }
     }
 
-
     protected abstract void onAction();
-
 }

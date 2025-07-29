@@ -4,9 +4,6 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 
-/**
- * Created by User on 3/6/2018.
- */
 public abstract class HotKeyCombinationListener implements HotKeyListener {
 
     private KeyCombination kc;

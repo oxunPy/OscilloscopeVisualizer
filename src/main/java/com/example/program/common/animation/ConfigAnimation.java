@@ -13,12 +13,7 @@ import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
-/* 
-    Created on : Sep 13, 2014, 8:45:48 AM
-    Author     : herudi-pc
-*/
-
-public class ConfigAnimasi extends Transition {
+public class ConfigAnimation extends Transition {
     protected static final Interpolator WEB_EASE = Interpolator.SPLINE(0.25, 0.1, 0.25, 1);
     protected final Node node;
     protected Timeline timeline;
@@ -32,7 +27,7 @@ public class ConfigAnimasi extends Transition {
      * @param node The node that is being animated by the timeline
      * @param timeline The timeline for the animation, it should be from 0 to 1 seconds
      */
-    public ConfigAnimasi(final Node node, final Timeline timeline) {
+    public ConfigAnimation(final Node node, final Timeline timeline) {
         this(node, timeline, true);
     }
     
@@ -43,7 +38,7 @@ public class ConfigAnimasi extends Transition {
      * @param timeline The timeline for the animation, it should be from 0 to 1 seconds
      * @param useCache When true the node is cached as image during the animation
      */
-    public ConfigAnimasi(final Node node, final Timeline timeline, final boolean useCache) {
+    public ConfigAnimation(final Node node, final Timeline timeline, final boolean useCache) {
         this.node = node;
         this.timeline = timeline;
         this.useCache = useCache;

@@ -1193,3 +1193,14 @@
 .chart-line-symbol.default-color7 {
     -fx-background-color: #ff8f00, white;
 }
+
+.setting-hbox {
+    -fx-background-color: #fbfbfb;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #e6e6e6;
+    -fx-border-width: 1px 1px;
+    -fx-padding: 20px;
+    -fx-min-height: 60px;
+    -fx-max-height: 60px;
+}

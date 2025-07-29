@@ -275,7 +275,7 @@
                 <version>8.8.3</version>
                 <configuration>
                     <vendor>RXR-vendor</vendor>
-                    <mainClass>com.example.program.app.Launch</mainClass>
+                    <mainClass>com.example.program.app.LauncherApp</mainClass>
                 </configuration>
             </plugin>
         </plugins>

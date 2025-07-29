@@ -9,18 +9,9 @@ import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by User on 3/6/2018.
- */
 public class HotKeyManager {
     private List<HotKeyListener> mListeners = new ArrayList<>();
     private EventHandler<KeyEvent> handler = event -> {
-
-//        if (event.getTarget() instanceof ComboBoxPopupControl.FakeFocusTextField)
-//            return;
-
-//        System.out.println(event);
-
         if (mListeners != null && !mListeners.isEmpty()) {
             for (HotKeyListener listener : mListeners)
                 Platform.runLater(() -> listener.onKeyPressed(event));

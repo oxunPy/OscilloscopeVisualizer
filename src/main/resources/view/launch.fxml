@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="327.0" prefWidth="493.0" styleClass="launch-background" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.program.app.LaunchController">
+<AnchorPane prefHeight="327.0" prefWidth="493.0" styleClass="launch-background" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.program.app.controller.LaunchWindow">
     <AnchorPane layoutX="74.0" layoutY="14.0" prefHeight="327.0" prefWidth="518.0" style="-fx-background-color: #043b2d;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
             <ImageView fx:id="imgLoading" fitHeight="16.0" fitWidth="179.0" layoutX="157.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true">
@@ -34,11 +34,6 @@
                     </Text>
                 </children>
             </VBox>
-            <Label fx:id="lblClose" layoutX="474.0" layoutY="5.0" text="X" textFill="WHITE">
-                <font>
-                    <Font name="Arial Black" size="16.0" />
-                </font>
-            </Label>
         </children>
     </AnchorPane>
 </AnchorPane>
