@@ -1,7 +1,7 @@
 package com.example.program.app.view;
 
-import com.example.program.app.starter.LayoutAppStarter;
-import com.example.program.app.starter.LauncherAppStarter;
+import com.example.program.app.stages.LayoutAppStage;
+import com.example.program.app.stages.LauncherAppStage;
 import com.example.program.common.animation.FadeInLeftTransition;
 import com.example.program.common.animation.FadeInRightTransition;
 import com.example.program.common.animation.FadeInTransition;
@@ -42,7 +42,7 @@ public class LaunchWindow implements Initializable {
                 return new Task<Result>() {
                     @Override
                     protected Result call() throws Exception {
-                        Thread.sleep(3000);
+                        Thread.sleep(1500);
                         return Result.SUCCESS;
                     }
                 };
@@ -53,7 +53,7 @@ public class LaunchWindow implements Initializable {
         service.setOnSucceeded(event -> {
             if(service.getValue() == Result.SUCCESS) {
                 close();
-                new LayoutAppStarter().start(new Stage());
+                new LayoutAppStage().start(new Stage());
             }
         });
     }
@@ -65,7 +65,7 @@ public class LaunchWindow implements Initializable {
     }
 
     private void close() {
-        LauncherAppStarter.stage.close();
+        LauncherAppStage.stage.close();
     }
 
 

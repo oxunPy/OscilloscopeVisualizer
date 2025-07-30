@@ -1,27 +1,31 @@
 package com.example.program.app.view;
 
-import com.example.program.app.starter.LayoutAppStarter;
-import com.example.program.app.property.OsciDataProperty;
+import com.example.program.app.property.OsciFileProperty;
+import com.example.program.app.stages.LayoutAppStage;
 import com.example.program.util.*;
 import com.example.program.util.widget.hotkey.HotKeyListener;
 import com.example.program.util.widget.hotkey.HotKeyManager;
 import de.jensd.fx.glyphs.GlyphsDude;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Path;
+import javafx.stage.FileChooser;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.gillius.jfxutils.chart.ChartPanManager;
@@ -33,25 +37,20 @@ import java.util.*;
 
 public class MainWindow extends AnchorPane {
     @FXML
-    private BorderPane lineChartIconPane;
-    @FXML
-    private BorderPane absoluteErrorPane;
-    @FXML
     private BorderPane prevLineChartPane;
     @FXML
     private BorderPane nextLineChartPane;
+
     @FXML
-    private TableColumn<OsciDataProperty, String> colFileName;
+    private TableView<OsciFileProperty> tbDataFiles;
     @FXML
-    private Button btnDrawLineChart;
-    @FXML
-    private Button btnAbsoluteError;
+    private TableColumn<OsciFileProperty, String> colFileName;
+
+    // Graph items
     @FXML
     private Button btnPrevChart;
     @FXML
     private Button btnNextChart;
-    @FXML
-    private TableView<OsciDataProperty> tbData;
     @FXML
     private LineChart<Number, Number> lchGraphs;
     @FXML
@@ -71,6 +70,12 @@ public class MainWindow extends AnchorPane {
     @FXML
     private NumberAxis yAxis;
 
+    @FXML
+    private ImageView imgDropBox;
+    @FXML
+    private Button btnBrowseFile;
+    private final ObjectProperty<File> fileOnFly = new SimpleObjectProperty<>();
+
     private final XYChart.Series<Number, Number> graph1Series = new XYChart.Series<>();
     private final XYChart.Series<Number, Number> graph2Series = new XYChart.Series<>();
     private final XYChart.Series<Number, Number> graph3Series = new XYChart.Series<>();
@@ -84,7 +89,7 @@ public class MainWindow extends AnchorPane {
     private final StringProperty graph2Filename = new SimpleStringProperty();
     private final StringProperty graph3Filename = new SimpleStringProperty();
 
-    private final ListProperty<OsciDataProperty> listData = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private final ListProperty<OsciFileProperty> listData = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     private final HotKeyListener hot = event -> {
         if(event.getCode() == KeyCode.LEFT){
@@ -102,23 +107,35 @@ public class MainWindow extends AnchorPane {
             fxml.setRoot(this);
             fxml.setController(this);
             fxml.load();
-//            handleMousePosition();
+
+            onCreate();
+            onStart();
+            // handleMousePosition();
         } catch (IOException ex) {
             System.out.println(StringConfig.getValue("err.ui.load") + "\n" + ex);
         }
     }
 
     public void onCreate() {
-        tbData.setItems(listData);
-        tbData.setEditable(true);
-        lineChartIconPane.setCenter(GlyphsDude.createIcon(FontAwesomeIcon.LINE_CHART, "22px"));
-        absoluteErrorPane.setCenter(GlyphsDude.createIcon(MaterialDesignIcon.DELTA, "22px"));
+        tbDataFiles.setItems(listData);
+        tbDataFiles.setEditable(true);
         prevLineChartPane.setCenter(GlyphsDude.createIcon(MaterialDesignIcon.ARROW_LEFT, "20px"));
         nextLineChartPane.setCenter(GlyphsDude.createIcon(MaterialDesignIcon.ARROW_RIGHT, "20px"));
 
-        btnDrawLineChart.setOnMouseClicked(event -> {
-            drawLineChart();
+        fileOnFly.addListener((observable, oldValue, newValue) -> {
+            if(newValue != null) {
+                OsciFileProperty property = new OsciFileProperty();
+                property.setFilename(newValue.getAbsolutePath());
+                listData.add(property);
+            }
         });
+
+//        btnDrawLineChart.setOnMouseClicked(event -> {
+//            drawLineChart();
+//        });
+
+        handleClickBrowse();
+        handleDragFile();
 
         // init base defaults
         toggleCheckboxes();
@@ -128,7 +145,7 @@ public class MainWindow extends AnchorPane {
     public void onStart() {
         // zooming line chart
         zoomLineChart();
-        tbData.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+        tbDataFiles.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
 
         }));
 
@@ -172,8 +189,8 @@ public class MainWindow extends AnchorPane {
         });
 
         this.setOnMouseDragged(event -> {
-            LayoutAppStarter.stage.setX(event.getScreenX() - x);
-            LayoutAppStarter.stage.setY(event.getScreenY() - y);
+            LayoutAppStage.stage.setX(event.getScreenX() - x);
+            LayoutAppStage.stage.setY(event.getScreenY() - y);
         });
     }
 
@@ -218,12 +235,12 @@ public class MainWindow extends AnchorPane {
             return ;
         }
 
-        if(tbData.getSelectionModel().getSelectedItem() == null){
+        if(tbDataFiles.getSelectionModel().getSelectedItem() == null){
             // Note.alert(StringConfig.getValue("err.select.item"));
             return ;
         }
 
-        String fileName = tbData.getSelectionModel().getSelectedItem().getDataFile().getFilename();
+        String fileName = tbDataFiles.getSelectionModel().getSelectedItem().getFilename();
         File fileToDraw = new File("osci.upload.file.path" + File.separator + fileName);
         if(!fileToDraw.exists()) {
             // Note.error(StringConfig.getValue("err.file.notFound"));
@@ -406,5 +423,49 @@ public class MainWindow extends AnchorPane {
             System.out.println(StringConfig.getValue("err.calculate.absolute") + "\n " + ex);
         }
         return 0.0;
+    }
+
+
+    private void handleClickBrowse() {
+        btnBrowseFile.setOnMouseClicked(event -> {
+            FileChooser fileChooser = new FileChooser();
+            File selectedFile = fileChooser.showOpenDialog(LayoutAppStage.stage);
+
+            if (selectedFile != null) {
+                String ext = selectedFile.getName().substring(selectedFile.getName().lastIndexOf(".") + 1);
+                if (ext.equals("txt") || ext.equals("xlxs") || ext.equals("xls") || ext.equals("csv")) {
+                    fileOnFly.set(selectedFile);
+                } else {
+                    System.out.println(StringConfig.getValue("err.file.type"));
+                }
+            }
+        });
+    }
+
+    private void handleDragFile() {
+        imgDropBox.setOnDragOver(event -> {
+            setCursor(Cursor.CROSSHAIR);
+            Dragboard db = event.getDragboard();
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            if (event.getGestureSource() != imgDropBox && db.hasFiles()) {
+                File file = db.getFiles().get(0);
+                fileOnFly.set(file);
+
+            }
+        });
+
+        imgDropBox.setOnDragDropped(event -> {
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+            if (db.hasFiles()) {
+                System.out.println(db.getFiles().get(0).getName());
+                success = true;
+            }
+
+            event.setDropCompleted(success);
+            setCursor(Cursor.DEFAULT);
+            event.consume();
+        });
+
     }
 }

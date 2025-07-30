@@ -1,4 +1,4 @@
-package com.example.program.app.starter;
+package com.example.program.app.stages;
 
 import com.example.program.util.StringConfig;
 import com.example.program.util.widget.hotkey.HotKeyManager;
@@ -10,12 +10,11 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class LayoutAppStarter extends Application {
+public class LayoutAppStage extends Application {
     private static AnchorPane page;
 
     private final Screen screen = Screen.getPrimary();
@@ -25,8 +24,8 @@ public class LayoutAppStarter extends Application {
     @Override
     public void start(final Stage stage) {
         try {
-            LayoutAppStarter.stage = stage;
-            FXMLLoader loader = new FXMLLoader(LayoutAppStarter.class.getResource("/view/app_layout.fxml"), StringConfig.getPropertiesFromResource());
+            LayoutAppStage.stage = stage;
+            FXMLLoader loader = new FXMLLoader(LayoutAppStage.class.getResource("/view/app_layout.fxml"), StringConfig.getPropertiesFromResource());
             page = loader.load();
             Scene scene = new Scene(page);
 
@@ -35,7 +34,7 @@ public class LayoutAppStarter extends Application {
             stage.setWidth(window.getWidth());
             stage.setHeight(window.getHeight());
 
-            stage.getIcons().add(new Image(Objects.requireNonNull(LayoutAppStarter.class.getResourceAsStream("/img/oscilloscope/icon.png"))));
+            stage.getIcons().add(new Image(Objects.requireNonNull(LayoutAppStage.class.getResourceAsStream("/img/oscilloscope/icon.png"))));
 
             stage.setScene(scene);
             stage.show();

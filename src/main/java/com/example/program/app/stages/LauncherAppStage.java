@@ -1,4 +1,4 @@
-package com.example.program.app.starter;
+package com.example.program.app.stages;
 
 import com.example.program.util.StringConfig;
 import javafx.application.Application;
@@ -12,7 +12,7 @@ import javafx.stage.StageStyle;
 import java.util.Objects;
 
 
-public class LauncherAppStarter extends Application {
+public class LauncherAppStage extends Application {
     public static Stage stage;
     private AnchorPane page;
 
@@ -24,7 +24,7 @@ public class LauncherAppStarter extends Application {
 
     public void show(final Stage stage) {
         try {
-            LauncherAppStarter.stage = stage;
+            LauncherAppStage.stage = stage;
             page = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/view/app_launch.fxml")), StringConfig.getPropertiesFromResource());
             Scene scene = new Scene(page);
 

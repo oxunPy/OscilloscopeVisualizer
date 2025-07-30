@@ -1,6 +1,6 @@
 package com.example.program.app;
 
-import com.example.program.app.starter.LauncherAppStarter;
+import com.example.program.app.stages.LauncherAppStage;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -25,7 +25,7 @@ public class OscilloscopeApplication extends Application {
     }
 
     void startNewLauncher(Stage stage) throws Exception {
-        LauncherAppStarter launcher = new LauncherAppStarter();
+        LauncherAppStage launcher = new LauncherAppStage();
         launcher.show(stage);
     }
 }
