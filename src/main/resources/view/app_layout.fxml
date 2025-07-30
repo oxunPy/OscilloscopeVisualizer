@@ -12,7 +12,6 @@
     <stylesheets>
         <URL value="@../css/app.css" />
         <URL value="@../css/default.css" />
-        <URL value="@../css/custom.css" />
     </stylesheets>
 
     <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
