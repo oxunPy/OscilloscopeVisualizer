@@ -257,7 +257,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.program/com.example.program.app.App</mainClass>
+                            <mainClass>com.example.program/com.example.program.app.starter.LayoutAppStarter</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
@@ -275,7 +275,7 @@
                 <version>8.8.3</version>
                 <configuration>
                     <vendor>RXR-vendor</vendor>
-                    <mainClass>com.example.program.app.LauncherApp</mainClass>
+                    <mainClass>com.example.program.app.starter.LauncherAppStarter</mainClass>
                 </configuration>
             </plugin>
         </plugins>

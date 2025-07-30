@@ -527,12 +527,12 @@
 
 .header-box {
     -fx-padding: 4px 10px 4px 10px;
-    -fx-border-width: 0px 0px 2px 0px;
-    -fx-border-color: #49a3da;
+    -fx-border-width: 0px 0px 3px 0px;
+    -fx-border-color: #043b2d;
 }
 
 .header-box > *.label {
-    -fx-font-size: 16px;
+    -fx-font-size: 20px;
 }
 
 .base-content {

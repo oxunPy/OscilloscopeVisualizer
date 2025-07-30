@@ -1,6 +1,6 @@
-package com.example.program.app.controller;
+package com.example.program.app.view;
 
-import com.example.program.app.App;
+import com.example.program.app.starter.LayoutAppStarter;
 import com.example.program.app.property.OsciDataProperty;
 import com.example.program.util.*;
 import com.example.program.util.widget.hotkey.HotKeyListener;
@@ -172,8 +172,8 @@ public class MainWindow extends AnchorPane {
         });
 
         this.setOnMouseDragged(event -> {
-            App.stage.setX(event.getScreenX() - x);
-            App.stage.setY(event.getScreenY() - y);
+            LayoutAppStarter.stage.setX(event.getScreenX() - x);
+            LayoutAppStarter.stage.setY(event.getScreenY() - y);
         });
     }
 

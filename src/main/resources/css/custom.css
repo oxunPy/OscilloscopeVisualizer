@@ -138,6 +138,8 @@
     -fx-padding: 0 15 12 15;
     -fx-alignment: bottom-left;
     -fx-spacing: 8;
+    -fx-font-size: 40px;
+    -fx-font-weight: 200;
 }
 
 .titulo {
@@ -1460,7 +1462,7 @@ footer-box-cell-label {
     -fx-hgap: 5px;
 }
 
-.invoice-box {
+.padding-box {
     -fx-padding: 10px;
 }
 

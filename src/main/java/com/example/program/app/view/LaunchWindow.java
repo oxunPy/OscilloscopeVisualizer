@@ -1,7 +1,7 @@
-package com.example.program.app.controller;
+package com.example.program.app.view;
 
-import com.example.program.app.App;
-import com.example.program.app.LauncherApp;
+import com.example.program.app.starter.LayoutAppStarter;
+import com.example.program.app.starter.LauncherAppStarter;
 import com.example.program.common.animation.FadeInLeftTransition;
 import com.example.program.common.animation.FadeInRightTransition;
 import com.example.program.common.animation.FadeInTransition;
@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -52,7 +53,7 @@ public class LaunchWindow implements Initializable {
         service.setOnSucceeded(event -> {
             if(service.getValue() == Result.SUCCESS) {
                 close();
-                new App().start(LauncherApp.stage);
+                new LayoutAppStarter().start(new Stage());
             }
         });
     }
@@ -64,7 +65,7 @@ public class LaunchWindow implements Initializable {
     }
 
     private void close() {
-        LauncherApp.launchStage.close();
+        LauncherAppStarter.stage.close();
     }
 
 
