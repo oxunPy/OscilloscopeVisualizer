@@ -41,7 +41,7 @@
                                 </HBox>
                             </graphic>
                         </JFXButton>
-                        <LineChart fx:id="lchGraphs" maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <LineChart fx:id="lineChartGraphs" maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                             <xAxis>
                                 <NumberAxis side="BOTTOM" upperBound="1000" tickUnit="50" fx:id="xAxis"/>
                             </xAxis>
