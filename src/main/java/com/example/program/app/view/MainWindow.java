@@ -6,6 +6,7 @@ import com.example.program.util.*;
 import com.example.program.util.widget.hotkey.HotKeyListener;
 import com.example.program.util.widget.hotkey.HotKeyManager;
 import de.jensd.fx.glyphs.GlyphsDude;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -17,6 +18,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyCode;
@@ -26,7 +28,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Path;
 import javafx.stage.FileChooser;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
@@ -41,10 +42,15 @@ public class MainWindow extends AnchorPane {
     @FXML
     private BorderPane nextLineChartPane;
 
+    // File table items
     @FXML
     private TableView<OsciFileProperty> tbDataFiles;
     @FXML
     private TableColumn<OsciFileProperty, String> colFileName;
+    @FXML
+    private TableColumn<OsciFileProperty, Void> colShowGraphic;
+    @FXML
+    private TableColumn<OsciFileProperty, Void> colPlayPause;
 
     // Graph items
     @FXML
@@ -53,6 +59,8 @@ public class MainWindow extends AnchorPane {
     private Button btnNextChart;
     @FXML
     private LineChart<Number, Number> lchGraphs;
+
+    // Footer items
     @FXML
     private CheckBox chbGraph1;
     @FXML
@@ -69,12 +77,18 @@ public class MainWindow extends AnchorPane {
     private NumberAxis xAxis;
     @FXML
     private NumberAxis yAxis;
+    @FXML
+    private Label lbGraph1;
+    @FXML
+    private Label lbGraph2;
+    @FXML
+    private Label lbGraph3;
 
+    // Drag-Drop/Browse items
     @FXML
     private ImageView imgDropBox;
     @FXML
     private Button btnBrowseFile;
-    private final ObjectProperty<File> fileOnFly = new SimpleObjectProperty<>();
 
     private final XYChart.Series<Number, Number> graph1Series = new XYChart.Series<>();
     private final XYChart.Series<Number, Number> graph2Series = new XYChart.Series<>();
@@ -102,52 +116,40 @@ public class MainWindow extends AnchorPane {
 
     public MainWindow() {
         try {
-            FXMLLoader fxml = new FXMLLoader(getClass().getResource("/view/main.fxml"), StringConfig.getPropertiesFromResource());
-
-            fxml.setRoot(this);
-            fxml.setController(this);
-            fxml.load();
-
+            loadView();
             onCreate();
             onStart();
-            // handleMousePosition();
+            FileHandler fileHandler = new FileHandler();
+            fileHandler.setup();
         } catch (IOException ex) {
             System.out.println(StringConfig.getValue("err.ui.load") + "\n" + ex);
         }
     }
 
+    private void loadView() throws IOException {
+        FXMLLoader fxml = new FXMLLoader(getClass().getResource("/view/main.fxml"), StringConfig.getPropertiesFromResource());
+
+        fxml.setRoot(this);
+        fxml.setController(this);
+        fxml.load();
+    }
+
     public void onCreate() {
-        tbDataFiles.setItems(listData);
-        tbDataFiles.setEditable(true);
+        tableConfig();
         prevLineChartPane.setCenter(GlyphsDude.createIcon(MaterialDesignIcon.ARROW_LEFT, "20px"));
         nextLineChartPane.setCenter(GlyphsDude.createIcon(MaterialDesignIcon.ARROW_RIGHT, "20px"));
-
-        fileOnFly.addListener((observable, oldValue, newValue) -> {
-            if(newValue != null) {
-                OsciFileProperty property = new OsciFileProperty();
-                property.setFilename(newValue.getAbsolutePath());
-                listData.add(property);
-            }
-        });
-
-//        btnDrawLineChart.setOnMouseClicked(event -> {
-//            drawLineChart();
-//        });
-
-        handleClickBrowse();
-        handleDragFile();
 
         // init base defaults
         toggleCheckboxes();
         baseLineChart();
+        lbGraph1.textProperty().bind(graph1Filename);
+        lbGraph2.textProperty().bind(graph2Filename);
+        lbGraph3.textProperty().bind(graph3Filename);
     }
 
     public void onStart() {
         // zooming line chart
         zoomLineChart();
-        tbDataFiles.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-
-        }));
 
         lchGraphs.getData().add(graph1Series);
         lchGraphs.getData().add(graph2Series);
@@ -224,41 +226,32 @@ public class MainWindow extends AnchorPane {
         lchGraphs.setTitle(StringConfig.getValue("label.oscilloscope.graphics"));
     }
 
-    private void refreshLineChartColors(){
-
-    }
-
-
-    private void drawLineChart(){
+    private void drawLineChart(String absolutePath) {
         if(!(chbGraph1.isSelected() || chbGraph2.isSelected() || chbGraph3.isSelected())){
-            // Note.alert(StringConfig.getValue("select.item.checkbox"));
             return ;
         }
 
         if(tbDataFiles.getSelectionModel().getSelectedItem() == null){
-            // Note.alert(StringConfig.getValue("err.select.item"));
             return ;
         }
 
-        String fileName = tbDataFiles.getSelectionModel().getSelectedItem().getFilename();
-        File fileToDraw = new File("osci.upload.file.path" + File.separator + fileName);
+        File fileToDraw = new File(absolutePath);
         if(!fileToDraw.exists()) {
-            // Note.error(StringConfig.getValue("err.file.notFound"));
             return;
         }
 
         XYChart.Series<Number, Number> linechart = null;
         if(chbGraph1.isSelected()) {
             linechart = graph1Series;
-            graph1Filename.setValue(fileName);
+            graph1Filename.setValue(absolutePath);
         }
         else if(chbGraph2.isSelected()){
             linechart = graph2Series;
-            graph2Filename.setValue(fileName);
+            graph2Filename.setValue(absolutePath);
         }
         else {
             linechart = graph3Series;
-            graph3Filename.setValue(fileName);
+            graph3Filename.setValue(absolutePath);
         }
 
         List<Double> readDataFromFile = null;
@@ -273,10 +266,10 @@ public class MainWindow extends AnchorPane {
         }
     }
 
-    public void drawSeries(List<Double> data, XYChart.Series<Number, Number> linechart){
-        linechart.getData().clear();
-        for(int i = currentPage.get() * MAX_UNIT_SIZE; (i < currentPage.get() * MAX_UNIT_SIZE + MAX_UNIT_SIZE && i < data.size()) ; i++){
-            linechart.getData().add(new XYChart.Data<>(i, data.get(i)));
+    public void drawSeries(List<Double> data, XYChart.Series<Number, Number> lineChart){
+        lineChart.getData().clear();
+        for(int i = currentPage.get() * MAX_UNIT_SIZE; (i < currentPage.get() * MAX_UNIT_SIZE + MAX_UNIT_SIZE && i < data.size()) ; i++) {
+            lineChart.getData().add(new XYChart.Data<>(i, data.get(i)));
         }
     }
 
@@ -316,19 +309,12 @@ public class MainWindow extends AnchorPane {
         return isValidLine(line) && NumberUtils.isNumber(line);
     }
 
-    private Double absoluteErrorPercent(){
-        return Math.abs(percentComparisonOfGraphs());
-    }
-
-
     private void nextLineChart(){
-//        Note.info("NEXT LINE CHART");
         currentPage.setValue(currentPage.get() + 1);
         updateGraphics();
     }
 
     private void prevLineChart(){
-//        Note.info("PREV LINE CHART");
         if(currentPage.get() > 0) currentPage.setValue(currentPage.get() - 1);
         updateGraphics();
     }
@@ -336,15 +322,14 @@ public class MainWindow extends AnchorPane {
     private void updateGraphics(){
         try {
             if (!graph1Series.getData().isEmpty()) {
-                File fileToDraw = new File("osci.upload.file.path" + File.separator + graph1Filename.get());
+                File fileToDraw = new File(graph1Filename.get());
                 if(!fileToDraw.exists()) {
                     return;
-//                    Note.error(StringConfig.getValue("err.file.notFound"));
                 }
                 else drawSeries(readFromFile(Files.newInputStream(fileToDraw.toPath())), graph1Series);
             }
             if (!graph2Series.getData().isEmpty()) {
-                File fileToDraw = new File("osci.upload.file.path" + File.separator + graph2Filename.get());
+                File fileToDraw = new File(graph2Filename.get());
                 if(!fileToDraw.exists()) {
                     return;
 //                    Note.error(StringConfig.getValue("err.file.notFound"));
@@ -352,7 +337,7 @@ public class MainWindow extends AnchorPane {
                 else drawSeries(readFromFile(Files.newInputStream(fileToDraw.toPath())), graph2Series);
             }
             if (!graph3Series.getData().isEmpty()) {
-                File fileToDraw = new File("osci.upload.file.path" + File.separator + graph3Filename.get());
+                File fileToDraw = new File(graph3Filename.get());
                 if(!fileToDraw.exists()) {
                     return;
 //                    Note.error(StringConfig.getValue("err.file.notFound"));
@@ -366,106 +351,113 @@ public class MainWindow extends AnchorPane {
     }
 
     private void zoomLineChart(){
-        //zooming linechart
         ChartPanManager panner = new ChartPanManager(lchGraphs);
-        //while presssing the left mouse button, you can drag to navigate
         panner.setMouseFilter(mouseEvent -> {
-            if(mouseEvent.getButton() == MouseButton.PRIMARY){ //set your custom combination to trigger navigation
-
-            }
-            else{
+            if(mouseEvent.getButton() != MouseButton.PRIMARY){
                 mouseEvent.consume();
             }
         });
         panner.start();
 
         JFXChartUtil.setupZooming(lchGraphs, mouseEvent -> {
-            if(mouseEvent.getButton() != MouseButton.SECONDARY){ //set your custom combination to trigger rectangle zooming
+            if(mouseEvent.getButton() != MouseButton.SECONDARY){
                 mouseEvent.consume();
             }
         });
 
     }
 
-    public Double percentComparisonOfGraphs(){
-        int count = 0;
-        if(StringUtils.isEmpty(graph1Filename.get())) count++;
-        if(StringUtils.isEmpty(graph2Filename.get())) count++;
-        if(StringUtils.isEmpty(graph3Filename.get())) count++;
+    private void tableConfig() {
+        tbDataFiles.setItems(listData);
+        tbDataFiles.setEditable(true);
 
-        if(count >= 2){
-            // Note.error(StringConfig.getValue("err.ui.load"));
-            return 0.0;
-        }
-        File oldFileData = null;
-        File newFileData = null;
-
-        if(!graph1Filename.get().isEmpty()) oldFileData = new File("osci.upload.file.path" + File.separator + graph1Filename.get());
-        if(!graph2Filename.get().isEmpty()) newFileData = new File("osci.upload.file.path" + File.separator + graph2Filename.get());
-
-        if(oldFileData == null || newFileData == null || !oldFileData.exists() || !newFileData.exists()) {
-            // Note.error(StringConfig.getValue("err.file.notFound"));
-            return 0.0;
-        }
-        try{
-            List<Double> oldData = readFromFile(Files.newInputStream(oldFileData.toPath()));
-            List<Double> newData = readFromFile(Files.newInputStream(newFileData.toPath()));
-
-            Double sumSigmas = 0.0;
-            int NUMBER_POINTS = Math.min(oldData.size(), newData.size());
-            for(int i = NUMBER_POINTS - MAX_WAVE_DATA; i < NUMBER_POINTS; i++){
-                double sigma = oldData.get(i) == 0 ? 0 : (newData.get(i) - oldData.get(i)) / oldData.get(i);
-                sumSigmas += Math.abs(sigma);
+        colFileName.setCellValueFactory(new PropertyValueFactory<>("filename"));
+        colShowGraphic.setCellFactory(col -> new TableCell<OsciFileProperty, Void>() {
+            final Button btnDrawChart = new Button(StringConfig.getValue("label.draw.graph"));
+            {
+                btnDrawChart.setOnMouseClicked(event -> {
+                    OsciFileProperty property = getTableView().getItems().get(getIndex());
+                    drawLineChart(property.getFilename());
+                });
+                btnDrawChart.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.LINE_CHART, "22px"));
             }
-            return sumSigmas / MAX_WAVE_DATA;
-        }
-        catch (IOException ex){
-            System.out.println(StringConfig.getValue("err.calculate.absolute") + "\n " + ex);
-        }
-        return 0.0;
-    }
 
-
-    private void handleClickBrowse() {
-        btnBrowseFile.setOnMouseClicked(event -> {
-            FileChooser fileChooser = new FileChooser();
-            File selectedFile = fileChooser.showOpenDialog(LayoutAppStage.stage);
-
-            if (selectedFile != null) {
-                String ext = selectedFile.getName().substring(selectedFile.getName().lastIndexOf(".") + 1);
-                if (ext.equals("txt") || ext.equals("xlxs") || ext.equals("xls") || ext.equals("csv")) {
-                    fileOnFly.set(selectedFile);
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
                 } else {
-                    System.out.println(StringConfig.getValue("err.file.type"));
+                    setGraphic(btnDrawChart);
                 }
             }
         });
     }
 
-    private void handleDragFile() {
-        imgDropBox.setOnDragOver(event -> {
-            setCursor(Cursor.CROSSHAIR);
-            Dragboard db = event.getDragboard();
-            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-            if (event.getGestureSource() != imgDropBox && db.hasFiles()) {
-                File file = db.getFiles().get(0);
-                fileOnFly.set(file);
+    class FileHandler {
+        private final ObjectProperty<File> fileOnFly = new SimpleObjectProperty<>();
 
-            }
-        });
+        void setup() {
+            handleDragFile();
+            handleClickBrowse();
+            handleFileExistCallback();
+        }
 
-        imgDropBox.setOnDragDropped(event -> {
-            Dragboard db = event.getDragboard();
-            boolean success = false;
-            if (db.hasFiles()) {
-                System.out.println(db.getFiles().get(0).getName());
-                success = true;
-            }
+        private void handleFileExistCallback() {
+            fileOnFly.addListener((observable, oldValue, newValue) -> {
+                if(newValue != null) {
+                    OsciFileProperty property = new OsciFileProperty();
+                    property.setFilename(newValue.getAbsolutePath());
+                    listData.add(property);
+                }
+            });
+        }
 
-            event.setDropCompleted(success);
-            setCursor(Cursor.DEFAULT);
-            event.consume();
-        });
+        private void handleClickBrowse() {
+            btnBrowseFile.setOnMouseClicked(event -> {
+                FileChooser fileChooser = new FileChooser();
+                File selectedFile = fileChooser.showOpenDialog(LayoutAppStage.stage);
 
+                if (selectedFile != null) {
+                    String ext = selectedFile.getName().substring(selectedFile.getName().lastIndexOf(".") + 1);
+                    if (ext.equals("txt") || ext.equals("xlxs") || ext.equals("xls") || ext.equals("csv")) {
+                        fileOnFly.set(selectedFile);
+                    }
+                }
+            });
+        }
+
+        private void handleDragFile() {
+            dragAction();
+            dropAction();
+        }
+
+        private void dragAction() {
+            imgDropBox.setOnDragOver(event -> {
+                setCursor(Cursor.CROSSHAIR);
+                Dragboard db = event.getDragboard();
+                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                if (event.getGestureSource() != imgDropBox && db.hasFiles()) {
+                    File file = db.getFiles().get(0);
+                    fileOnFly.set(file);
+
+                }
+            });
+        }
+
+        private void dropAction() {
+            imgDropBox.setOnDragDropped(event -> {
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+                if (db.hasFiles()) {
+                    System.out.println(db.getFiles().get(0).getName());
+                    success = true;
+                }
+
+                event.setDropCompleted(success);
+                setCursor(Cursor.DEFAULT);
+                event.consume();
+            });
+        }
     }
 }
